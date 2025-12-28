@@ -7,7 +7,7 @@ auth_bp = Blueprint('auth_bp', __name__)
 
 # Definimos las rutas usando el Blueprint
 @auth_bp.route('/admin/usuaris', methods=['POST'])
-def add_usuari():
+def add_user():
     pass
 
-# ... (Añadir aquí las rutas POST, PUT, DELETE para citas)
+# ... (Añadir aquí las rutas POST, PUT, DELETE para usuarios)
