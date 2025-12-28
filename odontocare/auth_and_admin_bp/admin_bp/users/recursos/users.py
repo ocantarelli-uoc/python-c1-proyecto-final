@@ -1,13 +1,13 @@
 from flask import Blueprint, jsonify, request
 
 # Creamos una instancia de Blueprint
-# 'auth_bp' es el nombre del Blueprint
+# 'users_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
-auth_bp = Blueprint('auth_bp', __name__)
+users_bp = Blueprint('users_bp', __name__)
 
 # Definimos las rutas usando el Blueprint
-@auth_bp.route('/auth/login', methods=['POST'])
-def login_user():
+@users_bp.route('/admin/usuaris', methods=['POST'])
+def add_user():
     pass
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para usuarios)
