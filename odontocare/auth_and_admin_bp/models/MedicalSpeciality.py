@@ -1,0 +1,7 @@
+class MedicalSpeciality(db.Model):
+    __tablename__ = 'medical_specialities'
+    id_medical_speciality = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+
+    def __repr__(self):
+        return f"<MedicalSpeciality {self.name}>"
