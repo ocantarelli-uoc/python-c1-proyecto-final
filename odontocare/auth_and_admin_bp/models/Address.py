@@ -1,6 +1,6 @@
-class Address(db.Model):
+class Address():
     __tablename__ = 'addresses'
-    id_address = db.Column(db.Integer, primary_key=True)
+    id_address
     street = db.Column(db.String(255), nullable=False)
     city = db.Column(db.String(255), nullable=False)
 
