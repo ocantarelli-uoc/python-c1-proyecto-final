@@ -1,3 +1,4 @@
+from extensions import db
 class UserRole(db.Model):
     __tablename__ = 'user_roles'
     id_user_role = db.Column(db.Integer, primary_key=True)

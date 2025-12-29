@@ -1,4 +1,5 @@
-class Address():
+from extensions import db
+class Address(db.Model):
     __tablename__ = 'addresses'
     id_address
     street = db.Column(db.String(255), nullable=False)

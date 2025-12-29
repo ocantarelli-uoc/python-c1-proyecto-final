@@ -1,3 +1,4 @@
+from extensions import db
 class MedicalSpeciality(db.Model):
     __tablename__ = 'medical_specialities'
     id_medical_speciality = db.Column(db.Integer, primary_key=True)
