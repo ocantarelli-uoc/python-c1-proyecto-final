@@ -5,7 +5,6 @@ from decorators.needs_authorization import needs_auth
 from models.User import User
 from models.UserRole import UserRole
 # Decorador personalizado para verificar el rol
-@needs_auth
 def require_role(required_roles:list[str]):
     def decorador_interno(f):
         @wraps(f)

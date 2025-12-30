@@ -1,4 +1,5 @@
 from flask import Flask
+from first_configs import create_first_admin_user
 from sqlalchemy.pool import StaticPool
 from dotenv import dotenv_values
 from extensions import db
@@ -46,5 +47,6 @@ def create_app():
 
     with app.app_context():
         db.create_all()
+        create_first_admin_user()
 
     return app
