@@ -10,8 +10,8 @@ doctors_bp = Blueprint('doctors_bp', __name__)
 # Definimos las rutas usando el Blueprint
 @doctors_bp.route('/admin/doctors', methods=['POST'])
 def add_doctor():
-    created_user = create_user(user_role="doctor")
-    created_doctor = create_doctor(created_user.id_user)
+    created_user = create_user(user_role_str="doctor")
+    created_doctor = create_doctor(created_user)
     return jsonify({'id': created_doctor.id_doctor, 'name': created_doctor.name})
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para médicos)

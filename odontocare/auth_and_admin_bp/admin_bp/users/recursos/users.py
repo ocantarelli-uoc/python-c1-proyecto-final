@@ -10,7 +10,7 @@ users_bp = Blueprint('users_bp', __name__)
 # Definimos las rutas usando el Blueprint
 @users_bp.route('/admin/usuaris', methods=['POST'])
 def add_user():
-    createdUser = create_user(user_role=None)
+    createdUser = create_user(user_role_str=None)
     user = get_user_by_id(createdUser.id_user)
     return jsonify({'id': user.id_user, 'username': user.username})
 
