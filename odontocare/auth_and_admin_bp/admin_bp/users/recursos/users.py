@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from admin_bp.users.services.get_user_by_id import get_user_by_id
-from admin_bp.users.services.create_users import create_user
+from admin_bp.users.services.create_user import create_user
 
 # Creamos una instancia de Blueprint
 # 'users_bp' es el nombre del Blueprint

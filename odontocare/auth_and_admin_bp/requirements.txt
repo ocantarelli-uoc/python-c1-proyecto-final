@@ -14,3 +14,4 @@ flask-sqlalchemy
 PyJWT
 jsonschema
 python-dotenv
+bcrypt
