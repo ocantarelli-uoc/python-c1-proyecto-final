@@ -1,6 +1,7 @@
 import jwt
 from functools import wraps
 from flask import Flask, jsonify, request
+from dotenv import dotenv_values
 import app
 from admin_bp.users.services.get_user_by_username import get_user_by_username
 def needs_auth():
@@ -14,7 +15,7 @@ def needs_auth():
             
             token = auth_header.split(" ")[1]
             try:
-                payload = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
+                payload = jwt.decode(token, dotenv_values['SECRET_KEY'], algorithms=['HS256'])
                 payload_user = payload['sub']
                 user = get_user_by_username(payload_user)
                 # 2. Verificación del usuario
