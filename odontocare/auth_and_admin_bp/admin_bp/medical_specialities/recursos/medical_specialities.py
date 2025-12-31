@@ -4,6 +4,9 @@ from admin_bp.medical_specialities.services.create_medical_speciality import cre
 from admin_bp.medical_specialities.services.get_medical_speciality_by_id import get_medical_speciality_by_id
 from decorators.needs_authorization import needs_auth
 from decorators.require_role import require_role
+from admin_bp.exceptions.already_exists.MedicalSpecialityAlreadyExistsException import MedicalSpecialityAlreadyExistsException
+from models.MedicalSpeciality import MedicalSpeciality
+from admin_bp.medical_specialities.services.get_medical_speciality_by_name import get_medical_speciality_by_name
 # Creamos una instancia de Blueprint
 # 'medical_specialities_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -14,11 +17,19 @@ medical_specialities_bp = Blueprint('medical_specialities_bp', __name__)
 @needs_auth
 @require_role(required_roles=["admin"])
 def add_medical_speciality(*args, **kwargs):
+    datos = request.get_json()
     try:
+        existing_medical_speciality:MedicalSpeciality = get_medical_speciality_by_name(datos["medical_speciality_name"])
+        if existing_medical_speciality != None:
+            raise MedicalSpecialityAlreadyExistsException()
         created_medical_speciality = create_medical_speciality()
         medical_speciality = get_medical_speciality_by_id(created_medical_speciality.id_medical_speciality)
         return jsonify({'id': medical_speciality.id_medical_speciality, 'name': created_medical_speciality.name})
-    except Exception as e:
+    except MedicalSpecialityAlreadyExistsException as e_medical_speciality_already_exists:
+        print(e_medical_speciality_already_exists.__str__(),file=sys.stderr)
+        print(e_medical_speciality_already_exists.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Especialidad Médica '+datos["medical_speciality_name"]+' ya existe.'}),409
+    except (TypeError, ValueError,Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500

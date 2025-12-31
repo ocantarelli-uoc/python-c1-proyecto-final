@@ -4,6 +4,9 @@ from admin_bp.users.services.create_user import create_user
 from admin_bp.patients.services.create_patient import create_patient
 from decorators.needs_authorization import needs_auth
 from decorators.require_role import require_role
+from admin_bp.exceptions.already_exists.PatientAlreadyExistsException import PatientAlreadyExistsException
+from models.Patient import Patient
+from admin_bp.patients.services.get_patient_by_name import get_patient_by_name
 
 # Creamos una instancia de Blueprint
 # 'patients_bp' es el nombre del Blueprint
@@ -15,15 +18,22 @@ patients_bp = Blueprint('patients_bp', __name__)
 @needs_auth
 @require_role(required_roles=["admin"])
 def add_patient(*args, **kwargs):
+    datos = request.get_json()
     try:
-        datos = request.get_json()
+        existing_patient:Patient = get_patient_by_name(datos['role_name'])
+        if existing_patient != None:
+            raise PatientAlreadyExistsException()
         created_user = create_user({
             'username':datos['username'],
             'password':datos['password']
         },user_role_str="patient")
         created_patient = create_patient(created_user)
         return jsonify({'id': created_patient.id_patient, 'name': created_patient.name})
-    except Exception as e:
+    except PatientAlreadyExistsException as e_patient_already_exists:
+        print(e_patient_already_exists.__str__(),file=sys.stderr)
+        print(e_patient_already_exists.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Paciente '+datos['name']+' ya existe.'}),409
+    except (TypeError, ValueError) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500
