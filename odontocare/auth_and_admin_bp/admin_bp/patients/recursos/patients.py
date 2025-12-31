@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+import sys
 from admin_bp.users.services.create_user import create_user
 from admin_bp.patients.services.create_patient import create_patient
 from decorators.needs_authorization import needs_auth
@@ -23,6 +24,8 @@ def add_patient(*args, **kwargs):
         created_patient = create_patient(created_user)
         return jsonify({'id': created_patient.id_patient, 'name': created_patient.name})
     except Exception as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para pacientes)

@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+import sys
 from admin_bp.addresses.services.create_address import create_address
 
 # Creamos una instancia de Blueprint
@@ -14,6 +15,8 @@ def add_address():
         return jsonify({'id': created_address.id_address, 'street': created_address.street, 
                         'city':created_address.city})
     except Exception as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para direcciones)

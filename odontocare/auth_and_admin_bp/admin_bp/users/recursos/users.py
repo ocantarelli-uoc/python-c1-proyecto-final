@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+import sys
 from admin_bp.users.services.get_user_by_id import get_user_by_id
 from admin_bp.users.services.create_user import create_user
 from decorators.needs_authorization import needs_auth
@@ -24,6 +25,8 @@ def add_user(*args, **kwargs):
         user = get_user_by_id(createdUser.id_user)
         return jsonify({'id': user.id_user, 'username': user.username})
     except Exception as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para usuarios)

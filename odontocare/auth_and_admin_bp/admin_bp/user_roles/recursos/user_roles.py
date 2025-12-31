@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+import sys
 from admin_bp.user_roles.services.get_user_role_by_id import get_user_role_by_id
 from admin_bp.user_roles.services.create_user_role import create_user_role
 from decorators.needs_authorization import needs_auth
@@ -22,6 +23,8 @@ def add_user_role(*args, **kwargs):
         user_role = get_user_role_by_id(created_user_role.id_user_role)
         return jsonify({'id': user_role.id_user_role, 'name': user_role.name})
     except Exception as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para usuarios)

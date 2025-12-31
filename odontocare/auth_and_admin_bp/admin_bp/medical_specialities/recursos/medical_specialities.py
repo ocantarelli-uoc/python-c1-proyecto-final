@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+import sys
 from admin_bp.medical_specialities.services.create_medical_speciality import create_medical_speciality
 from admin_bp.medical_specialities.services.get_medical_speciality_by_id import get_medical_speciality_by_id
 from decorators.needs_authorization import needs_auth
@@ -18,6 +19,8 @@ def add_medical_speciality(*args, **kwargs):
         medical_speciality = get_medical_speciality_by_id(created_medical_speciality.id_medical_speciality)
         return jsonify({'id': medical_speciality.id_medical_speciality, 'name': created_medical_speciality.name})
     except Exception as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para usuarios)
