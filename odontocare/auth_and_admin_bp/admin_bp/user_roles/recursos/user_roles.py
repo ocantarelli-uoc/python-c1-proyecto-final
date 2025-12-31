@@ -7,6 +7,7 @@ from decorators.require_role import require_role
 from admin_bp.exceptions.already_exists.UserRoleAlreadyExistsException import UserRoleAlreadyExistsException
 from models.UserRole import UserRole
 from admin_bp.user_roles.services.get_user_role_by_name import get_user_role_by_name
+from admin_bp.exceptions.not_found.UserRoleNotFoundException import UserRoleNotFoundException
 # Creamos una instancia de Blueprint
 # 'users_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -27,11 +28,17 @@ def add_user_role(*args, **kwargs):
         }
         created_user_role = create_user_role(user_role_dict)
         user_role = get_user_role_by_id(created_user_role.id_user_role)
+        if user_role == None:
+            raise UserRoleNotFoundException()
         return jsonify({'id': user_role.id_user_role, 'name': user_role.name})
     except UserRoleAlreadyExistsException as e_user_role_already_exists:
         print(e_user_role_already_exists.__str__(),file=sys.stderr)
         print(e_user_role_already_exists.__repr__(),file=sys.stderr)
         return jsonify({'message':'Rol de Usuario '+datos['role_name']+' ya existe.'}),409
+    except UserRoleAlreadyExistsException as e_user_role_not_found:
+        print(e_user_role_not_found.__str__(),file=sys.stderr)
+        print(e_user_role_not_found.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Rol de Usuario '+datos['role_name']+' creado no encontrado.'}),404
     except (TypeError, ValueError) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)

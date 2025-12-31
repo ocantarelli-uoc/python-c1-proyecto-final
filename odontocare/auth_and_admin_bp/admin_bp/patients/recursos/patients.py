@@ -7,7 +7,7 @@ from decorators.require_role import require_role
 from admin_bp.exceptions.already_exists.PatientAlreadyExistsException import PatientAlreadyExistsException
 from models.Patient import Patient
 from admin_bp.patients.services.get_patient_by_name import get_patient_by_name
-
+from admin_bp.exceptions.not_found.PatientNotFoundException import PatientNotFoundException
 # Creamos una instancia de Blueprint
 # 'patients_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -28,11 +28,17 @@ def add_patient(*args, **kwargs):
             'password':datos['password']
         },user_role_str="patient")
         created_patient = create_patient(created_user)
+        if created_patient == None:
+            raise PatientNotFoundException()
         return jsonify({'id': created_patient.id_patient, 'name': created_patient.name})
     except PatientAlreadyExistsException as e_patient_already_exists:
         print(e_patient_already_exists.__str__(),file=sys.stderr)
         print(e_patient_already_exists.__repr__(),file=sys.stderr)
         return jsonify({'message':'Paciente '+datos['name']+' ya existe.'}),409
+    except PatientNotFoundException as e_patient_not_found:
+        print(e_patient_not_found.__str__(),file=sys.stderr)
+        print(e_patient_not_found.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Paciente '+datos['name']+' no se encuentra.'}),404
     except (TypeError, ValueError) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
