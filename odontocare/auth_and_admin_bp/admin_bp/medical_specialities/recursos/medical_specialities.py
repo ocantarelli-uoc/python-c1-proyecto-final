@@ -13,8 +13,11 @@ medical_specialities_bp = Blueprint('medical_specialities_bp', __name__)
 @needs_auth
 @require_role(required_roles=["admin"])
 def add_medical_speciality(*args, **kwargs):
-    created_medical_speciality = create_medical_speciality()
-    medical_speciality = get_medical_speciality_by_id(created_medical_speciality.id_medical_speciality)
-    return jsonify({'id': medical_speciality.id_medical_speciality, 'name': created_medical_speciality.name})
+    try:
+        created_medical_speciality = create_medical_speciality()
+        medical_speciality = get_medical_speciality_by_id(created_medical_speciality.id_medical_speciality)
+        return jsonify({'id': medical_speciality.id_medical_speciality, 'name': created_medical_speciality.name})
+    except Exception as e:
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para usuarios)

@@ -14,13 +14,16 @@ users_bp = Blueprint('users_bp', __name__)
 @needs_auth
 @require_role(required_roles=["admin"])
 def add_user(*args, **kwargs):
-    datos = request.get_json()
-    createdUser = create_user({
-        'username':datos['username'],
-        'password':datos['password'],
-        'user_role':datos['user_role']
-    },user_role_str=None)
-    user = get_user_by_id(createdUser.id_user)
-    return jsonify({'id': user.id_user, 'username': user.username})
+    try:
+        datos = request.get_json()
+        createdUser = create_user({
+            'username':datos['username'],
+            'password':datos['password'],
+            'user_role':datos['user_role']
+        },user_role_str=None)
+        user = get_user_by_id(createdUser.id_user)
+        return jsonify({'id': user.id_user, 'username': user.username})
+    except Exception as e:
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para usuarios)

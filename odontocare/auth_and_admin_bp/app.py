@@ -43,7 +43,6 @@ def create_app():
         "poolclass": StaticPool
     }
     db.init_app(app)
-    config = app.config
 
     with app.app_context():
         db.create_all()

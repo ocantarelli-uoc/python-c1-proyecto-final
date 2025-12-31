@@ -13,7 +13,10 @@ centers_bp = Blueprint('centers_bp', __name__)
 @needs_auth
 @require_role(required_roles=["admin"])
 def add_center(*args, **kwargs):
-    created_center = create_center()
-    return jsonify({'id': created_center.id_medical_center, 'name': created_center.name})
+    try:
+        created_center = create_center()
+        return jsonify({'id': created_center.id_medical_center, 'name': created_center.name})
+    except Exception as e:
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para centros)

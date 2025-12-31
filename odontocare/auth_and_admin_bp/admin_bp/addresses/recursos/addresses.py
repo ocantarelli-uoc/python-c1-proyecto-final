@@ -9,8 +9,11 @@ address_bp = Blueprint('address_bp', __name__)
 # Definimos las rutas usando el Blueprint
 @address_bp.route('/admin/adreces', methods=['POST'])
 def add_address():
-    created_address = create_address()
-    return jsonify({'id': created_address.id_address, 'street': created_address.street, 
-                    'city':created_address.city})
+    try:
+        created_address = create_address()
+        return jsonify({'id': created_address.id_address, 'street': created_address.street, 
+                        'city':created_address.city})
+    except Exception as e:
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para direcciones)

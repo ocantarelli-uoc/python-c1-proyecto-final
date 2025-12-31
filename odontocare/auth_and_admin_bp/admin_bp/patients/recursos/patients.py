@@ -14,12 +14,15 @@ patients_bp = Blueprint('patients_bp', __name__)
 @needs_auth
 @require_role(required_roles=["admin"])
 def add_patient(*args, **kwargs):
-    datos = request.get_json()
-    created_user = create_user({
-        'username':datos['username'],
-        'password':datos['password']
-    },user_role_str="patient")
-    created_patient = create_patient(created_user)
-    return jsonify({'id': created_patient.id_patient, 'name': created_patient.name})
+    try:
+        datos = request.get_json()
+        created_user = create_user({
+            'username':datos['username'],
+            'password':datos['password']
+        },user_role_str="patient")
+        created_patient = create_patient(created_user)
+        return jsonify({'id': created_patient.id_patient, 'name': created_patient.name})
+    except Exception as e:
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para pacientes)
