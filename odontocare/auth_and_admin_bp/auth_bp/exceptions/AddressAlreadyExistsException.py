@@ -1,0 +1,2 @@
+class AddressAlreadyExistsException(Exception):
+    pass
