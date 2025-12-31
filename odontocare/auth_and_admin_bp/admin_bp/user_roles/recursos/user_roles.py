@@ -12,7 +12,7 @@ users_roles_bp = Blueprint('users_roles_bp', __name__)
 @users_roles_bp.route('/admin/rols_usuaris', methods=['POST'])
 @needs_auth
 @require_role(required_roles=["admin"])
-def add_user():
+def add_user_role(*args, **kwargs):
     datos = request.get_json()
     user_role_dict = {
         'role_name':datos['role_name']

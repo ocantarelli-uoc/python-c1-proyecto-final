@@ -12,7 +12,7 @@ medical_specialities_bp = Blueprint('medical_specialities_bp', __name__)
 @medical_specialities_bp.route('/admin/especialitats_mediques', methods=['POST'])
 @needs_auth
 @require_role(required_roles=["admin"])
-def add_user():
+def add_medical_speciality(*args, **kwargs):
     created_medical_speciality = create_medical_speciality()
     medical_speciality = get_medical_speciality_by_id(created_medical_speciality.id_medical_speciality)
     return jsonify({'id': medical_speciality.id_medical_speciality, 'name': created_medical_speciality.name})

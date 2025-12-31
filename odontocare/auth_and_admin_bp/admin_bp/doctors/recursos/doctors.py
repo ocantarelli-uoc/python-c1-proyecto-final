@@ -13,7 +13,7 @@ doctors_bp = Blueprint('doctors_bp', __name__)
 @doctors_bp.route('/admin/doctors', methods=['POST'])
 @needs_auth
 @require_role(required_roles=["admin"])
-def add_doctor():
+def add_doctor(*args, **kwargs):
     datos = request.get_json()
     created_user = create_user({
         'username':datos['username'],

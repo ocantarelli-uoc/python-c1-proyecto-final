@@ -1,4 +1,5 @@
 import jwt
+import sys
 from functools import wraps
 from flask import Flask, jsonify, request
 from decorators.needs_authorization import needs_auth
@@ -11,14 +12,17 @@ def require_role(required_roles:list[str]):
         def wrapper(*args, **kwargs):
             # 1. Validación del token
             try:
+                #print(*args, file=sys.stderr, **kwargs)
                 # 2. Verificación del permiso
                 authorized_user : User = kwargs.get('authorized_user')
                 if authorized_user != None:
-                    user_role : UserRole = authorized_user.role
+                    user_role : UserRole = authorized_user.user_role
                     if user_role == None or user_role.name not in required_roles:
                         return jsonify({'mensaje': 'Permiso denegado'}), 403
 
-            except (Exception):
+            except Exception as e:
+                print(e.__str__(),file=sys.stderr)
+                print(e.__repr__(),file=sys.stderr)
                 return jsonify({'mensaje': 'Ha ocurrido algún error al verificar rol.'}), 500
 
             return f(*args, **kwargs)

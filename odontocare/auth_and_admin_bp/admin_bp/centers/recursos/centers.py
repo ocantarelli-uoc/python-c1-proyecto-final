@@ -12,7 +12,7 @@ centers_bp = Blueprint('centers_bp', __name__)
 @centers_bp.route('/admin/centres', methods=['POST'])
 @needs_auth
 @require_role(required_roles=["admin"])
-def add_center():
+def add_center(*args, **kwargs):
     created_center = create_center()
     return jsonify({'id': created_center.id_medical_center, 'name': created_center.name})
 

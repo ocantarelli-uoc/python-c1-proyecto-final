@@ -13,7 +13,7 @@ users_bp = Blueprint('users_bp', __name__)
 @users_bp.route('/admin/usuaris', methods=['POST'])
 @needs_auth
 @require_role(required_roles=["admin"])
-def add_user():
+def add_user(*args, **kwargs):
     datos = request.get_json()
     createdUser = create_user({
         'username':datos['username'],
