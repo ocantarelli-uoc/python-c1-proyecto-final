@@ -4,6 +4,9 @@ from admin_bp.users.services.get_user_by_id import get_user_by_id
 from admin_bp.users.services.create_user import create_user
 from decorators.needs_authorization import needs_auth
 from decorators.require_role import require_role
+from admin_bp.exceptions.already_exists.UserAlreadyExistsException import UserAlreadyExistsException
+from admin_bp.users.services.get_user_by_username import get_user_by_username
+from models import User
 
 # Creamos una instancia de Blueprint
 # 'users_bp' es el nombre del Blueprint
@@ -15,8 +18,11 @@ users_bp = Blueprint('users_bp', __name__)
 @needs_auth
 @require_role(required_roles=["admin"])
 def add_user(*args, **kwargs):
+    datos = request.get_json()
     try:
-        datos = request.get_json()
+        existing_user:User = get_user_by_username(datos['username'])
+        if existing_user != None:
+            raise UserAlreadyExistsException()
         createdUser = create_user({
             'username':datos['username'],
             'password':datos['password'],
@@ -24,7 +30,11 @@ def add_user(*args, **kwargs):
         },user_role_str=None)
         user = get_user_by_id(createdUser.id_user)
         return jsonify({'id': user.id_user, 'username': user.username})
-    except Exception as e:
+    except UserAlreadyExistsException as e_user_already_exists:
+        print(e_user_already_exists.__str__(),file=sys.stderr)
+        print(e_user_already_exists.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Usuario '+datos['username']+' ya existe.'}),409
+    except (TypeError, ValueError) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500
