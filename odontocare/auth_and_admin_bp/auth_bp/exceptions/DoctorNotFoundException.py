@@ -1,0 +1,2 @@
+class DoctorNotFoundException(Exception):
+    pass

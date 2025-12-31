@@ -1,0 +1,2 @@
+class UserRoleNotFoundException(Exception):
+    pass

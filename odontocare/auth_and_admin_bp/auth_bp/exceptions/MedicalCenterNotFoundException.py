@@ -1,0 +1,2 @@
+class MedicalCenterNotFoundException(Exception):
+    pass
