@@ -1,0 +1,2 @@
+class PatientAlreadyExistsException(Exception):
+    pass

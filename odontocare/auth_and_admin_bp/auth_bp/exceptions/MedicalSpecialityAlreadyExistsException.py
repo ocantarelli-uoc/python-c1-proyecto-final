@@ -1,0 +1,2 @@
+class MedicalSpecialityAlreadyExistsException(Exception):
+    pass

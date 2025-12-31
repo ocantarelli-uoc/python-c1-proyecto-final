@@ -1,0 +1,2 @@
+class MedicalCenterAlreadyExistsException(Exception):
+    pass
