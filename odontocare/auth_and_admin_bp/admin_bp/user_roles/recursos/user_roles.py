@@ -28,8 +28,8 @@ def add_user_role(*args, **kwargs):
         user_role_dict = {
             'role_name':datos['role_name']
         }
-        created_user_role = create_user_role(user_role_dict)
-        user_role = get_user_role_by_id(created_user_role.id_user_role)
+        created_user_role : UserRole = create_user_role(user_role_dict)
+        user_role : UserRole = get_user_role_by_id(created_user_role.id_user_role)
         if user_role == None:
             raise UserRoleNotFoundException()
         return jsonify({'id': user_role.id_user_role, 'name': user_role.name})
