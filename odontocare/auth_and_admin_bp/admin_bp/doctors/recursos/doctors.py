@@ -8,7 +8,7 @@ from admin_bp.exceptions.already_exists.DoctorAlreadyExistsException import Doct
 from admin_bp.exceptions.not_found.DoctorNotFoundException import DoctorNotFoundException
 from models.Doctor import Doctor
 from admin_bp.doctors.services.get_doctor_by_name import get_doctor_by_name
-
+from admin_bp.doctors.services.list_doctors import list_doctors as orm_list_doctors
 # Creamos una instancia de Blueprint
 # 'doctors_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -41,6 +41,19 @@ def add_doctor(*args, **kwargs):
         print(e_doctor_not_found.__repr__(),file=sys.stderr)
         return jsonify({'message':'Paciente '+datos['name']+' no se encuentra recién creado.'}),404
     except (TypeError, ValueError,Exception) as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
+
+@doctors_bp.route('/admin/doctors', methods=['GET'])
+@needs_auth
+@require_role(required_roles=["admin"])
+def list_doctors(*args, **kwargs):
+    try:
+        doctors:list[Doctor] = orm_list_doctors()
+        doctors_list = [{'id': d.id_doctor, 'name': d.name} for d in doctors]
+        return jsonify(doctors_list)
+    except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500

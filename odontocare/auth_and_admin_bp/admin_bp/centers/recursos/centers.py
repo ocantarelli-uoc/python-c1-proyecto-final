@@ -7,7 +7,7 @@ from admin_bp.exceptions.already_exists.MedicalCenterAlreadyExistsException impo
 from admin_bp.exceptions.not_found.MedicalCenterNotFoundException import MedicalCenterNotFoundException
 from models.MedicalCenter import MedicalCenter
 from admin_bp.centers.services.get_center_by_name import get_center_by_name
-
+from admin_bp.centers.services.list_centers import list_centers as orm_list_centers
 # Creamos una instancia de Blueprint
 # 'centers_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -35,6 +35,23 @@ def add_center(*args, **kwargs):
         print(e_center_not_exists_exists.__str__(),file=sys.stderr)
         print(e_center_not_exists_exists.__repr__(),file=sys.stderr)
         return jsonify({'message':'Centro '+datos['name']+' no se puede recuperar el centro recién creado.'}),404
+    except (TypeError, ValueError, Exception) as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
+
+@centers_bp.route('/admin/centres', methods=['GET'])
+@needs_auth
+@require_role(required_roles=["admin"])
+def list_medical_centers(*args, **kwargs):
+    try:
+        medical_centers:list[MedicalCenter] = orm_list_centers()
+        medical_centers_list = [{'id': m_c.id_medical_center, 'name': m_c.name,'address':{
+            'id_address':m_c.address.id_address,
+            'street':m_c.address.street,
+            'city':m_c.address.city
+        }} for m_c in medical_centers]
+        return jsonify(medical_centers_list)
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)

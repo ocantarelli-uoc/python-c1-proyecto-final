@@ -1,11 +1,13 @@
 from models.Address import Address
 from flask import Blueprint, jsonify, request
 import sys
+from decorators.needs_authorization import needs_auth
+from decorators.require_role import require_role
 from admin_bp.addresses.services.create_address import create_address
 from admin_bp.exceptions.already_exists.AddressAlreadyExistsException import AddressAlreadyExistsException
 from admin_bp.exceptions.not_found.AddressNotFoundException import AddressNotFoundException
 from admin_bp.addresses.services.get_address_by_filter import get_address_by_filter
-
+from admin_bp.addresses.services.list_addresses import list_addresses as orm_list_address
 # Creamos una instancia de Blueprint
 # 'address_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -13,6 +15,8 @@ address_bp = Blueprint('address_bp', __name__)
 
 # Definimos las rutas usando el Blueprint
 @address_bp.route('/admin/adreces', methods=['POST'])
+@needs_auth
+@require_role(required_roles=["admin"])
 def add_address():
     datos = request.get_json()
     try:
@@ -32,6 +36,21 @@ def add_address():
         print(e_address_not_found.__str__(),file=sys.stderr)
         print(e_address_not_found.__repr__(),file=sys.stderr)
         return jsonify({'message':'Dirección calle:'+datos['street']+',city:'+datos['city']+' ha habido algún problema al crearse, y no se encuentra objeto creado.'}),404
+    except (TypeError, ValueError, Exception) as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
+    
+@address_bp.route('/admin/adreces', methods=['GET'])
+@needs_auth
+@require_role(required_roles=["admin"])
+def list_addresses(*args, **kwargs):
+    try:
+        addresses:list[Address] = orm_list_address()
+        addresses_list = [{'id_address':a.id_address,
+            'street':a.street,
+            'city':a.city} for a in addresses]
+        return jsonify(addresses_list)
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)

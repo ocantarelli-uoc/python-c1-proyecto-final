@@ -6,7 +6,7 @@ from decorators.needs_authorization import needs_auth
 from decorators.require_role import require_role
 from admin_bp.exceptions.already_exists.UserAlreadyExistsException import UserAlreadyExistsException
 from admin_bp.users.services.get_user_by_username import get_user_by_username
-from admin_bp.users.services.list_users import list_users as dao_list_users
+from admin_bp.users.services.list_users import list_users as orm_list_users
 from models import User
 from admin_bp.exceptions.not_found.UserNotFoundException import UserNotFoundException
 
@@ -53,7 +53,7 @@ def add_user(*args, **kwargs):
 @require_role(required_roles=["admin"])
 def list_users(*args, **kwargs):
     try:
-        users = dao_list_users()
+        users = orm_list_users()
         user_list = [{'id': u.id_user, 'name': u.username, 'role': u.user_role.name} for u in users]
         return jsonify(user_list)
     except (TypeError, ValueError, Exception) as e:
