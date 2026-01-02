@@ -18,7 +18,7 @@ address_bp = Blueprint('address_bp', __name__)
 @address_bp.route('/admin/adreces', methods=['POST'])
 @needs_auth
 @require_role(required_roles=["admin"])
-def add_address():
+def add_address(*args, **kwargs):
     datos = request.get_json()
     try:
         existing_address:Address = get_address_by_filter(datos['street'],datos['city'])
