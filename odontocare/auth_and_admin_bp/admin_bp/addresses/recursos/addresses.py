@@ -8,6 +8,7 @@ from admin_bp.exceptions.already_exists.AddressAlreadyExistsException import Add
 from admin_bp.exceptions.not_found.AddressNotFoundException import AddressNotFoundException
 from admin_bp.addresses.services.get_address_by_filter import get_address_by_filter
 from admin_bp.addresses.services.list_addresses import list_addresses as orm_list_address
+from admin_bp.addresses.services.get_address_by_id import get_address_by_id as orm_get_address_by_id
 # Creamos una instancia de Blueprint
 # 'address_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -51,6 +52,27 @@ def list_addresses(*args, **kwargs):
             'street':a.street,
             'city':a.city} for a in addresses]
         return jsonify(addresses_list)
+    except (TypeError, ValueError, Exception) as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
+
+@address_bp.route('/admin/adreces/<int:id>', methods=['GET'])
+@needs_auth
+@require_role(required_roles=["admin"])
+def get_address_by_id(id,*args, **kwargs):
+    try:
+        address : Address = orm_get_address_by_id(id)
+        if address == None:
+            raise AddressNotFoundException()
+        user_role_dict = [{'id_address':address.id_address,
+                'street':address.street,
+                'city':address.city}]
+        return jsonify(user_role_dict)
+    except (AddressNotFoundException) as e_address_not_found:
+        print(e_address_not_found.__str__(),file=sys.stderr)
+        print(e_address_not_found.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Dirección no encontrada!'}),404
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)

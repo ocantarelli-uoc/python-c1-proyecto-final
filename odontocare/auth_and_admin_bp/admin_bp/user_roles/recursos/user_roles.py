@@ -7,6 +7,7 @@ from decorators.require_role import require_role
 from admin_bp.exceptions.already_exists.UserRoleAlreadyExistsException import UserRoleAlreadyExistsException
 from models.UserRole import UserRole
 from admin_bp.user_roles.services.get_user_role_by_name import get_user_role_by_name
+from admin_bp.user_roles.services.get_user_role_by_id import get_user_role_by_id as orm_get_user_role_by_id
 from admin_bp.user_roles.services.list_user_roles import list_user_roles as orm_list_user_roles
 from admin_bp.exceptions.not_found.UserRoleNotFoundException import UserRoleNotFoundException
 # Creamos una instancia de Blueprint
@@ -53,6 +54,25 @@ def list_user_roles(*args, **kwargs):
         user_roles = orm_list_user_roles()
         user_roles_list = [{'id': u_r.id_user_role, 'name': u_r.name} for u_r in user_roles]
         return jsonify(user_roles_list)
+    except (TypeError, ValueError, Exception) as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
+
+@users_roles_bp.route('/admin/rols_usuaris/<int:id>', methods=['GET'])
+@needs_auth
+@require_role(required_roles=["admin"])
+def get_user_role_by_id(id,*args, **kwargs):
+    try:
+        user_role : UserRole = orm_get_user_role_by_id(id)
+        if user_role == None:
+            raise UserRoleNotFoundException()
+        user_role_dict = [{'id': user_role.id_user_role, 'name': user_role.name}]
+        return jsonify(user_role_dict)
+    except (UserRoleNotFoundException) as e_user_not_found:
+        print(e_user_not_found.__str__(),file=sys.stderr)
+        print(e_user_not_found.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Rol de Usuario no encontrado!'}),404
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)

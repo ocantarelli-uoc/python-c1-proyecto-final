@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 import sys
-from admin_bp.users.services.get_user_by_id import get_user_by_id
+from admin_bp.users.services.get_user_by_id import get_user_by_id as orm_get_user_by_id
 from admin_bp.users.services.create_user import create_user
 from decorators.needs_authorization import needs_auth
 from decorators.require_role import require_role
@@ -30,7 +30,7 @@ def add_user(*args, **kwargs):
             'password':datos['password'],
             'user_role':datos['user_role']
         },user_role_str=None)
-        user = get_user_by_id(createdUser.id_user)
+        user = orm_get_user_by_id(createdUser.id_user)
         if user == None:
             raise UserNotFoundException()
         return jsonify({'id': user.id_user, 'username': user.username})
@@ -56,6 +56,25 @@ def list_users(*args, **kwargs):
         users = orm_list_users()
         user_list = [{'id': u.id_user, 'name': u.username, 'role': u.user_role.name} for u in users]
         return jsonify(user_list)
+    except (TypeError, ValueError, Exception) as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
+
+@users_bp.route('/admin/usuaris/<int:id>', methods=['GET'])
+@needs_auth
+@require_role(required_roles=["admin"])
+def get_user_by_id(id,*args, **kwargs):
+    try:
+        user = orm_get_user_by_id(id)
+        if user == None:
+            raise UserNotFoundException()
+        user_dict = [{'id': user.id_user, 'username': user.username, 'role': user.user_role.name}]
+        return jsonify(user_dict)
+    except (UserNotFoundException) as e_user_not_found:
+        print(e_user_not_found.__str__(),file=sys.stderr)
+        print(e_user_not_found.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Usuario no encontrado!'}),404
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)

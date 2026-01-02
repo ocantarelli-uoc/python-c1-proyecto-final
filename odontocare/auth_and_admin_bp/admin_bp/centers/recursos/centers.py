@@ -8,6 +8,7 @@ from admin_bp.exceptions.not_found.MedicalCenterNotFoundException import Medical
 from models.MedicalCenter import MedicalCenter
 from admin_bp.centers.services.get_center_by_name import get_center_by_name
 from admin_bp.centers.services.list_centers import list_centers as orm_list_centers
+from admin_bp.centers.services.get_center_by_id import get_medical_center_by_id as orm_get_medical_center_by_id
 # Creamos una instancia de Blueprint
 # 'centers_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -52,6 +53,30 @@ def list_medical_centers(*args, **kwargs):
             'city':m_c.address.city
         }} for m_c in medical_centers]
         return jsonify(medical_centers_list)
+    except (TypeError, ValueError, Exception) as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
+
+@centers_bp.route('/admin/centres/<int:id>', methods=['GET'])
+@needs_auth
+@require_role(required_roles=["admin"])
+def get_medical_centers_by_id(id,*args, **kwargs):
+    try:
+        medical_center : MedicalCenter = orm_get_medical_center_by_id(id)
+        if medical_center == None:
+            raise MedicalCenterNotFoundException()
+        user_role_dict = [{'id': medical_center.id_medical_center, 'name': medical_center.name,
+            'address':{
+                'id_address':medical_center.address.id_address,
+                'street':medical_center.address.street,
+                'city':medical_center.address.city
+             }}]
+        return jsonify(user_role_dict)
+    except (MedicalCenterNotFoundException) as e_doctor_not_found:
+        print(e_doctor_not_found.__str__(),file=sys.stderr)
+        print(e_doctor_not_found.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Centro Médico no encontrado!'}),404
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)

@@ -8,6 +8,7 @@ from admin_bp.exceptions.already_exists.MedicalSpecialityAlreadyExistsException 
 from models.MedicalSpeciality import MedicalSpeciality
 from admin_bp.medical_specialities.services.get_medical_speciality_by_name import get_medical_speciality_by_name
 from admin_bp.medical_specialities.services.list_medical_specialities import list_medical_specialities as orm_list_medical_specialities
+from admin_bp.medical_specialities.services.get_medical_speciality_by_id import get_medical_speciality_by_id as orm_get_medical_speciality_by_id
 from admin_bp.exceptions.not_found.MedicalSpecialityNotFoundException import MedicalSpecialityNotFoundException
 # Creamos una instancia de Blueprint
 # 'medical_specialities_bp' es el nombre del Blueprint
@@ -50,6 +51,25 @@ def list_medical_specialities(*args, **kwargs):
         medical_specialities:list[MedicalSpeciality] = orm_list_medical_specialities()
         medical_specialities_list = [{'id': m_s.id_medical_speciality, 'name': m_s.name} for m_s in medical_specialities]
         return jsonify(medical_specialities_list)
+    except (TypeError, ValueError, Exception) as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
+
+@medical_specialities_bp.route('/admin/especialitats_mediques/<int:id>', methods=['GET'])
+@needs_auth
+@require_role(required_roles=["admin"])
+def get_user_role_by_id(id,*args, **kwargs):
+    try:
+        medical_speciality : MedicalSpeciality = orm_get_medical_speciality_by_id(id)
+        if medical_speciality == None:
+            raise MedicalSpecialityNotFoundException()
+        user_role_dict = [{'id': medical_speciality.id_medical_speciality, 'name': medical_speciality.name}]
+        return jsonify(user_role_dict)
+    except (MedicalSpecialityNotFoundException) as e_medical_speciality_not_found:
+        print(e_medical_speciality_not_found.__str__(),file=sys.stderr)
+        print(e_medical_speciality_not_found.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Especialidad Médica no encontrada!'}),404
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)

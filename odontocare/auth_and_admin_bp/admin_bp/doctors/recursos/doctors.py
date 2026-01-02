@@ -9,6 +9,7 @@ from admin_bp.exceptions.not_found.DoctorNotFoundException import DoctorNotFound
 from models.Doctor import Doctor
 from admin_bp.doctors.services.get_doctor_by_name import get_doctor_by_name
 from admin_bp.doctors.services.list_doctors import list_doctors as orm_list_doctors
+from admin_bp.doctors.services.get_doctor_by_id import get_doctor_by_id as orm_get_doctor_by_id
 # Creamos una instancia de Blueprint
 # 'doctors_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -53,6 +54,25 @@ def list_doctors(*args, **kwargs):
         doctors:list[Doctor] = orm_list_doctors()
         doctors_list = [{'id': d.id_doctor, 'name': d.name} for d in doctors]
         return jsonify(doctors_list)
+    except (TypeError, ValueError, Exception) as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
+
+@doctors_bp.route('/admin/doctors/<int:id>', methods=['GET'])
+@needs_auth
+@require_role(required_roles=["admin"])
+def get_user_role_by_id(id,*args, **kwargs):
+    try:
+        doctor : Doctor = orm_get_doctor_by_id(id)
+        if doctor == None:
+            raise DoctorNotFoundException()
+        user_role_dict = [{'id': doctor.id_doctor, 'name': doctor.name}]
+        return jsonify(user_role_dict)
+    except (DoctorNotFoundException) as e_doctor_not_found:
+        print(e_doctor_not_found.__str__(),file=sys.stderr)
+        print(e_doctor_not_found.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Doctor no encontrado!'}),404
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
