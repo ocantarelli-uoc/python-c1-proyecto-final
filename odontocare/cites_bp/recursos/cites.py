@@ -7,15 +7,15 @@ cites_bp = Blueprint('cites_bp', __name__)
 
 # Definimos las rutas usando el Blueprint
 @cites_bp.route('/cites', methods=['POST'])
-def add_appointment():
+def add_appointment(*args, **kwargs):
     pass
 
 @cites_bp.route('/cites', methods=['GET'])
-def get_appointment():
+def get_appointment(*args, **kwargs):
     pass
 
 @cites_bp.route('/cites/<int:id>', methods=['PUT'])
-def cancel_appointment(id):
+def cancel_appointment(id,*args, **kwargs):
     pass
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para citas)
