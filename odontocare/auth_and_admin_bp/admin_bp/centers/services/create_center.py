@@ -6,7 +6,7 @@ from extensions import db
 def create_center():
     try:
         datos = request.get_json()
-        address:Address = Address.query.filter_by(name=datos["address_name"]).first()
+        address:Address = Address.query.filter_by(id_address=datos["id_address"]).first()
         medical_center = MedicalCenter(name=datos["name"],
                                     address=address)
         db.session.add(medical_center)
