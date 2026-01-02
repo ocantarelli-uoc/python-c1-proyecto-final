@@ -39,7 +39,7 @@ def add_user_role(*args, **kwargs):
         print(e_user_role_not_found.__str__(),file=sys.stderr)
         print(e_user_role_not_found.__repr__(),file=sys.stderr)
         return jsonify({'message':'Rol de Usuario '+datos['role_name']+' creado no encontrado.'}),404
-    except (TypeError, ValueError) as e:
+    except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500

@@ -32,7 +32,7 @@ def add_address():
         print(e_address_not_found.__str__(),file=sys.stderr)
         print(e_address_not_found.__repr__(),file=sys.stderr)
         return jsonify({'message':'Dirección calle:'+datos['street']+',city:'+datos['city']+' ha habido algún problema al crearse, y no se encuentra objeto creado.'}),404
-    except (TypeError, ValueError) as e:
+    except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500

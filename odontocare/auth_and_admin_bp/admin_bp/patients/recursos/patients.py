@@ -20,7 +20,7 @@ patients_bp = Blueprint('patients_bp', __name__)
 def add_patient(*args, **kwargs):
     datos = request.get_json()
     try:
-        existing_patient:Patient = get_patient_by_name(datos['role_name'])
+        existing_patient:Patient = get_patient_by_name(datos['name'])
         if existing_patient != None:
             raise PatientAlreadyExistsException()
         created_user = create_user({
@@ -39,7 +39,7 @@ def add_patient(*args, **kwargs):
         print(e_patient_not_found.__str__(),file=sys.stderr)
         print(e_patient_not_found.__repr__(),file=sys.stderr)
         return jsonify({'message':'Paciente '+datos['name']+' no se encuentra.'}),404
-    except (TypeError, ValueError) as e:
+    except (TypeError, ValueError,Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500

@@ -7,7 +7,7 @@ from decorators.require_role import require_role
 from admin_bp.exceptions.already_exists.DoctorAlreadyExistsException import DoctorAlreadyExistsException
 from admin_bp.exceptions.not_found.DoctorNotFoundException import DoctorNotFoundException
 from models.Doctor import Doctor
-from admin_bp.patients.services import get_patient_by_name
+from admin_bp.doctors.services.get_doctor_by_name import get_doctor_by_name
 
 # Creamos una instancia de Blueprint
 # 'doctors_bp' es el nombre del Blueprint
@@ -21,7 +21,7 @@ doctors_bp = Blueprint('doctors_bp', __name__)
 def add_doctor(*args, **kwargs):
     datos = request.get_json()
     try:
-        existing_doctor:Doctor = get_patient_by_name(datos['name'])
+        existing_doctor:Doctor = get_doctor_by_name(datos['name'])
         if existing_doctor != None:
             raise DoctorAlreadyExistsException()
         created_user = create_user({
@@ -40,7 +40,7 @@ def add_doctor(*args, **kwargs):
         print(e_doctor_not_found.__str__(),file=sys.stderr)
         print(e_doctor_not_found.__repr__(),file=sys.stderr)
         return jsonify({'message':'Paciente '+datos['name']+' no se encuentra recién creado.'}),404
-    except (TypeError, ValueError) as e:
+    except (TypeError, ValueError,Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500

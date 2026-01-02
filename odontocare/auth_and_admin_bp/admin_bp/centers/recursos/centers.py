@@ -35,7 +35,7 @@ def add_center(*args, **kwargs):
         print(e_center_not_exists_exists.__str__(),file=sys.stderr)
         print(e_center_not_exists_exists.__repr__(),file=sys.stderr)
         return jsonify({'message':'Centro '+datos['name']+' no se puede recuperar el centro recién creado.'}),404
-    except (TypeError, ValueError) as e:
+    except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500

@@ -6,6 +6,7 @@ from decorators.needs_authorization import needs_auth
 from decorators.require_role import require_role
 from admin_bp.exceptions.already_exists.UserAlreadyExistsException import UserAlreadyExistsException
 from admin_bp.users.services.get_user_by_username import get_user_by_username
+from admin_bp.users.services.list_users import list_users as dao_list_users
 from models import User
 from admin_bp.exceptions.not_found.UserNotFoundException import UserNotFoundException
 
@@ -41,7 +42,21 @@ def add_user(*args, **kwargs):
         print(e_user_not_found.__str__(),file=sys.stderr)
         print(e_user_not_found.__repr__(),file=sys.stderr)
         return jsonify({'message':'Usuario '+datos['username']+' creado no se ha encontrado.'}),404
-    except (TypeError, ValueError) as e:
+    except (TypeError, ValueError, Exception) as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
+    
+# Definimos las rutas usando el Blueprint
+@users_bp.route('/admin/usuaris', methods=['GET'])
+@needs_auth
+@require_role(required_roles=["admin"])
+def list_users(*args, **kwargs):
+    try:
+        users = dao_list_users()
+        user_list = [{'id': u.id_user, 'name': u.username, 'role': u.user_role.name} for u in users]
+        return jsonify(user_list)
+    except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
         return jsonify({'message':'Ha ocurrido algún error!'}),500
