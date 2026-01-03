@@ -1,0 +1,26 @@
+services:
+  auth_and_admin_bp:
+    #image: odontocare/auth_and_admin_bp
+    container_name: auth_and_admin_bp
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    networks:
+      - back-tier
+
+  cites_bp:
+    #image: odontocare/cites_bp
+    container_name: cites_bp
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5002:5002"
+    networks:
+      - back-tier
+
+networks:
+  back-tier: 
+    driver: bridge
