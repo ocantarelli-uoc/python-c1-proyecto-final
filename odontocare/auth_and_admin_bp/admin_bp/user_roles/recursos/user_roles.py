@@ -28,11 +28,14 @@ def add_user_role(*args, **kwargs):
         user_role_dict = {
             'role_name':datos['role_name']
         }
-        created_user_role : UserRole = create_user_role(user_role_dict)
-        user_role : UserRole = get_user_role_by_id(created_user_role.id_user_role)
+        created_user_role = create_user_role(user_role_dict)
+        """user_role = get_user_role_by_id(created_user_role.id_user_role)
         if user_role == None:
-            raise UserRoleNotFoundException()
-        return jsonify({'id': user_role.id_user_role, 'name': user_role.name})
+            raise UserRoleNotFoundException()"""
+        print("abans retornar rol creat",file=sys.stderr)
+        print(created_user_role.__str__(),file=sys.stderr)
+        print(created_user_role.__repr__(),file=sys.stderr)
+        return jsonify({'id': created_user_role.id_user_role, 'name': created_user_role.name})
     except UserRoleAlreadyExistsException as e_user_role_already_exists:
         print(e_user_role_already_exists.__str__(),file=sys.stderr)
         print(e_user_role_already_exists.__repr__(),file=sys.stderr)
