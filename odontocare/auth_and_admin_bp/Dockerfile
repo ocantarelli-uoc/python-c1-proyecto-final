@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.9-alpine
 # Directorio de trabajo
 WORKDIR /app
 # Instala dependencias
