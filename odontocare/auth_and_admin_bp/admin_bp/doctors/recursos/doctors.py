@@ -67,7 +67,19 @@ def get_doctor_by_id(id,*args, **kwargs):
         doctor : Doctor = orm_get_doctor_by_id(id)
         if doctor == None:
             raise DoctorNotFoundException()
-        doctor_dict = [{'id': doctor.id_doctor, 'name': doctor.name}]
+        doctor_dict = [{'id_doctor': doctor.id_doctor, 'name': doctor.name
+                        ,'medical_speciality':{
+                            'id_medical_speciality':doctor.medical_speciality.id_medical_speciality,
+                            'name':doctor.medical_speciality.name,
+                        },
+                        'user':{
+                            'id_user':doctor.user.id_user,
+                            'username':doctor.user.username,
+                            'role':{
+                                'id_user_role':doctor.user.user_role.id_user_role,
+                                'name':doctor.user.user_role.name,
+                            }
+                        }}]
         return jsonify(doctor_dict)
     except (DoctorNotFoundException) as e_doctor_not_found:
         print(e_doctor_not_found.__str__(),file=sys.stderr)

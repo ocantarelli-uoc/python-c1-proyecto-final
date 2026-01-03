@@ -32,9 +32,9 @@ def add_center(*args, **kwargs):
         print(e_center_already_exists.__str__(),file=sys.stderr)
         print(e_center_already_exists.__repr__(),file=sys.stderr)
         return jsonify({'message':'Centro '+datos['name']+' ya existe.'}),409
-    except MedicalCenterNotFoundException as e_center_not_exists_exists:
-        print(e_center_not_exists_exists.__str__(),file=sys.stderr)
-        print(e_center_not_exists_exists.__repr__(),file=sys.stderr)
+    except MedicalCenterNotFoundException as e_center_not_exists:
+        print(e_center_not_exists.__str__(),file=sys.stderr)
+        print(e_center_not_exists.__repr__(),file=sys.stderr)
         return jsonify({'message':'Centro '+datos['name']+' no se puede recuperar el centro recién creado.'}),404
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
@@ -73,9 +73,9 @@ def get_medical_centers_by_id(id,*args, **kwargs):
                 'city':medical_center.address.city
              }}]
         return jsonify(user_role_dict)
-    except (MedicalCenterNotFoundException) as e_doctor_not_found:
-        print(e_doctor_not_found.__str__(),file=sys.stderr)
-        print(e_doctor_not_found.__repr__(),file=sys.stderr)
+    except (MedicalCenterNotFoundException) as e_medical_center_not_found:
+        print(e_medical_center_not_found.__str__(),file=sys.stderr)
+        print(e_medical_center_not_found.__repr__(),file=sys.stderr)
         return jsonify({'message':'Centro Médico no encontrado!'}),404
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)

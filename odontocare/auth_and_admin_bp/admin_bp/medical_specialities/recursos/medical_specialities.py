@@ -59,13 +59,13 @@ def list_medical_specialities(*args, **kwargs):
 @medical_specialities_bp.route('/admin/especialitats_mediques/<int:id>', methods=['GET'])
 @needs_auth
 @require_role(required_roles=["admin"])
-def get_user_role_by_id(id,*args, **kwargs):
+def get_medical_speciality_by_id(id,*args, **kwargs):
     try:
         medical_speciality : MedicalSpeciality = orm_get_medical_speciality_by_id(id)
         if medical_speciality == None:
             raise MedicalSpecialityNotFoundException()
-        user_role_dict = [{'id': medical_speciality.id_medical_speciality, 'name': medical_speciality.name}]
-        return jsonify(user_role_dict)
+        medical_speciality_dict = [{'id_medical_speciality': medical_speciality.id_medical_speciality, 'name': medical_speciality.name}]
+        return jsonify(medical_speciality_dict)
     except (MedicalSpecialityNotFoundException) as e_medical_speciality_not_found:
         print(e_medical_speciality_not_found.__str__(),file=sys.stderr)
         print(e_medical_speciality_not_found.__repr__(),file=sys.stderr)

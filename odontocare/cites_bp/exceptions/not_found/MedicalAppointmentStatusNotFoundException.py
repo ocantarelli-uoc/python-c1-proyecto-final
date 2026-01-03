@@ -1,0 +1,2 @@
+class MedicalAppointmentStatusNotFoundException(Exception):
+    pass

@@ -62,13 +62,22 @@ def list_patients(*args, **kwargs):
 @patients_bp.route('/admin/pacients/<int:id>', methods=['GET'])
 @needs_auth
 @require_role(required_roles=["admin"])
-def get_user_role_by_id(id,*args, **kwargs):
+def get_patient_by_id(id,*args, **kwargs):
     try:
         patient : Patient = orm_get_patient_by_id(id)
         if patient == None:
             raise PatientNotFoundException()
-        user_role_dict = [{'id': patient.id_patient, 'name': patient.name}]
-        return jsonify(user_role_dict)
+        patient_dict = [{'id_patient': patient.id_patient, 'name': patient.name
+                        ,
+                        'user':{
+                            'id_user':patient.user.id_user,
+                            'username':patient.user.username,
+                            'role':{
+                                'id_user_role':patient.user.user_role.id_user_role,
+                                'name':patient.user.user_role.name,
+                            }
+                        }}]
+        return jsonify(patient_dict)
     except (PatientNotFoundException) as e_user_not_found:
         print(e_user_not_found.__str__(),file=sys.stderr)
         print(e_user_not_found.__repr__(),file=sys.stderr)
