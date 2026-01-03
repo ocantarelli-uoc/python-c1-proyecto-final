@@ -9,6 +9,8 @@ cites_bp = Blueprint('cites_bp', __name__)
 
 # Definimos las rutas usando el Blueprint
 @cites_bp.route('/cites', methods=['POST'])
+@needs_auth
+@require_role(required_roles=["admin","pacient"])
 def add_appointment(*args, **kwargs):
     pass
 

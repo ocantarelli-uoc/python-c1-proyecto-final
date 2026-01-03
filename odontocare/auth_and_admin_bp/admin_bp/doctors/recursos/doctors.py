@@ -36,11 +36,11 @@ def add_doctor(*args, **kwargs):
     except DoctorAlreadyExistsException as e_doctor_already_exists:
         print(e_doctor_already_exists.__str__(),file=sys.stderr)
         print(e_doctor_already_exists.__repr__(),file=sys.stderr)
-        return jsonify({'message':'Paciente '+datos['name']+' ya existe.'}),409
+        return jsonify({'message':'Doctor '+datos['name']+' ya existe.'}),409
     except DoctorNotFoundException as e_doctor_not_found:
         print(e_doctor_not_found.__str__(),file=sys.stderr)
         print(e_doctor_not_found.__repr__(),file=sys.stderr)
-        return jsonify({'message':'Paciente '+datos['name']+' no se encuentra recién creado.'}),404
+        return jsonify({'message':'Doctor '+datos['name']+' no se encuentra recién creado.'}),404
     except (TypeError, ValueError,Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
@@ -62,13 +62,13 @@ def list_doctors(*args, **kwargs):
 @doctors_bp.route('/admin/doctors/<int:id>', methods=['GET'])
 @needs_auth
 @require_role(required_roles=["admin"])
-def get_user_role_by_id(id,*args, **kwargs):
+def get_doctor_by_id(id,*args, **kwargs):
     try:
         doctor : Doctor = orm_get_doctor_by_id(id)
         if doctor == None:
             raise DoctorNotFoundException()
-        user_role_dict = [{'id': doctor.id_doctor, 'name': doctor.name}]
-        return jsonify(user_role_dict)
+        doctor_dict = [{'id': doctor.id_doctor, 'name': doctor.name}]
+        return jsonify(doctor_dict)
     except (DoctorNotFoundException) as e_doctor_not_found:
         print(e_doctor_not_found.__str__(),file=sys.stderr)
         print(e_doctor_not_found.__repr__(),file=sys.stderr)
