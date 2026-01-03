@@ -85,10 +85,15 @@ def get_user_by_id(id,*args, **kwargs):
 @require_role(required_roles=["admin"])
 def get_user_by_username(username,*args, **kwargs):
     try:
-        user = orm_get_user_by_username(username)
+        user : User = orm_get_user_by_username(username)
         if user == None:
             raise UserNotFoundException()
-        user_dict = [{'id': user.id_user, 'username': user.username, 'role': user.user_role.name}]
+        user_dict = [{'id_user': user.id_user, 'username': user.username, 
+            'user_role':{
+                'id_user_role':user.user_role.id_user_role,
+                'name':user.user_role.name,
+            }
+          }]
         return jsonify(user_dict)
     except (UserNotFoundException) as e_user_not_found:
         print(e_user_not_found.__str__(),file=sys.stderr)
