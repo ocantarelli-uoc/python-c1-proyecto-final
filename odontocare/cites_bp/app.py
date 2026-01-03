@@ -1,5 +1,5 @@
 from flask import Flask
-from odontocare import cites_bp
+from recursos.cites import cites_bp
 
 def create_app():
     app = Flask(__name__)
