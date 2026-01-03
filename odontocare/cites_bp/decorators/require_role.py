@@ -2,8 +2,8 @@ import jwt
 import sys
 from functools import wraps
 from flask import Flask, jsonify, request
-from models.User import User
-from models.UserRole import UserRole
+from dtos.User import User
+from dtos.UserRole import UserRole
 # Decorador personalizado para verificar el rol
 def require_role(required_roles:list[str]):
     def decorador_interno(f):
