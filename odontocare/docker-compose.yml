@@ -4,7 +4,9 @@ services:
     container_name: auth_and_admin_bp
     build: 
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./auth_and_admin_bp/Dockerfile
+    volumes:
+      - ./auth_and_admin_bp/:/app:ro
     ports:
       - "5001:5001"
     networks:
@@ -15,7 +17,9 @@ services:
     container_name: cites_bp
     build: 
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./cites_bp/Dockerfile
+    volumes:
+      - ./cites_bp/:/app:ro
     ports:
       - "5002:5002"
     networks:
