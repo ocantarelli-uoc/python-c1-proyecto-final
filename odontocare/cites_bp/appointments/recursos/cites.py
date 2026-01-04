@@ -18,6 +18,7 @@ from exceptions.not_found.MedicalAppointmentNotFoundException import MedicalAppo
 from exceptions.action_already_applied.MedicalAppointmentAlreadyCancelledException import MedicalAppointmentAlreadyCancelledException
 from exceptions.action_already_applied.MedicalAppointmentAlreadyApprovedException import MedicalAppointmentAlreadyApprovedException
 from exceptions.action_already_applied.MedicalAppointmentAlreadyDeclinedException import MedicalAppointmentAlreadyDeclinedException
+from appointments.services.get_medical_appointment_by_id import get_medical_appointment_by_id as orm_get_medical_appointment_by_id
 # Creamos una instancia de Blueprint
 # 'cites_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -82,23 +83,49 @@ def add_appointment(*args, **kwargs):
 def list_appointment(*args, **kwargs):
     pass
 
+@cites_bp.route('/cites', methods=['GET'])
+@needs_auth
+@require_role(required_roles=["admin","pacient"])
+def get_appointment_by_id(id,*args,**kwargs):
+    datos = request.get_json()
+    try:
+        appointment : MedicalAppointment = orm_get_medical_appointment_by_id(id)
+        return jsonify({'id_appointment':appointment.id_appointment,
+                        'appointment_date':datetime.datetime.fromisoformat(appointment.appointment_date).astimezone(ZoneInfo("Europe/Madrid")),
+                        'motiu':appointment.motiu,
+                        'medical_appointment_status':{
+                            'name':appointment.medical_appointment_status.name,
+                        },
+                        'id_doctor':appointment.id_doctor,
+                        'id_medical_center':appointment.id_medical_center,
+                        'id_patient':appointment.id_patient,
+                        'id_action_user':appointment.id_action_user}),200
+    except (MedicalAppointmentNotFoundException) as e_medical_appointment_not_found:
+        print(e_medical_appointment_not_found.__str__(),file=sys.stderr)
+        print(e_medical_appointment_not_found.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Cita Médica no encontrada!'}),404
+    except (TypeError, ValueError, Exception) as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
+
 @cites_bp.route('/cites/<int:id>', methods=['PUT'])
 @needs_auth
 @require_role(required_roles=["admin","secretary"])
 def modify_appointment(id,*args, **kwargs):
     datos = request.json()
     try:
-        cancelled_medical_appointment : MedicalAppointment = orm_modify_appointment_status(id,datos["action"])
-        return jsonify({'id_appointment':cancelled_medical_appointment.id_appointment,
-                        'appointment_date':cancelled_medical_appointment.appointment_date,
-                        'motiu':cancelled_medical_appointment.motiu,
+        modified_medical_appointment : MedicalAppointment = orm_modify_appointment_status(id,datos["action"])
+        return jsonify({'id_appointment':modified_medical_appointment.id_appointment,
+                        'appointment_date':modified_medical_appointment.appointment_date,
+                        'motiu':modified_medical_appointment.motiu,
                         'medical_appointment_status':{
-                            'name':cancelled_medical_appointment.medical_appointment_status.name,
+                            'name':modified_medical_appointment.medical_appointment_status.name,
                         },
-                        'id_doctor':cancelled_medical_appointment.id_doctor,
-                        'id_medical_centre':cancelled_medical_appointment.id_medical_centre,
-                        'id_patient':cancelled_medical_appointment.id_patient,
-                        'id_action_user':cancelled_medical_appointment.id_action_user}),204
+                        'id_doctor':modified_medical_appointment.id_doctor,
+                        'id_medical_centre':modified_medical_appointment.id_medical_centre,
+                        'id_patient':modified_medical_appointment.id_patient,
+                        'id_action_user':modified_medical_appointment.id_action_user}),204
     except (MedicalAppointmentAlreadyCancelledException) as e_medical_appointment_already_cancelled:
         print(e_medical_appointment_already_cancelled.__str__(),file=sys.stderr)
         print(e_medical_appointment_already_cancelled.__repr__(),file=sys.stderr)
