@@ -75,7 +75,7 @@ def get_doctor_by_id(id,*args, **kwargs):
                         'user':{
                             'id_user':doctor.user.id_user,
                             'username':doctor.user.username,
-                            'role':{
+                            'user_role':{
                                 'id_user_role':doctor.user.user_role.id_user_role,
                                 'name':doctor.user.user_role.name,
                             }

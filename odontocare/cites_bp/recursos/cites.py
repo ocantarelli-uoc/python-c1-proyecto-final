@@ -3,13 +3,19 @@ import sys
 from decorators.needs_authorization import needs_auth
 from decorators.require_role import require_role
 from dtos.User import User
+from models.MedicalAppointment import MedicalAppointment
+from enums.MedicalAppointmentActionEnum import MedicalAppointmentActionEnum
 from services.add_appointment import add_appointment as orm_add_appointment
+from services.modify_appointment_status import modify_appointment_status as orm_modify_appointment_status
 from exceptions.not_found.DoctorNotFoundException import DoctorNotFoundException
 from exceptions.not_found.PatientNotFoundException import PatientNotFoundException
 from exceptions.not_found.MedicalCenterNotFoundException import MedicalCenterNotFoundException
 from exceptions.not_found.MedicalAppointmentStatusNotFoundException import MedicalAppointmentStatusNotFoundException
 from exceptions.already_exists.MedicalAppointmentAlreadyExistsException import MedicalAppointmentAlreadyExistsException
-
+from exceptions.not_found.MedicalAppointmentNotFoundException import MedicalAppointmentNotFoundException
+from exceptions.action_already_applied.MedicalAppointmentAlreadyCancelledException import MedicalAppointmentAlreadyCancelledException
+from exceptions.action_already_applied.MedicalAppointmentAlreadyApprovedException import MedicalAppointmentAlreadyApprovedException
+from exceptions.action_already_applied.MedicalAppointmentAlreadyDeclinedException import MedicalAppointmentAlreadyDeclinedException
 # Creamos una instancia de Blueprint
 # 'cites_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -20,7 +26,7 @@ cites_bp = Blueprint('cites_bp', __name__)
 @needs_auth
 @require_role(required_roles=["admin","pacient"])
 def add_appointment(*args, **kwargs):
-    datos = request.json()
+    datos = request.get_json()
     try:
         authorized_user : User = kwargs.get('authorized_user')
         appointment_input_dict = {
@@ -30,12 +36,22 @@ def add_appointment(*args, **kwargs):
             'id_medical_center':datos['id_medical_center'],
             'motiu':datos['motiu'],
             'id_action_user':authorized_user.id_user,
-            'status':datos['status'],
+            'status':MedicalAppointmentActionEnum.CREATE.value,
         }
-        created_appoinment = orm_add_appointment(appointment_input_dict)
-    except (PatientNotFoundException) as e_user_not_found:
-        print(e_user_not_found.__str__(),file=sys.stderr)
-        print(e_user_not_found.__repr__(),file=sys.stderr)
+        created_appoinment : MedicalAppointment = orm_add_appointment(appointment_input_dict)
+        return jsonify({'id_appointment':created_appoinment.id_appointment,
+                        'appointment_date':created_appoinment.appointment_date,
+                        'motiu':created_appoinment.motiu,
+                        'medical_appointment_status':{
+                            'name':created_appoinment.medical_appointment_status.name,
+                        },
+                        'id_doctor':created_appoinment.id_doctor,
+                        'id_medical_centre':created_appoinment.id_medical_centre,
+                        'id_patient':created_appoinment.id_patient,
+                        'id_action_user':created_appoinment.id_action_user}),201
+    except (PatientNotFoundException) as e_patient_not_found:
+        print(e_patient_not_found.__str__(),file=sys.stderr)
+        print(e_patient_not_found.__repr__(),file=sys.stderr)
         return jsonify({'message':'Paciente no encontrado!'}),404
     except DoctorNotFoundException as e_doctor_not_found:
         print(e_doctor_not_found.__str__(),file=sys.stderr)
@@ -48,7 +64,7 @@ def add_appointment(*args, **kwargs):
     except (MedicalAppointmentStatusNotFoundException) as e_medical_appointment_not_found:
         print(e_medical_appointment_not_found.__str__(),file=sys.stderr)
         print(e_medical_appointment_not_found.__repr__(),file=sys.stderr)
-        return jsonify({'message':'Cita Médica no encontrada!'}),404
+        return jsonify({'message':'Estado de Cita Médica no existe!'}),404
     except (MedicalAppointmentAlreadyExistsException) as e_medical_appointment_already_exists:
         print(e_medical_appointment_already_exists.__str__(),file=sys.stderr)
         print(e_medical_appointment_already_exists.__repr__(),file=sys.stderr)
@@ -65,7 +81,42 @@ def list_appointment(*args, **kwargs):
     pass
 
 @cites_bp.route('/cites/<int:id>', methods=['PUT'])
-def cancel_appointment(id,*args, **kwargs):
-    pass
+@needs_auth
+@require_role(required_roles=["admin","secretary"])
+def modify_appointment(id,*args, **kwargs):
+    datos = request.json()
+    try:
+        cancelled_medical_appointment : MedicalAppointment = orm_modify_appointment_status(id,datos["action"])
+        return jsonify({'id_appointment':cancelled_medical_appointment.id_appointment,
+                        'appointment_date':cancelled_medical_appointment.appointment_date,
+                        'motiu':cancelled_medical_appointment.motiu,
+                        'medical_appointment_status':{
+                            'name':cancelled_medical_appointment.medical_appointment_status.name,
+                        },
+                        'id_doctor':cancelled_medical_appointment.id_doctor,
+                        'id_medical_centre':cancelled_medical_appointment.id_medical_centre,
+                        'id_patient':cancelled_medical_appointment.id_patient,
+                        'id_action_user':cancelled_medical_appointment.id_action_user}),204
+    except (MedicalAppointmentAlreadyCancelledException) as e_medical_appointment_already_cancelled:
+        print(e_medical_appointment_already_cancelled.__str__(),file=sys.stderr)
+        print(e_medical_appointment_already_cancelled.__repr__(),file=sys.stderr)
+        return jsonify({'message':'La cita médica ya ha sido cancelada!'}),409
+    except (MedicalAppointmentAlreadyDeclinedException) as e_medical_appointment_already_cancelled:
+        print(e_medical_appointment_already_cancelled.__str__(),file=sys.stderr)
+        print(e_medical_appointment_already_cancelled.__repr__(),file=sys.stderr)
+        return jsonify({'message':'La cita médica ya ha sido rechazada!'}),409
+    except (MedicalAppointmentAlreadyApprovedException) as e_medical_appointment_already_cancelled:
+        print(e_medical_appointment_already_cancelled.__str__(),file=sys.stderr)
+        print(e_medical_appointment_already_cancelled.__repr__(),file=sys.stderr)
+        return jsonify({'message':'La cita médica ya ha sido aprobada!'}),409
+    except (MedicalAppointmentNotFoundException) as e_medical_appointment_not_found:
+        print(e_medical_appointment_not_found.__str__(),file=sys.stderr)
+        print(e_medical_appointment_not_found.__repr__(),file=sys.stderr)
+        return jsonify({'message':'No existe la cita médica que se quiere cancelar!'}),404
+    except (TypeError, ValueError, Exception) as e:
+        print(e.__str__(),file=sys.stderr)
+        print(e.__repr__(),file=sys.stderr)
+        return jsonify({'message':'Ha ocurrido algún error!'}),500
+
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para citas)

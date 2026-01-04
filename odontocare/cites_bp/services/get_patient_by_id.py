@@ -7,24 +7,24 @@ from dtos.UserRole import UserRole
 
 def get_patient_by_id(id:int) -> Patient:
     print(id,file=sys.stderr)
-    req = requests.Request('GET', 'http://auth_and_admin_bp:5001/api/v1/admin/pacients/'+id)
+    req = requests.Request('GET', 'http://auth_and_admin_bp:5001/api/v1/admin/pacients/'+str(id))
     r = req.prepare()
     r.headers['Authorization'] = request.headers.get('Authorization')
     r.headers['Content-Type'] = 'application/json'   
     s = requests.Session()
     rs: requests.Response = s.send(r)
-    pacient_dict = rs.json()
-    pacient : Patient = Patient(id_doctor=pacient_dict['id_doctor'],
-        name=pacient_dict['name'],
+    patient_rs_list = rs.json()
+    patient : Patient = Patient(id_patient=patient_rs_list[0]['id_patient'],
+        name=patient_rs_list[0]['name'],
         user=User(
-           id_user=pacient_dict['user']['id_user'],
-           username=pacient_dict['user']['username'],
+           id_user=patient_rs_list[0]['user']['id_user'],
+           username=patient_rs_list[0]['user']['username'],
            user_role=UserRole(
-           id_user_role=pacient_dict['user']['user_role']['id_user_role'],
-              name=pacient_dict['user']['user_role']['name']
+           id_user_role=patient_rs_list[0]['user']['user_role']['id_user_role'],
+              name=patient_rs_list[0]['user']['user_role']['name']
            )
         ),
-        telephone=pacient_dict['telephone'],
-        is_active=pacient_dict['is_active']
+        telephone=patient_rs_list[0]['telephone'],
+        is_active=patient_rs_list[0]['is_active']
     )
-    return pacient
+    return patient

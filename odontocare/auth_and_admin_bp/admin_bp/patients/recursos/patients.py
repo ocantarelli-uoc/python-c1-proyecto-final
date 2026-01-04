@@ -72,11 +72,13 @@ def get_patient_by_id(id,*args, **kwargs):
                         'user':{
                             'id_user':patient.user.id_user,
                             'username':patient.user.username,
-                            'role':{
+                            'user_role':{
                                 'id_user_role':patient.user.user_role.id_user_role,
                                 'name':patient.user.user_role.name,
                             }
-                        }}]
+                        }
+                        ,'telephone':patient.telephone,
+                        'is_active':patient.is_active}]
         return jsonify(patient_dict)
     except (PatientNotFoundException) as e_user_not_found:
         print(e_user_not_found.__str__(),file=sys.stderr)

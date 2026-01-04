@@ -6,7 +6,7 @@ from dtos.UserRole import UserRole
 
 def get_user_by_username(username:str) -> User:
     print(username,file=sys.stderr)
-    req = requests.Request('GET', 'http://auth_and_admin_bp:5001/api/v1/admin/usuaris/name/'+username)
+    req = requests.Request('GET', 'http://auth_and_admin_bp:5001/api/v1/admin/usuaris/name/'+str(username))
     r = req.prepare()
     r.headers['Authorization'] = request.headers.get('Authorization')
     r.headers['Content-Type'] = 'application/json'   

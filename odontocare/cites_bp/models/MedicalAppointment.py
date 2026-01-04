@@ -5,6 +5,7 @@ class MedicalAppointment(db.Model):
     appointment_date = db.Column(db.DateTime, nullable=False)
     motiu = db.Column(db.String(255), nullable=False)
     medical_appointment_status = db.relationship('MedicalAppointmentStatus')
+    id_medical_status = db.Column(db.Integer, db.ForeignKey('medical_appointment_statuses.id_medical_status'),nullable=False)
     id_doctor = db.Column(db.Integer, nullable=False)
     id_medical_centre = db.Column(db.Integer, nullable=False)
     id_patient = db.Column(db.Integer, nullable=False)

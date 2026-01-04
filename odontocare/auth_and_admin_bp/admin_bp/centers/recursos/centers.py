@@ -47,7 +47,7 @@ def add_center(*args, **kwargs):
 def list_medical_centers(*args, **kwargs):
     try:
         medical_centers:list[MedicalCenter] = orm_list_centers()
-        medical_centers_list = [{'id': m_c.id_medical_center, 'name': m_c.name,'address':{
+        medical_centers_list = [{'id_medical_center': m_c.id_medical_center, 'name': m_c.name,'address':{
             'id_address':m_c.address.id_address,
             'street':m_c.address.street,
             'city':m_c.address.city
@@ -66,7 +66,7 @@ def get_medical_centers_by_id(id,*args, **kwargs):
         medical_center : MedicalCenter = orm_get_medical_center_by_id(id)
         if medical_center == None:
             raise MedicalCenterNotFoundException()
-        user_role_dict = [{'id': medical_center.id_medical_center, 'name': medical_center.name,
+        user_role_dict = [{'id_medical_center': medical_center.id_medical_center, 'name': medical_center.name,
             'address':{
                 'id_address':medical_center.address.id_address,
                 'street':medical_center.address.street,
