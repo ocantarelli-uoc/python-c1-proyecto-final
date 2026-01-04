@@ -1,12 +1,14 @@
 from flask import Blueprint, jsonify, request
 import sys
+import datetime
+from zoneinfo import ZoneInfo
 from decorators.needs_authorization import needs_auth
 from decorators.require_role import require_role
 from dtos.User import User
 from models.MedicalAppointment import MedicalAppointment
-from enums.MedicalAppointmentActionEnum import MedicalAppointmentActionEnum
-from services.add_appointment import add_appointment as orm_add_appointment
-from services.modify_appointment_status import modify_appointment_status as orm_modify_appointment_status
+from enums.MedicalAppointmentStatusEnum import MedicalAppointmentStatusEnum
+from appointments.services.add_appointment import add_appointment as orm_add_appointment
+from appointments.services.modify_appointment_status import modify_appointment_status as orm_modify_appointment_status
 from exceptions.not_found.DoctorNotFoundException import DoctorNotFoundException
 from exceptions.not_found.PatientNotFoundException import PatientNotFoundException
 from exceptions.not_found.MedicalCenterNotFoundException import MedicalCenterNotFoundException
@@ -36,17 +38,17 @@ def add_appointment(*args, **kwargs):
             'id_medical_center':datos['id_medical_center'],
             'motiu':datos['motiu'],
             'id_action_user':authorized_user.id_user,
-            'status':MedicalAppointmentActionEnum.CREATE.value,
+            'status':MedicalAppointmentStatusEnum.PENDING.value,
         }
         created_appoinment : MedicalAppointment = orm_add_appointment(appointment_input_dict)
         return jsonify({'id_appointment':created_appoinment.id_appointment,
-                        'appointment_date':created_appoinment.appointment_date,
+                        'appointment_date':datetime.datetime.fromisoformat(appointment_input_dict['appointment_date']).astimezone(ZoneInfo("Europe/Madrid")),
                         'motiu':created_appoinment.motiu,
                         'medical_appointment_status':{
                             'name':created_appoinment.medical_appointment_status.name,
                         },
                         'id_doctor':created_appoinment.id_doctor,
-                        'id_medical_centre':created_appoinment.id_medical_centre,
+                        'id_medical_center':created_appoinment.id_medical_center,
                         'id_patient':created_appoinment.id_patient,
                         'id_action_user':created_appoinment.id_action_user}),201
     except (PatientNotFoundException) as e_patient_not_found:

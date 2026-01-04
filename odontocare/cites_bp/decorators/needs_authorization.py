@@ -3,7 +3,7 @@ from functools import wraps
 from flask import Flask, jsonify, request
 from dotenv import dotenv_values
 import app
-from services.get_user_by_username import get_user_by_username
+from auth.services.get_user_by_username import get_user_by_username
 # Decorador personalizado para la autenticación
 def needs_auth(f):
     @wraps(f)

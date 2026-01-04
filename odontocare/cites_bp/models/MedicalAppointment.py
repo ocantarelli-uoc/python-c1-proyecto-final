@@ -7,7 +7,7 @@ class MedicalAppointment(db.Model):
     medical_appointment_status = db.relationship('MedicalAppointmentStatus')
     id_medical_status = db.Column(db.Integer, db.ForeignKey('medical_appointment_statuses.id_medical_status'),nullable=False)
     id_doctor = db.Column(db.Integer, nullable=False)
-    id_medical_centre = db.Column(db.Integer, nullable=False)
+    id_medical_center = db.Column(db.Integer, nullable=False)
     id_patient = db.Column(db.Integer, nullable=False)
     id_action_user = db.Column(db.Integer, nullable=False)
     def __repr__(self):

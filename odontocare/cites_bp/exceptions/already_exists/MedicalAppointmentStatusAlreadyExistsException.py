@@ -1,0 +1,2 @@
+class MedicalAppointmentStatusAlreadyExistsException(Exception):
+    pass
