@@ -29,14 +29,14 @@ def add_appointment(appointment_input_dict:dict):
             raise MedicalCenterNotFoundException()
 
         doctor_medical_appointments : list[MedicalAppointment] = get_doctor_appointments_by_date(doctor,
-        datetime.datetime.fromisoformat(appointment_input_dict['appointment_date']).astimezone(ZoneInfo("Europe/Madrid")))
+        datetime.datetime.fromisoformat(str(appointment_input_dict['appointment_date'])))
         if doctor_medical_appointments is not None and len(doctor_medical_appointments) >= 1:
             raise MedicalAppointmentAlreadyExistsException()
 
         medical_appointment_status:MedicalAppointmentStatus = MedicalAppointmentStatus.query.filter_by(name=appointment_input_dict['status']).first()
         if medical_appointment_status is None:
             raise MedicalAppointmentStatusNotFoundException()
-        medical_appointment : MedicalAppointment = MedicalAppointment(appointment_date=datetime.datetime.fromisoformat(appointment_input_dict['appointment_date']).astimezone(ZoneInfo("Europe/Madrid")),
+        medical_appointment : MedicalAppointment = MedicalAppointment(appointment_date=datetime.datetime.fromisoformat(str(appointment_input_dict['appointment_date'])),
                 motiu=appointment_input_dict['motiu'],
                 id_doctor=appointment_input_dict['id_doctor'],
                 id_medical_center=appointment_input_dict['id_medical_center'],

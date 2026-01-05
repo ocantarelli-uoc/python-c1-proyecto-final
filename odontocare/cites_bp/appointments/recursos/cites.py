@@ -43,7 +43,7 @@ def add_appointment(*args, **kwargs):
         }
         created_appoinment : MedicalAppointment = orm_add_appointment(appointment_input_dict)
         return jsonify({'id_appointment':created_appoinment.id_appointment,
-                        'appointment_date':datetime.datetime.fromisoformat(appointment_input_dict['appointment_date']).astimezone(ZoneInfo("Europe/Madrid")),
+                        'appointment_date':datetime.datetime.fromisoformat(str(created_appoinment.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
                         'motiu':created_appoinment.motiu,
                         'medical_appointment_status':{
                             'name':created_appoinment.medical_appointment_status.name,
@@ -83,15 +83,14 @@ def add_appointment(*args, **kwargs):
 def list_appointment(*args, **kwargs):
     pass
 
-@cites_bp.route('/cites', methods=['GET'])
+@cites_bp.route('/cites/<int:id>', methods=['GET'])
 @needs_auth
 @require_role(required_roles=["admin","pacient"])
 def get_appointment_by_id(id,*args,**kwargs):
-    datos = request.get_json()
     try:
         appointment : MedicalAppointment = orm_get_medical_appointment_by_id(id)
         return jsonify({'id_appointment':appointment.id_appointment,
-                        'appointment_date':datetime.datetime.fromisoformat(appointment.appointment_date).astimezone(ZoneInfo("Europe/Madrid")),
+                        'appointment_date':datetime.datetime.fromisoformat(str(appointment.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
                         'motiu':appointment.motiu,
                         'medical_appointment_status':{
                             'name':appointment.medical_appointment_status.name,
@@ -117,7 +116,7 @@ def modify_appointment(id,*args, **kwargs):
     try:
         modified_medical_appointment : MedicalAppointment = orm_modify_appointment_status(id,datos["action"])
         return jsonify({'id_appointment':modified_medical_appointment.id_appointment,
-                        'appointment_date':modified_medical_appointment.appointment_date,
+                        'appointment_date':datetime.datetime.fromisoformat(str(modified_medical_appointment.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
                         'motiu':modified_medical_appointment.motiu,
                         'medical_appointment_status':{
                             'name':modified_medical_appointment.medical_appointment_status.name,
