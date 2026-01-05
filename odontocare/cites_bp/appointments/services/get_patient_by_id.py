@@ -14,17 +14,19 @@ def get_patient_by_id(id:int) -> Patient:
     s = requests.Session()
     rs: requests.Response = s.send(r)
     patient_rs_list = rs.json()
-    patient : Patient = Patient(id_patient=patient_rs_list[0]['id_patient'],
-        name=patient_rs_list[0]['name'],
-        user=User(
-           id_user=patient_rs_list[0]['user']['id_user'],
-           username=patient_rs_list[0]['user']['username'],
-           user_role=UserRole(
-           id_user_role=patient_rs_list[0]['user']['user_role']['id_user_role'],
-              name=patient_rs_list[0]['user']['user_role']['name']
-           )
-        ),
-        telephone=patient_rs_list[0]['telephone'],
-        is_active=patient_rs_list[0]['is_active']
-    )
+    patient = None
+    if patient_rs_list is not None and isinstance(patient_rs_list,list) and len(patient_rs_list) >= 1:
+      patient : Patient = Patient(id_patient=patient_rs_list[0]['id_patient'],
+         name=patient_rs_list[0]['name'],
+         user=User(
+            id_user=patient_rs_list[0]['user']['id_user'],
+            username=patient_rs_list[0]['user']['username'],
+            user_role=UserRole(
+            id_user_role=patient_rs_list[0]['user']['user_role']['id_user_role'],
+               name=patient_rs_list[0]['user']['user_role']['name']
+            )
+         ),
+         telephone=patient_rs_list[0]['telephone'],
+         is_active=patient_rs_list[0]['is_active']
+      )
     return patient

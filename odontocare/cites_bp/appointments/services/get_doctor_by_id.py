@@ -15,22 +15,24 @@ def get_doctor_by_id(id:int) -> Doctor:
     s = requests.Session()
     rs: requests.Response = s.send(r)
     doctor_rs_list = rs.json()
-    #print(doctor_rs_list[0],file=sys.stderr)
-    #print(doctor_rs_list[0]['id_doctor'],file=sys.stderr)
-    doctor : Doctor = Doctor(
-        id_doctor=doctor_rs_list[0]['id_doctor'],
-        name=doctor_rs_list[0]['name'],
-        medical_speciality=MedicalSpeciality(
-            id_medical_speciality=doctor_rs_list[0]['medical_speciality']['id_medical_speciality'],
-            name=doctor_rs_list[0]['medical_speciality']['name']
-        ),
-        user=User(
-            id_user=doctor_rs_list[0]['user']['id_user'],
-            username=doctor_rs_list[0]['user']['username'],
-            user_role=UserRole(
-               id_user_role=doctor_rs_list[0]['user']['user_role']['id_user_role'],
-               name=doctor_rs_list[0]['user']['user_role']['name']
+    doctor = None
+    if doctor_rs_list is not None and isinstance(doctor_rs_list,list) and len(doctor_rs_list) >= 1:
+        #print(doctor_rs_list[0],file=sys.stderr)
+        #print(doctor_rs_list[0]['id_doctor'],file=sys.stderr)
+        doctor : Doctor = Doctor(
+            id_doctor=doctor_rs_list[0]['id_doctor'],
+            name=doctor_rs_list[0]['name'],
+            medical_speciality=MedicalSpeciality(
+                id_medical_speciality=doctor_rs_list[0]['medical_speciality']['id_medical_speciality'],
+                name=doctor_rs_list[0]['medical_speciality']['name']
+            ),
+            user=User(
+                id_user=doctor_rs_list[0]['user']['id_user'],
+                username=doctor_rs_list[0]['user']['username'],
+                user_role=UserRole(
+                id_user_role=doctor_rs_list[0]['user']['user_role']['id_user_role'],
+                name=doctor_rs_list[0]['user']['user_role']['name']
+                )
             )
         )
-    )
     return doctor
