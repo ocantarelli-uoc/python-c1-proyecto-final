@@ -47,9 +47,9 @@ def modify_appointment_status(id,action) -> MedicalAppointment:
             if medical_appointment.medical_appointment_status.name == MedicalAppointmentStatusEnum.CANCELLED.value and status != MedicalAppointmentStatusEnum.CANCELLED.value:
                 raise MedicalAppointmentIsCancelledException()
             elif medical_appointment.medical_appointment_status.name == MedicalAppointmentStatusEnum.APPROVED.value and status == MedicalAppointmentStatusEnum.DECLINED.value:
-                raise MedicalAppointmentIsDeclinedException()
-            elif medical_appointment.medical_appointment_status.name == MedicalAppointmentStatusEnum.DECLINED.value and status == MedicalAppointmentStatusEnum.APPROVED.value:
                 raise MedicalAppointmentIsApprovedException()
+            elif medical_appointment.medical_appointment_status.name == MedicalAppointmentStatusEnum.DECLINED.value and status == MedicalAppointmentStatusEnum.APPROVED.value:
+                raise MedicalAppointmentIsDeclinedException()
             else:
                 pass
         medical_appointment.medical_appointment_status = medical_appointment_status
