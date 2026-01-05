@@ -40,7 +40,7 @@ def add_appointment(*args, **kwargs):
 def list_appointment_statuses(*args, **kwargs):
     pass
 
-@appointment_statuses_bp.route('/estats_cites/<int:id>', methods=['PUT'])
+@appointment_statuses_bp.route('/estats_cites/<int:id>', methods=['GET'])
 @needs_auth
 @require_role(required_roles=["admin"])
 def get_appointment_status_by_id(id,*args, **kwargs):
