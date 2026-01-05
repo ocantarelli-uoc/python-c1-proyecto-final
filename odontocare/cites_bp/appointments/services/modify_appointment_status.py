@@ -29,13 +29,13 @@ def modify_appointment_status(id,action) -> MedicalAppointment:
         if medical_appointment_status is None:
             raise MedicalAppointmentStatusNotFoundException()
         if medical_appointment.medical_appointment_status.name == status:
-            if status == MedicalAppointmentStatusEnum.CANCELLED:
+            if status == MedicalAppointmentStatusEnum.CANCELLED.value:
                 raise MedicalAppointmentAlreadyCancelledException()
-            elif status == MedicalAppointmentStatusEnum.PENDING:
+            elif status == MedicalAppointmentStatusEnum.PENDING.value:
                 raise MedicalAppointmentAlreadyCreatedException()
-            elif status == MedicalAppointmentStatusEnum.APPROVED:
+            elif status == MedicalAppointmentStatusEnum.APPROVED.value:
                 raise MedicalAppointmentAlreadyApprovedException()
-            elif status == MedicalAppointmentStatusEnum.DECLINED:
+            elif status == MedicalAppointmentStatusEnum.DECLINED.value:
                 raise MedicalAppointmentAlreadyDeclinedException()
         medical_appointment.medical_appointment_status = medical_appointment_status
         db.session.add(medical_appointment)
