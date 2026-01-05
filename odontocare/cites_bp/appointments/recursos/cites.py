@@ -120,7 +120,8 @@ def modify_appointment(id,*args, **kwargs):
     datos = request.get_json()
     try:
         modified_medical_appointment : MedicalAppointment = orm_modify_appointment_status(id,datos["action"])
-        modified_medical_appointment_dict : dict = {'id_medical_appointment':modified_medical_appointment.id_medical_appointment,
+        modified_medical_appointment_dict : dict = {
+                        'id_medical_appointment':modified_medical_appointment.id_medical_appointment,
                         'appointment_date':datetime.datetime.fromisoformat(str(modified_medical_appointment.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
                         'motiu':modified_medical_appointment.motiu,
                         'medical_appointment_status':{
@@ -130,7 +131,7 @@ def modify_appointment(id,*args, **kwargs):
                         'id_medical_center':modified_medical_appointment.id_medical_center,
                         'id_patient':modified_medical_appointment.id_patient,
                         'id_action_user':modified_medical_appointment.id_action_user}
-        return jsonify(),204
+        return jsonify(modified_medical_appointment_dict),200
     except (MedicalAppointmentAlreadyCancelledException) as e_medical_appointment_already_cancelled:
         print(e_medical_appointment_already_cancelled.__str__(),file=sys.stderr)
         print(e_medical_appointment_already_cancelled.__repr__(),file=sys.stderr)
