@@ -21,7 +21,7 @@ def modify_appointment_status(id,action) -> MedicalAppointment:
             status = MedicalAppointmentStatusEnum.DECLINED.value
         else:
             pass
-        medical_appointment:MedicalAppointment = MedicalAppointment.query.filter_by(id=id).first()
+        medical_appointment:MedicalAppointment = MedicalAppointment.query.filter_by(id_medical_appointment=id).first()
         medical_appointment_status:MedicalAppointmentStatus = MedicalAppointmentStatus.query.filter_by(name=status).first()
         if medical_appointment_status is None:
             raise MedicalAppointmentStatusNotFoundException()

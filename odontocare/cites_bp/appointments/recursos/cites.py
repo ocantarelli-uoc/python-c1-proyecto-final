@@ -42,7 +42,7 @@ def add_appointment(*args, **kwargs):
             'status':MedicalAppointmentStatusEnum.PENDING.value,
         }
         created_appoinment : MedicalAppointment = orm_add_appointment(appointment_input_dict)
-        return jsonify({'id_appointment':created_appoinment.id_appointment,
+        return jsonify({'id_medical_appointment':created_appoinment.id_medical_appointment,
                         'appointment_date':datetime.datetime.fromisoformat(str(created_appoinment.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
                         'motiu':created_appoinment.motiu,
                         'medical_appointment_status':{
@@ -89,7 +89,7 @@ def list_appointment(*args, **kwargs):
 def get_appointment_by_id(id,*args,**kwargs):
     try:
         appointment : MedicalAppointment = orm_get_medical_appointment_by_id(id)
-        return jsonify({'id_appointment':appointment.id_appointment,
+        return jsonify({'id_medical_appointment':appointment.id_medical_appointment,
                         'appointment_date':datetime.datetime.fromisoformat(str(appointment.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
                         'motiu':appointment.motiu,
                         'medical_appointment_status':{
@@ -112,19 +112,20 @@ def get_appointment_by_id(id,*args,**kwargs):
 @needs_auth
 @require_role(required_roles=["admin","secretary"])
 def modify_appointment(id,*args, **kwargs):
-    datos = request.json()
+    datos = request.get_json()
     try:
         modified_medical_appointment : MedicalAppointment = orm_modify_appointment_status(id,datos["action"])
-        return jsonify({'id_appointment':modified_medical_appointment.id_appointment,
+        modified_medical_appointment_dict : dict = {'id_medical_appointment':modified_medical_appointment.id_medical_appointment,
                         'appointment_date':datetime.datetime.fromisoformat(str(modified_medical_appointment.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
                         'motiu':modified_medical_appointment.motiu,
                         'medical_appointment_status':{
                             'name':modified_medical_appointment.medical_appointment_status.name,
                         },
                         'id_doctor':modified_medical_appointment.id_doctor,
-                        'id_medical_centre':modified_medical_appointment.id_medical_centre,
+                        'id_medical_center':modified_medical_appointment.id_medical_center,
                         'id_patient':modified_medical_appointment.id_patient,
-                        'id_action_user':modified_medical_appointment.id_action_user}),204
+                        'id_action_user':modified_medical_appointment.id_action_user}
+        return jsonify(),204
     except (MedicalAppointmentAlreadyCancelledException) as e_medical_appointment_already_cancelled:
         print(e_medical_appointment_already_cancelled.__str__(),file=sys.stderr)
         print(e_medical_appointment_already_cancelled.__repr__(),file=sys.stderr)
