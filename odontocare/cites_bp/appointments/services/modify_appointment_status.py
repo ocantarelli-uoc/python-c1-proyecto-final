@@ -1,6 +1,7 @@
 from extensions import db
 from models.MedicalAppointment import MedicalAppointment
 from models.MedicalAppointmentStatus import MedicalAppointmentStatus
+from exceptions.not_found.MedicalAppointmentNotFoundException import MedicalAppointmentNotFoundException
 from exceptions.not_found.MedicalAppointmentStatusNotFoundException import MedicalAppointmentStatusNotFoundException
 from exceptions.action_already_applied.MedicalAppointmentAlreadyCancelledException import MedicalAppointmentAlreadyCancelledException
 from exceptions.action_already_applied.MedicalAppointmentAlreadyApprovedException import MedicalAppointmentAlreadyApprovedException
@@ -22,6 +23,8 @@ def modify_appointment_status(id,action) -> MedicalAppointment:
         else:
             pass
         medical_appointment:MedicalAppointment = MedicalAppointment.query.filter_by(id_medical_appointment=id).first()
+        if medical_appointment is None:
+            raise MedicalAppointmentNotFoundException()
         medical_appointment_status:MedicalAppointmentStatus = MedicalAppointmentStatus.query.filter_by(name=status).first()
         if medical_appointment_status is None:
             raise MedicalAppointmentStatusNotFoundException()

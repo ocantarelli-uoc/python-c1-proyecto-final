@@ -46,12 +46,14 @@ def list_appointment_statuses(*args, **kwargs):
 def get_appointment_status_by_id(id,*args, **kwargs):
     try:
         appointment_status : MedicalAppointmentStatus = orm_get_medical_appointment_status_by_id(id)
+        if appointment_status is None:
+            raise MedicalAppointmentStatusNotFoundException()
         return jsonify({'id_medical_status':appointment_status.id_medical_status,
                         'name':appointment_status.name}),200
     except (MedicalAppointmentStatusNotFoundException) as e_medical_appointment_status_not_found:
         print(e_medical_appointment_status_not_found.__str__(),file=sys.stderr)
         print(e_medical_appointment_status_not_found.__repr__(),file=sys.stderr)
-        return jsonify({'message':'Estado de Cita Médica no existe!'}),404
+        return jsonify({'message':'Estado de Cita Médica no encontrado!'}),404
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)

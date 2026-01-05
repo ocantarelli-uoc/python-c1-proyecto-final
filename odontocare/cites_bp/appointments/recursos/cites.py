@@ -89,6 +89,8 @@ def list_appointment(*args, **kwargs):
 def get_appointment_by_id(id,*args,**kwargs):
     try:
         appointment : MedicalAppointment = orm_get_medical_appointment_by_id(id)
+        if appointment is None:
+            raise MedicalAppointmentNotFoundException()
         return jsonify({'id_medical_appointment':appointment.id_medical_appointment,
                         'appointment_date':datetime.datetime.fromisoformat(str(appointment.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
                         'motiu':appointment.motiu,
