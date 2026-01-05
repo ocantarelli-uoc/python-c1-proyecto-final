@@ -98,40 +98,45 @@ def add_appointment(*args, **kwargs):
 @needs_auth
 @require_role(required_roles=["admin","secretary","doctor"])
 def list_appointment(*args, **kwargs):
+    appointments = []
     authorized_user : User = kwargs.get('authorized_user')
     filter_by = request.args.get('filter_by')
     filter_value = request.args.get('filter_value')
     if filter_by == "doctor":
+        require_role(required_roles=["admin","doctor"])
         if authorized_user.user_role.name=="doctor":
             doctor_id = authorized_user.id_user
         else:
          doctor_id = filter_value
         doctor : Doctor = orm_get_doctor_by_id(doctor_id)
-        require_role(required_roles=["admin","doctor"])
-        appointments : list[MedicalAppointment] = get_appointments_by_doctor(doctor)
+        if doctor is not None:
+            appointments : list[MedicalAppointment] = get_appointments_by_doctor(doctor)
     if filter_by == "patient":
+        require_role(required_roles=["admin"])
         patient : Patient = orm_get_patient_by_id(filter_value)
-        require_role(required_roles=["admin"])
-        appointments : list[MedicalAppointment] = get_appointments_by_patient(
-            patient
-        )
+        if patient is not None:
+            appointments : list[MedicalAppointment] = get_appointments_by_patient(
+                patient
+            )
     if filter_by == "center":
+        require_role(required_roles=["admin"])
         medical_center : MedicalCenter = orm_get_medical_center_by_id(filter_value)
-        require_role(required_roles=["admin"])
-        appointments : list[MedicalAppointment] = get_appointments_by_medical_center(
-            medical_center
-        )
+        if medical_center is not None:
+            appointments : list[MedicalAppointment] = get_appointments_by_medical_center(
+                medical_center
+            )
     if filter_by == "status":
-        medical_status : MedicalAppointmentStatus = orm_get_medical_appointment_status_by_id(filter_value)
         require_role(required_roles=["admin"])
-        appointments : list[MedicalAppointment] = get_appointments_by_status(
-            medical_status
-        )
-    if filter_by == "date":
         medical_status : MedicalAppointmentStatus = orm_get_medical_appointment_status_by_id(filter_value)
+        if medical_status is not None:
+            appointments : list[MedicalAppointment] = get_appointments_by_status(
+                medical_status
+            )
+    if filter_by == "date":
         require_role(required_roles=["admin","secretary"])
-        appointments : list[MedicalAppointment] = get_appointments_by_date(
-        datetime.datetime.fromisoformat(str(filter_value)))
+        if filter_value is not None:
+            appointments : list[MedicalAppointment] = get_appointments_by_date(
+            datetime.datetime.fromisoformat(str(filter_value)))
     
     medical_appointments_list = [{'id_medical_appointment':m_a.id_medical_appointment,
                         'appointment_date':datetime.datetime.fromisoformat(str(m_a.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
