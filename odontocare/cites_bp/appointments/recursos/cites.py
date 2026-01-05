@@ -22,6 +22,20 @@ from exceptions.action_already_applied.MedicalAppointmentIsCancelledException im
 from exceptions.action_already_applied.MedicalAppointmentIsApprovedException import MedicalAppointmentIsApprovedException
 from exceptions.action_already_applied.MedicalAppointmentIsDeclinedException import MedicalAppointmentIsDeclinedException
 from appointments.services.get_medical_appointment_by_id import get_medical_appointment_by_id as orm_get_medical_appointment_by_id
+from appointments.services.get_doctor_by_id import get_doctor_by_id as orm_get_doctor_by_id
+from appointments.services.get_appointments_by_patient import get_appointments_by_patient
+from appointments.services.get_patient_by_id import get_patient_by_id as orm_get_patient_by_id
+from dtos.Doctor import Doctor
+from appointments.services.get_appointments_by_doctor import get_appointments_by_doctor
+from dtos.Patient import Patient
+from appointments.services.get_appointments_by_patient import get_appointments_by_patient
+from dtos.MedicalCenter import MedicalCenter
+from appointments.services.get_medical_center_by_id import get_medical_center_by_id as orm_get_medical_center_by_id
+from appointments.services.get_appointments_by_medical_center import get_appointments_by_medical_center as get_appointments_by_medical_center
+from models.MedicalAppointmentStatus import MedicalAppointmentStatus
+from appointment_statuses.services.get_medical_appointment_status_by_id import get_medical_appointment_status_by_id as orm_get_medical_appointment_status_by_id
+from appointments.services.get_appointments_by_status import get_appointments_by_status
+from appointments.services.get_appointments_by_date import get_appointments_by_date
 # Creamos una instancia de Blueprint
 # 'cites_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -84,7 +98,53 @@ def add_appointment(*args, **kwargs):
 @needs_auth
 @require_role(required_roles=["admin","secretary","doctor"])
 def list_appointment(*args, **kwargs):
-    pass
+    authorized_user : User = kwargs.get('authorized_user')
+    filter_by = request.args.get('filter_by')
+    filter_value = request.args.get('filter_value')
+    if filter_by == "doctor":
+        if authorized_user.user_role.name=="doctor":
+            doctor_id = authorized_user.id_user
+        else:
+         doctor_id = filter_value
+        doctor : Doctor = orm_get_doctor_by_id(doctor_id)
+        require_role(required_roles=["admin","doctor"])
+        appointments : list[MedicalAppointment] = get_appointments_by_doctor(doctor)
+    if filter_by == "patient":
+        patient : Patient = orm_get_patient_by_id(filter_value)
+        require_role(required_roles=["admin"])
+        appointments : list[MedicalAppointment] = get_appointments_by_patient(
+            patient
+        )
+    if filter_by == "center":
+        medical_center : MedicalCenter = orm_get_medical_center_by_id(filter_value)
+        require_role(required_roles=["admin"])
+        appointments : list[MedicalAppointment] = get_appointments_by_medical_center(
+            medical_center
+        )
+    if filter_by == "status":
+        medical_status : MedicalAppointmentStatus = orm_get_medical_appointment_status_by_id(filter_value)
+        require_role(required_roles=["admin"])
+        appointments : list[MedicalAppointment] = get_appointments_by_status(
+            medical_status
+        )
+    if filter_by == "data":
+        medical_status : MedicalAppointmentStatus = orm_get_medical_appointment_status_by_id(filter_value)
+        require_role(required_roles=["admin","secretary"])
+        appointments : list[MedicalAppointment] = get_appointments_by_date(
+        datetime.datetime.fromisoformat(str(filter_value)))
+    
+    medical_appointments_list = [{'id_medical_appointment':m_a.id_medical_appointment,
+                        'appointment_date':datetime.datetime.fromisoformat(str(m_a.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
+                        'motiu':m_a.motiu,
+                        'medical_appointment_status':{
+                            'name':m_a.medical_appointment_status.name,
+                        },
+                        'id_doctor':m_a.id_doctor,
+                        'id_medical_center':m_a.id_medical_center,
+                        'id_patient':m_a.id_patient,
+                        'id_action_user':m_a.id_action_user} for m_a in appointments]
+    return jsonify(medical_appointments_list)
+
 
 @cites_bp.route('/cites/<int:id>', methods=['GET'])
 @needs_auth
