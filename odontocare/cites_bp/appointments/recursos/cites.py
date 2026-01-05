@@ -127,7 +127,7 @@ def list_appointment(*args, **kwargs):
         appointments : list[MedicalAppointment] = get_appointments_by_status(
             medical_status
         )
-    if filter_by == "data":
+    if filter_by == "date":
         medical_status : MedicalAppointmentStatus = orm_get_medical_appointment_status_by_id(filter_value)
         require_role(required_roles=["admin","secretary"])
         appointments : list[MedicalAppointment] = get_appointments_by_date(
