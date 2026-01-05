@@ -1,0 +1,2 @@
+class MedicalAppointmentIsDeclinedException(Exception):
+    pass

@@ -1,0 +1,2 @@
+class MedicalAppointmentInvalidActionException(Exception):
+    pass

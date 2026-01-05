@@ -10,6 +10,9 @@ from exceptions.action_already_applied.MedicalAppointmentAlreadyDeclinedExceptio
 from enums.MedicalAppointmentStatusEnum import MedicalAppointmentStatusEnum
 from enums.MedicalAppointmentActionEnum import MedicalAppointmentActionEnum
 from exceptions.action_already_applied.MedicalAppointmentIsCancelledException import MedicalAppointmentIsCancelledException
+from exceptions.invalid.MedicalAppointmentInvalidActionException import MedicalAppointmentInvalidActionException
+from exceptions.action_already_applied.MedicalAppointmentIsApprovedException import MedicalAppointmentIsApprovedException
+from exceptions.action_already_applied.MedicalAppointmentIsDeclinedException import MedicalAppointmentIsDeclinedException
 
 def modify_appointment_status(id,action) -> MedicalAppointment:
     try:
@@ -39,11 +42,16 @@ def modify_appointment_status(id,action) -> MedicalAppointment:
             elif status == MedicalAppointmentStatusEnum.DECLINED.value:
                 raise MedicalAppointmentAlreadyDeclinedException()
             else:
-                pass
-        elif medical_appointment.medical_appointment_status.name == MedicalAppointmentStatusEnum.CANCELLED.value and status != MedicalAppointmentStatusEnum.CANCELLED.value:
-            raise MedicalAppointmentIsCancelledException()
+                raise MedicalAppointmentInvalidActionException()
         else:
-            pass
+            if medical_appointment.medical_appointment_status.name == MedicalAppointmentStatusEnum.CANCELLED.value and status != MedicalAppointmentStatusEnum.CANCELLED.value:
+                raise MedicalAppointmentIsCancelledException()
+            elif medical_appointment.medical_appointment_status.name == MedicalAppointmentStatusEnum.APPROVED.value and status != MedicalAppointmentStatusEnum.DECLINED.value:
+                raise MedicalAppointmentIsDeclinedException()
+            elif medical_appointment.medical_appointment_status.name == MedicalAppointmentStatusEnum.DECLINED.value and status != MedicalAppointmentStatusEnum.APPROVED.value:
+                raise MedicalAppointmentIsApprovedException()
+            else:
+                pass
         medical_appointment.medical_appointment_status = medical_appointment_status
         db.session.add(medical_appointment)
         db.session.commit()

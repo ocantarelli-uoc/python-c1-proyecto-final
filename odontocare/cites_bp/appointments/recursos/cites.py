@@ -19,6 +19,8 @@ from exceptions.action_already_applied.MedicalAppointmentAlreadyCancelledExcepti
 from exceptions.action_already_applied.MedicalAppointmentAlreadyApprovedException import MedicalAppointmentAlreadyApprovedException
 from exceptions.action_already_applied.MedicalAppointmentAlreadyDeclinedException import MedicalAppointmentAlreadyDeclinedException
 from exceptions.action_already_applied.MedicalAppointmentIsCancelledException import MedicalAppointmentIsCancelledException
+from exceptions.action_already_applied.MedicalAppointmentIsApprovedException import MedicalAppointmentIsApprovedException
+from exceptions.action_already_applied.MedicalAppointmentIsDeclinedException import MedicalAppointmentIsDeclinedException
 from appointments.services.get_medical_appointment_by_id import get_medical_appointment_by_id as orm_get_medical_appointment_by_id
 # Creamos una instancia de Blueprint
 # 'cites_bp' es el nombre del Blueprint
@@ -137,6 +139,14 @@ def modify_appointment(id,*args, **kwargs):
         print(e_medical_appointment_is_cancelled.__str__(),file=sys.stderr)
         print(e_medical_appointment_is_cancelled.__repr__(),file=sys.stderr)
         return jsonify({'message':'La cita médica fue cancelada previamente!'}),409
+    except (MedicalAppointmentIsDeclinedException) as e_medical_appointment_is_declined:
+        print(e_medical_appointment_is_declined.__str__(),file=sys.stderr)
+        print(e_medical_appointment_is_declined.__repr__(),file=sys.stderr)
+        return jsonify({'message':'La cita médica fue rechazada previamente!'}),409
+    except (MedicalAppointmentIsApprovedException) as e_medical_appointment_is_approved:
+        print(e_medical_appointment_is_approved.__str__(),file=sys.stderr)
+        print(e_medical_appointment_is_approved.__repr__(),file=sys.stderr)
+        return jsonify({'message':'La cita médica fue aprobada previamente!'}),409
     except (MedicalAppointmentAlreadyDeclinedException) as e_medical_appointment_already_cancelled:
         print(e_medical_appointment_already_cancelled.__str__(),file=sys.stderr)
         print(e_medical_appointment_already_cancelled.__repr__(),file=sys.stderr)
