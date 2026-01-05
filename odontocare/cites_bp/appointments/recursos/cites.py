@@ -18,6 +18,7 @@ from exceptions.not_found.MedicalAppointmentNotFoundException import MedicalAppo
 from exceptions.action_already_applied.MedicalAppointmentAlreadyCancelledException import MedicalAppointmentAlreadyCancelledException
 from exceptions.action_already_applied.MedicalAppointmentAlreadyApprovedException import MedicalAppointmentAlreadyApprovedException
 from exceptions.action_already_applied.MedicalAppointmentAlreadyDeclinedException import MedicalAppointmentAlreadyDeclinedException
+from exceptions.action_already_applied.MedicalAppointmentIsCancelledException import MedicalAppointmentIsCancelledException
 from appointments.services.get_medical_appointment_by_id import get_medical_appointment_by_id as orm_get_medical_appointment_by_id
 # Creamos una instancia de Blueprint
 # 'cites_bp' es el nombre del Blueprint
@@ -132,6 +133,10 @@ def modify_appointment(id,*args, **kwargs):
         print(e_medical_appointment_already_cancelled.__str__(),file=sys.stderr)
         print(e_medical_appointment_already_cancelled.__repr__(),file=sys.stderr)
         return jsonify({'message':'La cita médica ya ha sido cancelada!'}),409
+    except (MedicalAppointmentIsCancelledException) as e_medical_appointment_is_cancelled:
+        print(e_medical_appointment_is_cancelled.__str__(),file=sys.stderr)
+        print(e_medical_appointment_is_cancelled.__repr__(),file=sys.stderr)
+        return jsonify({'message':'La cita médica fue cancelada previamente!'}),409
     except (MedicalAppointmentAlreadyDeclinedException) as e_medical_appointment_already_cancelled:
         print(e_medical_appointment_already_cancelled.__str__(),file=sys.stderr)
         print(e_medical_appointment_already_cancelled.__repr__(),file=sys.stderr)

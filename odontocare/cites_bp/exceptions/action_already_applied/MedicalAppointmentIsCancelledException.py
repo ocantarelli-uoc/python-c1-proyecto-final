@@ -1,0 +1,2 @@
+class MedicalAppointmentIsCancelledException(Exception):
+    pass

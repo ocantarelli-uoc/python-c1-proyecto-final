@@ -9,6 +9,7 @@ from exceptions.action_already_applied.MedicalAppointmentAlreadyCreatedException
 from exceptions.action_already_applied.MedicalAppointmentAlreadyDeclinedException import MedicalAppointmentAlreadyDeclinedException
 from enums.MedicalAppointmentStatusEnum import MedicalAppointmentStatusEnum
 from enums.MedicalAppointmentActionEnum import MedicalAppointmentActionEnum
+from exceptions.action_already_applied.MedicalAppointmentIsCancelledException import MedicalAppointmentIsCancelledException
 
 def modify_appointment_status(id,action) -> MedicalAppointment:
     try:
@@ -37,6 +38,12 @@ def modify_appointment_status(id,action) -> MedicalAppointment:
                 raise MedicalAppointmentAlreadyApprovedException()
             elif status == MedicalAppointmentStatusEnum.DECLINED.value:
                 raise MedicalAppointmentAlreadyDeclinedException()
+            else:
+                pass
+        elif medical_appointment.medical_appointment_status.name == MedicalAppointmentStatusEnum.CANCELLED.value and status != MedicalAppointmentStatusEnum.CANCELLED.value:
+            raise MedicalAppointmentIsCancelledException()
+        else:
+            pass
         medical_appointment.medical_appointment_status = medical_appointment_status
         db.session.add(medical_appointment)
         db.session.commit()
