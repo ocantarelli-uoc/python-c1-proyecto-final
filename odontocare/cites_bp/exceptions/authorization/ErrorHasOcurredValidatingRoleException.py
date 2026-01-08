@@ -1,0 +1,2 @@
+class ErrorHasOcurredValidatingRoleException(Exception):
+    pass

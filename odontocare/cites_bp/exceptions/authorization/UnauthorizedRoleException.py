@@ -1,0 +1,2 @@
+class UnauthorizedRoleException(Exception):
+    pass

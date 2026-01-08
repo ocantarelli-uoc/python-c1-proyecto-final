@@ -24,6 +24,8 @@ from exceptions.action_already_applied.MedicalAppointmentIsDeclinedException imp
 from appointments.services.get_medical_appointment_by_id import get_medical_appointment_by_id as orm_get_medical_appointment_by_id
 from appointments.services.get_appointments_by_medical_center import get_appointments_by_medical_center as get_appointments_by_medical_center
 from appointments.services.list_appointments_by_filter import list_appointments_by_filter
+from exceptions.authorization.ErrorHasOcurredValidatingRoleException import ErrorHasOcurredValidatingRoleException
+from exceptions.authorization.UnauthorizedRoleException import UnauthorizedRoleException
 # Creamos una instancia de Blueprint
 # 'cites_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -86,32 +88,32 @@ def add_appointment(*args, **kwargs):
 @needs_auth
 @require_role(required_roles=["admin","secretary","doctor"])
 def list_appointment(*args, **kwargs):
-    filter_by = request.args.get('filter_by')
-    filter_value = request.args.get('filter_value')
-    filter_dict = {
-        'filter_by':filter_by,
-        'filter_value':filter_value
-    }
-    medical_appointments_or_response = list_appointments_by_filter(filter_dict,*args,**kwargs)
+    try:
+        filter_by = request.args.get('filter_by')
+        filter_value = request.args.get('filter_value')
+        filter_dict = {
+            'filter_by':filter_by,
+            'filter_value':filter_value
+        }
+        medical_appointments_or_response = list_appointments_by_filter(filter_dict,*args,**kwargs)
 
-    if isinstance(medical_appointments_or_response,dict):
-        status_code = medical_appointments_or_response.get("status_code")
-        if status_code == 403:
-            return jsonify({'mensaje':"No puedes consultar citas médicas dado este filtro."}),403
-        if status_code == 500:
-            return jsonify({'mensaje':"Ha habido algún error al comprobar si podías consultar filtro."}),403
-
-    medical_appointments_list = [{'id_medical_appointment':m_a.id_medical_appointment,
-                            'appointment_date':datetime.datetime.fromisoformat(str(m_a.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
-                            'motiu':m_a.motiu,
-                            'medical_appointment_status':{
-                                'name':m_a.medical_appointment_status.name,
-                            },
-                            'id_doctor':m_a.id_doctor,
-                            'id_medical_center':m_a.id_medical_center,
-                            'id_patient':m_a.id_patient,
-                            'id_action_user':m_a.id_action_user} for m_a in medical_appointments_or_response]
-    return jsonify(medical_appointments_list)
+        medical_appointments_list = [{'id_medical_appointment':m_a.id_medical_appointment,
+                                'appointment_date':datetime.datetime.fromisoformat(str(m_a.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
+                                'motiu':m_a.motiu,
+                                'medical_appointment_status':{
+                                    'name':m_a.medical_appointment_status.name,
+                                },
+                                'id_doctor':m_a.id_doctor,
+                                'id_medical_center':m_a.id_medical_center,
+                                'id_patient':m_a.id_patient,
+                                'id_action_user':m_a.id_action_user} for m_a in medical_appointments_or_response]
+        return jsonify(medical_appointments_list)
+    except UnauthorizedRoleException:
+        return jsonify({'mensaje':"No puedes consultar citas médicas dado este filtro."}),403
+    except ErrorHasOcurredValidatingRoleException:
+        return jsonify({'mensaje':"Ha habido algún error al comprobar si podías consultar filtro."}),500
+    except Exception:
+        return jsonify({'mensaje':"Ha habido algún error al comprobar si podías consultar filtro."}),500
 
 
 @cites_bp.route('/cites/<int:id>', methods=['GET'])
