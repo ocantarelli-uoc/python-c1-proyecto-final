@@ -12,7 +12,7 @@ def needs_auth(f):
     # 1. Validación del token
         auth_header = request.headers.get('Authorization')
         if not auth_header:
-            return jsonify({'mensaje': 'Token no proporcionado'}), 401
+            return jsonify({'message': 'Token no proporcionado'}), 401
             
         token = auth_header.split(" ")[1]
         try:
@@ -26,9 +26,9 @@ def needs_auth(f):
                 kwargs['authorized_user'] = user
                 return f(*args, **kwargs)
             else:
-                return jsonify({'mensaje': 'Usuario no encontrado'}), 404
+                return jsonify({'message': 'Usuario no encontrado'}), 404
 
         except (jwt.ExpiredSignatureError, jwt.InvalidTokenError):
-                return jsonify({'mensaje': 'Token inválido'}), 401
+                return jsonify({'message': 'Token inválido'}), 401
             
     return wrapper

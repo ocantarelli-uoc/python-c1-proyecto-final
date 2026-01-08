@@ -109,11 +109,11 @@ def list_appointment(*args, **kwargs):
                                 'id_action_user':m_a.id_action_user} for m_a in medical_appointments_or_response]
         return jsonify(medical_appointments_list)
     except UnauthorizedRoleException:
-        return jsonify({'mensaje':"No puedes consultar citas médicas dado este filtro."}),403
+        return jsonify({'message':"No puedes consultar citas médicas dado este filtro."}),403
     except ErrorHasOcurredValidatingRoleException:
-        return jsonify({'mensaje':"Ha habido algún error al comprobar si podías consultar filtro."}),500
+        return jsonify({'message':"Ha habido algún error al comprobar si podías consultar filtro."}),500
     except Exception:
-        return jsonify({'mensaje':"Ha habido algún error al comprobar si podías consultar filtro."}),500
+        return jsonify({'message':"Ha habido algún error al comprobar si podías consultar filtro."}),500
 
 
 @cites_bp.route('/cites/<int:id>', methods=['GET'])
