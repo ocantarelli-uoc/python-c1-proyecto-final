@@ -87,7 +87,6 @@ def add_appointment(*args, **kwargs):
 @require_role(required_roles=["admin","secretary","doctor"])
 def list_appointment(*args, **kwargs):
     isValidRole = False
-    appointments = []
     filter_by = request.args.get('filter_by')
     filter_value = request.args.get('filter_value')
     filter_dict = {
@@ -106,7 +105,7 @@ def list_appointment(*args, **kwargs):
             isValidRole = True
     else:
         isValidRole = True
-        
+
     if isValidRole:
         medical_appointments_list = [{'id_medical_appointment':m_a.id_medical_appointment,
                             'appointment_date':datetime.datetime.fromisoformat(str(m_a.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
