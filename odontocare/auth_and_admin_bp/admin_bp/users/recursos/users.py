@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 import sys
+from models.UserRole import UserRole
 from admin_bp.users.services.get_user_by_id import get_user_by_id as orm_get_user_by_id
 from admin_bp.users.services.get_user_by_username import get_user_by_username as orm_get_user_by_username
 from admin_bp.users.services.create_user import create_user
@@ -9,7 +10,7 @@ from admin_bp.exceptions.already_exists.UserAlreadyExistsException import UserAl
 from admin_bp.users.services.list_users import list_users as orm_list_users
 from models import User
 from admin_bp.exceptions.not_found.UserNotFoundException import UserNotFoundException
-
+from admin_bp.exceptions.authorization.UnauthorizedRoleException import UnauthorizedRoleException
 # Creamos una instancia de Blueprint
 # 'users_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -85,8 +86,15 @@ def get_user_by_id(id,*args, **kwargs):
 @require_role(required_roles=["admin","secretary","patient","doctor"])
 def get_user_by_username(username,*args, **kwargs):
     try:
-        user : User = orm_get_user_by_username(username)
-        if user == None:
+        user = None
+        authorized_user : User = kwargs.get('authorized_user')
+        if authorized_user is not None:
+            user_role : UserRole = authorized_user.user_role
+            if user_role is None or user_role.name not in ["admin"] and authorized_user.username != username:
+                raise UnauthorizedRoleException()
+            else:
+                user : User = orm_get_user_by_username(username)
+        if user is None:
             raise UserNotFoundException()
         user_dict = [{'id_user': user.id_user, 'username': user.username, 
             'user_role':{
@@ -95,6 +103,10 @@ def get_user_by_username(username,*args, **kwargs):
             }
           }]
         return jsonify(user_dict)
+    except (UnauthorizedRoleException) as e_unauthorized_user:
+        print(e_unauthorized_user.__str__(),file=sys.stderr)
+        print(e_unauthorized_user.__repr__(),file=sys.stderr)
+        return jsonify({'message':'No tienes permiso para consultar este usuario!'}),403
     except (UserNotFoundException) as e_user_not_found:
         print(e_user_not_found.__str__(),file=sys.stderr)
         print(e_user_not_found.__repr__(),file=sys.stderr)
