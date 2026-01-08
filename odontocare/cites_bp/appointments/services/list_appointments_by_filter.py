@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 import datetime
-from decorators.require_role import require_role
+import sys
+from appointments.services.user_has_role import user_has_role
 from dtos.User import User
 from models.MedicalAppointment import MedicalAppointment
 from enums.MedicalAppointmentStatusEnum import MedicalAppointmentStatusEnum
@@ -23,8 +24,9 @@ def list_appointments_by_filter(filter_dict,*args,**kwargs):
     appointments = []
     filter_by = filter_dict["filter_by"]
     filter_value = filter_dict["filter_value"]
+    result_user_has_role = {}
     if filter_by == "doctor":
-        require_role(required_roles=["admin","doctor"])
+        result_user_has_role = user_has_role(required_roles=["admin","doctor"],*args,**kwargs)
         if authorized_user.user_role.name=="doctor":
             doctor_id = authorized_user.id_user
         else:
@@ -33,29 +35,33 @@ def list_appointments_by_filter(filter_dict,*args,**kwargs):
         if doctor is not None:
             appointments : list[MedicalAppointment] = get_appointments_by_doctor(doctor)
     if filter_by == "patient":
-        require_role(required_roles=["admin"])
+        result_user_has_role = user_has_role(required_roles=["admin"],*args,**kwargs)
         patient : Patient = orm_get_patient_by_id(filter_value)
         if patient is not None:
             appointments : list[MedicalAppointment] = get_appointments_by_patient(
                 patient
             )
     if filter_by == "center":
-        require_role(required_roles=["admin"])
+        result_user_has_role = user_has_role(required_roles=["admin"],*args,**kwargs)
         medical_center : MedicalCenter = orm_get_medical_center_by_id(filter_value)
         if medical_center is not None:
             appointments : list[MedicalAppointment] = get_appointments_by_medical_center(
                 medical_center
             )
     if filter_by == "status":
-        require_role(required_roles=["admin"])
+        result_user_has_role = user_has_role(required_roles=["admin"],*args,**kwargs)
         medical_status : MedicalAppointmentStatus = orm_get_medical_appointment_status_by_id(filter_value)
         if medical_status is not None:
             appointments : list[MedicalAppointment] = get_appointments_by_status(
                 medical_status
             )
     if filter_by == "date":
-        require_role(required_roles=["admin","secretary"])
+        result_user_has_role = user_has_role(required_roles=["admin","secretary"],*args,**kwargs)
         if filter_value is not None:
             appointments : list[MedicalAppointment] = get_appointments_by_date(
             datetime.datetime.fromisoformat(str(filter_value)))
-    return appointments
+    print(result_user_has_role,file=sys.stderr)
+    if result_user_has_role.get('status_code') != 200:
+        return result_user_has_role
+    else:
+        return appointments

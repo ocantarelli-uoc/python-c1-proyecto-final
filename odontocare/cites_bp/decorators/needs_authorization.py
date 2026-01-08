@@ -1,4 +1,5 @@
 import jwt
+import sys
 from functools import wraps
 from flask import Flask, jsonify, request
 from dotenv import dotenv_values
@@ -18,6 +19,7 @@ def needs_auth(f):
             dotenv_config_values = dotenv_values('.env')
             payload = jwt.decode(token, dotenv_config_values['SECRET_KEY'], algorithms=['HS256'])
             payload_user = payload['sub']
+            print("User: "+payload_user,file=sys.stderr)
             user = get_user_by_username(payload_user)
             # 2. Verificación del usuario
             if user != None:

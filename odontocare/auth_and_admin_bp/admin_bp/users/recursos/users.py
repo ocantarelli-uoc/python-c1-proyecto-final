@@ -82,7 +82,7 @@ def get_user_by_id(id,*args, **kwargs):
 
 @users_bp.route('/admin/usuaris/name/<string:username>', methods=['GET'])
 @needs_auth
-@require_role(required_roles=["admin"])
+@require_role(required_roles=["admin","secretary","patient","doctor"])
 def get_user_by_username(username,*args, **kwargs):
     try:
         user : User = orm_get_user_by_username(username)

@@ -86,6 +86,7 @@ def add_appointment(*args, **kwargs):
 @needs_auth
 @require_role(required_roles=["admin","secretary","doctor"])
 def list_appointment(*args, **kwargs):
+    isValidRole = False
     appointments = []
     filter_by = request.args.get('filter_by')
     filter_value = request.args.get('filter_value')
@@ -93,19 +94,31 @@ def list_appointment(*args, **kwargs):
         'filter_by':filter_by,
         'filter_value':filter_value
     }
-    medical_appointments = list_appointments_by_filter(filter_dict,*args,**kwargs)
-    
-    medical_appointments_list = [{'id_medical_appointment':m_a.id_medical_appointment,
-                        'appointment_date':datetime.datetime.fromisoformat(str(m_a.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
-                        'motiu':m_a.motiu,
-                        'medical_appointment_status':{
-                            'name':m_a.medical_appointment_status.name,
-                        },
-                        'id_doctor':m_a.id_doctor,
-                        'id_medical_center':m_a.id_medical_center,
-                        'id_patient':m_a.id_patient,
-                        'id_action_user':m_a.id_action_user} for m_a in medical_appointments]
-    return jsonify(medical_appointments_list)
+    medical_appointments_or_response = list_appointments_by_filter(filter_dict,*args,**kwargs)
+
+    if isinstance(medical_appointments_or_response,dict):
+        status_code = medical_appointments_or_response.get("status_code")
+        if status_code == 403:
+            return jsonify({'mensaje':"No puedes consultar citas médicas dado este filtro."}),403
+        elif status_code == 500:
+            return jsonify({'mensaje':"Ha habido algún error al comprobar si podías consultar filtro."}),403
+        else:
+            isValidRole = True
+    else:
+        isValidRole = True
+        
+    if isValidRole:
+        medical_appointments_list = [{'id_medical_appointment':m_a.id_medical_appointment,
+                            'appointment_date':datetime.datetime.fromisoformat(str(m_a.appointment_date)).astimezone(ZoneInfo("Europe/Madrid")).isoformat(),
+                            'motiu':m_a.motiu,
+                            'medical_appointment_status':{
+                                'name':m_a.medical_appointment_status.name,
+                            },
+                            'id_doctor':m_a.id_doctor,
+                            'id_medical_center':m_a.id_medical_center,
+                            'id_patient':m_a.id_patient,
+                            'id_action_user':m_a.id_action_user} for m_a in medical_appointments_or_response]
+        return jsonify(medical_appointments_list)
 
 
 @cites_bp.route('/cites/<int:id>', methods=['GET'])
