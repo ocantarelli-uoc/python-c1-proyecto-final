@@ -59,7 +59,7 @@ def list_medical_specialities(*args, **kwargs):
 def get_medical_speciality_by_id(id,*args, **kwargs):
     try:
         medical_speciality : MedicalSpeciality = orm_get_medical_speciality_by_id(id)
-        if medical_speciality == None:
+        if medical_speciality is None:
             raise MedicalSpecialityNotFoundException()
         medical_speciality_dict = [{'id_medical_speciality': medical_speciality.id_medical_speciality, 'name': medical_speciality.name}]
         return jsonify(medical_speciality_dict)

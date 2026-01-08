@@ -7,7 +7,7 @@ from auth_bp.services.hash_password import hash_password
 def create_user(user_data,user_role_str):
     #datos = request.get_json()
     try:
-        if user_role_str == None:
+        if user_role_str is None:
             user_role_str = user_data["user_role"]
         user_role:UserRole = UserRole.query.filter_by(name=user_role_str).first()
         hashed_password = hash_password(user_data["password"])

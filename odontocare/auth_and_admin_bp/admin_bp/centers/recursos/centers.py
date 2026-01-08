@@ -25,7 +25,7 @@ def add_center(*args, **kwargs):
         if existing_center != None:
             raise MedicalCenterAlreadyExistsException()
         created_center = create_center()
-        if created_center == None:
+        if created_center is None:
             raise MedicalCenterNotFoundException()
         return jsonify({'id': created_center.id_medical_center, 'name': created_center.name})
     except MedicalCenterAlreadyExistsException as e_center_already_exists:
@@ -64,7 +64,7 @@ def list_medical_centers(*args, **kwargs):
 def get_medical_centers_by_id(id,*args, **kwargs):
     try:
         medical_center : MedicalCenter = orm_get_medical_center_by_id(id)
-        if medical_center == None:
+        if medical_center is None:
             raise MedicalCenterNotFoundException()
         user_role_dict = [{'id_medical_center': medical_center.id_medical_center, 'name': medical_center.name,
             'address':{

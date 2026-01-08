@@ -30,7 +30,7 @@ def add_patient(*args, **kwargs):
             'password':datos['password']
         },user_role_str="patient")
         created_patient = create_patient(created_user)
-        if created_patient == None:
+        if created_patient is None:
             raise PatientNotFoundException()
         return jsonify({'id': created_patient.id_patient, 'name': created_patient.name})
     except PatientAlreadyExistsException as e_patient_already_exists:
@@ -65,7 +65,7 @@ def list_patients(*args, **kwargs):
 def get_patient_by_id(id,*args, **kwargs):
     try:
         patient : Patient = orm_get_patient_by_id(id)
-        if patient == None:
+        if patient is None:
             raise PatientNotFoundException()
         patient_dict = [{'id_patient': patient.id_patient, 'name': patient.name
                         ,

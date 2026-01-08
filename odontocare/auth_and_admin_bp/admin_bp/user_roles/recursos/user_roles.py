@@ -64,7 +64,7 @@ def list_user_roles(*args, **kwargs):
 def get_user_role_by_id(id,*args, **kwargs):
     try:
         user_role : UserRole = orm_get_user_role_by_id(id)
-        if user_role == None:
+        if user_role is None:
             raise UserRoleNotFoundException()
         user_role_dict = [{'id': user_role.id_user_role, 'name': user_role.name}]
         return jsonify(user_role_dict)

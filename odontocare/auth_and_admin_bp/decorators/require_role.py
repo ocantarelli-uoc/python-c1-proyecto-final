@@ -15,7 +15,7 @@ def require_role(required_roles:list[str]):
                 authorized_user : User = kwargs.get('authorized_user')
                 if authorized_user != None:
                     user_role : UserRole = authorized_user.user_role
-                    if user_role == None or user_role.name not in required_roles:
+                    if user_role is None or user_role.name not in required_roles:
                         return jsonify({'message': 'Permiso denegado'}), 403
 
             except Exception as e:

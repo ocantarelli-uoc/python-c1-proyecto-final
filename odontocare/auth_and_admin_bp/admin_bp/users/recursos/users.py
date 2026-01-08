@@ -32,7 +32,7 @@ def add_user(*args, **kwargs):
             'user_role':datos['user_role']
         },user_role_str=None)
         user = orm_get_user_by_id(createdUser.id_user)
-        if user == None:
+        if user is None:
             raise UserNotFoundException()
         return jsonify({'id': user.id_user, 'username': user.username})
     except UserAlreadyExistsException as e_user_already_exists:
@@ -68,7 +68,7 @@ def list_users(*args, **kwargs):
 def get_user_by_id(id,*args, **kwargs):
     try:
         user = orm_get_user_by_id(id)
-        if user == None:
+        if user is None:
             raise UserNotFoundException()
         user_dict = [{'id': user.id_user, 'username': user.username, 'role': user.user_role.name}]
         return jsonify(user_dict)

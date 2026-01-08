@@ -25,7 +25,7 @@ def add_address(*args, **kwargs):
         if existing_address != None:
             raise AddressAlreadyExistsException()
         created_address = create_address()
-        if create_address == None:
+        if create_address is None:
             raise AddressNotFoundException()
         return jsonify({'id': created_address.id_address, 'street': created_address.street, 
                         'city':created_address.city})
@@ -63,7 +63,7 @@ def list_addresses(*args, **kwargs):
 def get_address_by_id(id,*args, **kwargs):
     try:
         address : Address = orm_get_address_by_id(id)
-        if address == None:
+        if address is None:
             raise AddressNotFoundException()
         user_role_dict = [{'id_address':address.id_address,
                 'street':address.street,
