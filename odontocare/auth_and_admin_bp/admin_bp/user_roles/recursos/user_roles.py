@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify, request
 import sys
-from admin_bp.user_roles.services.get_user_role_by_id import get_user_role_by_id
 from admin_bp.user_roles.services.create_user_role import create_user_role
 from decorators.needs_authorization import needs_auth
 from decorators.require_role import require_role
@@ -29,9 +28,6 @@ def add_user_role(*args, **kwargs):
             'role_name':datos['role_name']
         }
         created_user_role = create_user_role(user_role_dict)
-        """user_role = get_user_role_by_id(created_user_role.id_user_role)
-        if user_role == None:
-            raise UserRoleNotFoundException()"""
         print("abans retornar rol creat",file=sys.stderr)
         print(created_user_role.__str__(),file=sys.stderr)
         print(created_user_role.__repr__(),file=sys.stderr)
