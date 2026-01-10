@@ -10,6 +10,7 @@ from models.Doctor import Doctor
 from admin_bp.doctors.services.get_doctor_by_name import get_doctor_by_name
 from admin_bp.doctors.services.list_doctors import list_doctors as orm_list_doctors
 from admin_bp.doctors.services.get_doctor_by_id import get_doctor_by_id as orm_get_doctor_by_id
+from admin_bp.user_roles.enums.UserRoleEnum import UserRoleEnum
 # Creamos una instancia de Blueprint
 # 'doctors_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -28,7 +29,7 @@ def add_doctor(*args, **kwargs):
         created_user = create_user({
             'username':datos['username'],
             'password':datos['password']
-        },user_role_str="doctor")
+        },user_role_str=UserRoleEnum.DOCTOR.value)
         created_doctor = create_doctor(created_user)
         if created_doctor is None:
             raise DoctorNotFoundException()

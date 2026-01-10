@@ -10,6 +10,7 @@ from admin_bp.patients.services.get_patient_by_name import get_patient_by_name
 from admin_bp.exceptions.not_found.PatientNotFoundException import PatientNotFoundException
 from admin_bp.patients.services.list_patients import list_patients as orm_list_patients
 from admin_bp.patients.services.get_patient_by_id import get_patient_by_id as orm_get_patient_by_id
+from admin_bp.user_roles.enums.UserRoleEnum import UserRoleEnum
 # Creamos una instancia de Blueprint
 # 'patients_bp' es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -28,7 +29,7 @@ def add_patient(*args, **kwargs):
         created_user = create_user({
             'username':datos['username'],
             'password':datos['password']
-        },user_role_str="patient")
+        },user_role_str=UserRoleEnum.PATIENT.value)
         created_patient = create_patient(created_user)
         if created_patient is None:
             raise PatientNotFoundException()
