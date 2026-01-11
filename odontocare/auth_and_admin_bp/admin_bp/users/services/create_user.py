@@ -1,4 +1,3 @@
-from flask import request
 from models.UserRole import UserRole
 from models.User import User
 from extensions import db

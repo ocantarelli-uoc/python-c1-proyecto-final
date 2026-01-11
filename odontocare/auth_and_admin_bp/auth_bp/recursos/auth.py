@@ -5,8 +5,6 @@ from dotenv import dotenv_values
 import datetime
 from admin_bp.users.services.get_user_by_username import get_user_by_username
 from models.User import User
-import app
-from auth_bp.services.hash_password import hash_password
 from auth_bp.services.hash_password import check_password
 
 # Creamos una instancia de Blueprint

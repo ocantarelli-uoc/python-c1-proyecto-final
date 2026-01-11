@@ -1,5 +1,4 @@
 import datetime
-from zoneinfo import ZoneInfo
 from extensions import db
 from dtos.Doctor import Doctor
 from dtos.Patient import Patient

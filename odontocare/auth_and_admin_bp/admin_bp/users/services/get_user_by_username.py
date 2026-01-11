@@ -1,4 +1,3 @@
-from models.UserRole import UserRole
 from models.User import User
 
 def get_user_by_username(username):

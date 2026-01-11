@@ -1,6 +1,4 @@
 import sys
-from functools import wraps
-from flask import Flask, jsonify, request
 from dtos.User import User
 from dtos.UserRole import UserRole
 from exceptions.authorization.ErrorHasOcurredValidatingRoleException import ErrorHasOcurredValidatingRoleException
@@ -8,6 +6,7 @@ from exceptions.authorization.UnauthorizedRoleException import UnauthorizedRoleE
 # Decorador personalizado para verificar el rol
 def user_has_role(required_roles:list[str],*args, **kwargs):
     try:
+        user_role = None
         authorized_user : User = kwargs.get('authorized_user')
         if authorized_user != None:
          user_role : UserRole = authorized_user.user_role
