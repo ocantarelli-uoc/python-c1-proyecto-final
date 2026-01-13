@@ -10,7 +10,6 @@ def login(username:str,password:str) -> Token:
     }
     req = requests.post('http://localhost:5001/api/v1/auth/login',json=body_payload)
     r = req.prepare()
-    r.headers['Authorization'] = request.headers.get('Authorization')
     r.headers['Content-Type'] = 'application/json'   
     s = requests.Session()
     rs: requests.Response = s.send(r)
