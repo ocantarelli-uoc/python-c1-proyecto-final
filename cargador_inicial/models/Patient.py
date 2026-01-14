@@ -1,4 +1,4 @@
-from dtos.User import User
+from models.User import User
 class Patient:
     def __init__(self,id_patient:int,user:User,name:str,telephone:str,is_active:bool):
         self.id_patient = id_patient

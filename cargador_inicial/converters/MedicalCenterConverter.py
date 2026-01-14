@@ -1,6 +1,6 @@
-from cargador_inicial.converters.Converter import Converter
-from cargador_inicial.dtos.MedicalCenter import MedicalCenter
-from cargador_inicial.dtos.Address import Address
+from converters.Converter import Converter
+from models.MedicalCenter import MedicalCenter
+from models.Address import Address
 
 class MedicalCenterConverter(Converter):
   #method that its responsibility it's to convert a dataframe of medical_centers to list of MedicalCenter class objects (instances)

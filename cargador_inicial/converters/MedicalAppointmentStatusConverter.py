@@ -1,5 +1,5 @@
-from cargador_inicial.converters.Converter import Converter
-from cargador_inicial.dtos.MedicalAppointmentStatus import MedicalAppointmentStatus
+from converters.Converter import Converter
+from models.MedicalAppointmentStatus import MedicalAppointmentStatus
 
 
 class MedicalAppointmentStatusConverter(Converter):

@@ -1,28 +1,27 @@
 
-
-from cargador_inicial.converters.AddressConverter import AddressConverter
-from cargador_inicial.converters.DoctorConverter import DoctorConverter
-from cargador_inicial.converters.MedicalAppointmentConverter import MedicalAppointmentConverter
-from cargador_inicial.converters.MedicalAppointmentStatusConverter import MedicalAppointmentStatusConverter
-from cargador_inicial.converters.MedicalCenterConverter import MedicalCenterConverter
-from cargador_inicial.converters.MedicalSpecialityConverter import MedicalSpecialityConverter
-from cargador_inicial.converters.PatientConverter import PatientConverter
-from cargador_inicial.converters.UserConverter import UserConverter
-from cargador_inicial.converters.UserRoleConverter import UserRoleConverter
-from cargador_inicial.util.file_manager import CSVFileManager
 import sys
 from flask import request
 import requests
-from dtos.Token import Token
-from dtos.Address import Address
-from dtos.User import User
-from dtos.UserRole import UserRole
-from dtos.Doctor import Doctor
-from dtos.MedicalSpeciality import MedicalSpeciality
-from dtos.Patient import Patient
-from dtos.MedicalCenter import MedicalCenter
-from dtos.MedicalAppointmentStatus import MedicalAppointmentStatus
-from dtos.MedicalAppointment import MedicalAppointment
+from converters.AddressConverter import AddressConverter
+from converters.DoctorConverter import DoctorConverter
+from converters.MedicalAppointmentConverter import MedicalAppointmentConverter
+from converters.MedicalAppointmentStatusConverter import MedicalAppointmentStatusConverter
+from converters.MedicalCenterConverter import MedicalCenterConverter
+from converters.MedicalSpecialityConverter import MedicalSpecialityConverter
+from converters.PatientConverter import PatientConverter
+from converters.UserConverter import UserConverter
+from converters.UserRoleConverter import UserRoleConverter
+from util.file_manager import CSVFileManager
+from models.Token import Token
+from models.Address import Address
+from models.User import User
+from models.UserRole import UserRole
+from models.Doctor import Doctor
+from models.MedicalSpeciality import MedicalSpeciality
+from models.Patient import Patient
+from models.MedicalCenter import MedicalCenter
+from models.MedicalAppointmentStatus import MedicalAppointmentStatus
+from models.MedicalAppointment import MedicalAppointment
 
 class InitialCharger:
 

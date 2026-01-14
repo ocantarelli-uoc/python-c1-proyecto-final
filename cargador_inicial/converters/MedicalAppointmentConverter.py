@@ -1,9 +1,9 @@
-from cargador_inicial.converters.Converter import Converter
-from cargador_inicial.dtos.MedicalAppointment import MedicalAppointment
-from cargador_inicial.dtos.Doctor import Doctor
-from cargador_inicial.dtos.Patient import Patient
-from cargador_inicial.dtos.User import User 
-from cargador_inicial.dtos.MedicalAppointmentStatus import MedicalAppointmentStatus
+from converters.Converter import Converter
+from models.MedicalAppointment import MedicalAppointment
+from models.Doctor import Doctor
+from models.Patient import Patient
+from models.User import User 
+from models.MedicalAppointmentStatus import MedicalAppointmentStatus
 
 class MedicalAppointmentConverter(Converter):
   #method that its responsibility it's to convert a dataframe of medical appointments to list of MedicalAppointment class objects (instances)

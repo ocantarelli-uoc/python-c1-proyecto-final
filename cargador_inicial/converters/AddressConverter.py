@@ -1,5 +1,5 @@
-from cargador_inicial.converters.Converter import Converter
-from cargador_inicial.dtos.Address import Address
+from converters.Converter import Converter
+from models.Address import Address
 
 
 class AddressConverter(Converter):

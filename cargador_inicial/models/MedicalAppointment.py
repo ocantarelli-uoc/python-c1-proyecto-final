@@ -1,9 +1,9 @@
 from datetime import datetime
 
-from cargador_inicial.dtos.MedicalAppointmentStatus import MedicalAppointmentStatus
-from cargador_inicial.dtos.Doctor import Doctor
-from cargador_inicial.dtos.Patient import Patient
-from cargador_inicial.dtos.User import User
+from models.MedicalAppointmentStatus import MedicalAppointmentStatus
+from models.Doctor import Doctor
+from models.Patient import Patient
+from models.User import User
 class MedicalAppointment:
     def __init__(self,id_medical_appointment:int,appointment_date:datetime,
                  motiu:str,medical_status:MedicalAppointmentStatus,

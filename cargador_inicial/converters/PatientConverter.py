@@ -1,6 +1,6 @@
-from cargador_inicial.converters.Converter import Converter
-from cargador_inicial.dtos.Patient import Patient
-from cargador_inicial.dtos.User import User
+from converters.Converter import Converter
+from models.Patient import Patient
+from models.User import User
 
 
 class PatientConverter(Converter):

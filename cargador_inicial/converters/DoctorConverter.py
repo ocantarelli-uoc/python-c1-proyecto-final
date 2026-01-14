@@ -1,7 +1,7 @@
-from cargador_inicial.converters.Converter import Converter
-from cargador_inicial.dtos.Doctor import Doctor
-from cargador_inicial.dtos.User import User
-from cargador_inicial.dtos.MedicalSpeciality import MedicalSpeciality
+from converters.Converter import Converter
+from models.Doctor import Doctor
+from models.User import User
+from models.MedicalSpeciality import MedicalSpeciality
 
 
 class DoctorConverter(Converter):

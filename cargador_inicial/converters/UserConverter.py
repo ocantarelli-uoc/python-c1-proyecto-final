@@ -1,6 +1,6 @@
-from cargador_inicial.converters.Converter import Converter
-from cargador_inicial.dtos.User import User
-from cargador_inicial.dtos.UserRole import UserRole
+from converters.Converter import Converter
+from models.User import User
+from models.UserRole import UserRole
 
 
 class UserConverter(Converter):

@@ -1,4 +1,4 @@
-from dtos.Address import Address
+from models.Address import Address
 class MedicalCenter:
     def __init__(self,id_medical_center:int,address:Address,name:str):
         self.id_medical_center = id_medical_center

@@ -1,5 +1,5 @@
-from cargador_inicial.converters.Converter import Converter
-from cargador_inicial.dtos.MedicalSpeciality import MedicalSpeciality
+from converters.Converter import Converter
+from models.MedicalSpeciality import MedicalSpeciality
 
 
 class MedicalSpecialityConverter(Converter):
