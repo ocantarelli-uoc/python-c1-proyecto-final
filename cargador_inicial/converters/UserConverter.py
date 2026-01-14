@@ -8,7 +8,8 @@ class UserConverter(Converter):
   def convert(self,dataFrame) -> list:
     users = []
     for row in dataFrame.itertuples():
-      user = User(id_user=None,username=row.username,password=row.password,
-                     user_role=UserRole(id_user_role=None,name=row.user_role))
-      users.append(user)
+      if row.entity_type == "user":
+        user = User(id_user=None,username=row.username,password=row.password,
+                      user_role=UserRole(id_user_role=None,name=row.user_role))
+        users.append(user)
     return users

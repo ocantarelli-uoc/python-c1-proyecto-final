@@ -7,9 +7,10 @@ class MedicalSpecialityConverter(Converter):
      def convert(self,dataFrame) -> list:
         medical_specialities = []
         for row in dataFrame.itertuples():
-            medical_speciality = MedicalSpeciality(
-                id_medical_speciality=None,
-                name=row.name,
-            )
-            medical_specialities.append(medical_speciality)
+            if row.entity_type == "medical_speciality":
+                medical_speciality = MedicalSpeciality(
+                    id_medical_speciality=None,
+                    name=row.name,
+                )
+                medical_specialities.append(medical_speciality)
         return medical_specialities

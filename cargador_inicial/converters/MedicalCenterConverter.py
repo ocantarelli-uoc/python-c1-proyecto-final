@@ -7,14 +7,15 @@ class MedicalCenterConverter(Converter):
      def convert(self,dataFrame) -> list:
         medical_centers = []
         for row in dataFrame.itertuples():
-            medical_center = MedicalCenter(
-                id_medical_center=None,
-                address=Address(
-                    id_address=row.id_address,
-                    street=None,
-                    city=None,
-                ),
-                name=row.name,
-            )
-            medical_centers.append(medical_center)
+            if row.entity_type == "medical_center":
+                medical_center = MedicalCenter(
+                    id_medical_center=None,
+                    address=Address(
+                        id_address=row.id_address,
+                        street=None,
+                        city=None,
+                    ),
+                    name=row.name,
+                )
+                medical_centers.append(medical_center)
         return medical_centers

@@ -7,9 +7,10 @@ class UserRoleConverter(Converter):
      def convert(self,dataFrame) -> list:
         user_roles = []
         for row in dataFrame.itertuples():
-            user_role = UserRole(
-                id_user_role=None,
-                name=row.name
-            )
-            user_roles.append(user_role)
+            if row.entity_type == "user_role":
+                user_role = UserRole(
+                    id_user_role=None,
+                    name=row.name
+                )
+                user_roles.append(user_role)
         return user_roles

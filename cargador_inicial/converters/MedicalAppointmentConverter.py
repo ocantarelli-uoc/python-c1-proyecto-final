@@ -10,15 +10,16 @@ class MedicalAppointmentConverter(Converter):
      def convert(self,dataFrame) -> list:
         medical_appointments = []
         for row in dataFrame.itertuples():
-            medical_appointment = MedicalAppointment(
-                id_medical_appointment=None,
-                appointment_date=row.appointment_date,
-                id_doctor=row.id_doctor,
-                id_patient=row.id_patient,
-                motiu=row.motiu,
-                medical_status=None,
-                id_action_user=row.id_action_user,
-                id_medical_center=row.id_medical_center
-            )
-            medical_appointments.append(medical_appointment)
+            if row.entity_type == "medical_appointment":
+                medical_appointment = MedicalAppointment(
+                    id_medical_appointment=None,
+                    appointment_date=row.appointment_date,
+                    id_doctor=row.id_doctor,
+                    id_patient=row.id_patient,
+                    motiu=row.motiu,
+                    medical_status=None,
+                    id_action_user=row.id_action_user,
+                    id_medical_center=row.id_medical_center
+                )
+                medical_appointments.append(medical_appointment)
         return medical_appointments

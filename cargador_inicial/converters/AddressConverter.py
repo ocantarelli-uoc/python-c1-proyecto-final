@@ -7,10 +7,11 @@ class AddressConverter(Converter):
      def convert(self,dataFrame) -> list:
         addresses = []
         for row in dataFrame.itertuples():
-            address = Address(
-                id_address=None,
-                street=row.street,
-                city=row.city,
-            )
-            addresses.append(address)
+            if row.entity_type == "address":
+                address = Address(
+                    id_address=None,
+                    street=row.street,
+                    city=row.city,
+                )
+                addresses.append(address)
         return addresses

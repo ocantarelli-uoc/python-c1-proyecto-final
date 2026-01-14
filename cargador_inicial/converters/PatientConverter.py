@@ -8,15 +8,16 @@ class PatientConverter(Converter):
      def convert(self,dataFrame) -> list:
         patients = []
         for row in dataFrame.itertuples():
-            patient = Patient(id_patient=None,
-                        user=User(
-                          id_user=None,
-                          username=row.username,
-                          password=row.password,
-                          user_role=None
-                        ),
-                        name=row.name,
-                        telephone=row.telephone,
-                        is_active=row.is_active)
-            patients.append(patient)
+            if row.entity_type == "patient":
+              patient = Patient(id_patient=None,
+                          user=User(
+                            id_user=None,
+                            username=row.username,
+                            password=row.password,
+                            user_role=None
+                          ),
+                          name=row.name,
+                          telephone=row.telephone,
+                          is_active=row.is_active)
+              patients.append(patient)
         return patients

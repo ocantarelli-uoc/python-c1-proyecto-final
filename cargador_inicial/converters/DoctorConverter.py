@@ -9,17 +9,18 @@ class DoctorConverter(Converter):
      def convert(self,dataFrame) -> list:
         doctors = []
         for row in dataFrame.itertuples():
-            doctor = Doctor(id_doctor=None,
-                        user=User(
-                          id_user=None,
-                          username=row.username,
-                          password=row.password,
-                          user_role=None
-                        ),
-                        name=row.name,
-                        medical_speciality=MedicalSpeciality(
-                            id_medical_speciality=None,
-                            name=row.medical_speciality
-                        ))
-            doctors.append(doctor)
+            if row.entity_type == "doctor":
+              doctor = Doctor(id_doctor=None,
+                          user=User(
+                            id_user=None,
+                            username=row.username,
+                            password=row.password,
+                            user_role=None
+                          ),
+                          name=row.name,
+                          medical_speciality=MedicalSpeciality(
+                              id_medical_speciality=None,
+                              name=row.medical_speciality
+                          ))
+              doctors.append(doctor)
         return doctors
