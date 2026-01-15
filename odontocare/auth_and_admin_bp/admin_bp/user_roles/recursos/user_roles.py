@@ -31,7 +31,7 @@ def add_user_role(*args, **kwargs):
         print("abans retornar rol creat",file=sys.stderr)
         print(created_user_role.__str__(),file=sys.stderr)
         print(created_user_role.__repr__(),file=sys.stderr)
-        return jsonify({'id': created_user_role.id_user_role, 'name': created_user_role.name})
+        return jsonify({'id_user_role': created_user_role.id_user_role, 'name': created_user_role.name})
     except UserRoleAlreadyExistsException as e_user_role_already_exists:
         print(e_user_role_already_exists.__str__(),file=sys.stderr)
         print(e_user_role_already_exists.__repr__(),file=sys.stderr)

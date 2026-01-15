@@ -70,6 +70,30 @@ class CargaInicial:
 
         for address in addresses:
             self.create_address(address=address)
+        
+        for medical_center in medical_centers:
+            self.create_medical_center(medical_center=medical_center)
+        
+        for medical_speciality in medical_specialities:
+            self.create_medical_speciality(medical_speciality=medical_speciality)
+        
+        for user_role in user_roles:
+            self.create_user_role(user_role=user_role)
+        
+        for user in users:
+            self.create_user(user=user)
+
+        for patient in patients:
+            self.create_patient(patient=patient)
+        
+        for doctor in doctors:
+            self.create_doctor(doctor=doctor)
+        
+        for medical_appointment_status in medicalAppointmentStatuses:
+            self.create_medical_appointment_status(medical_appointment_status=medical_appointment_status)
+        
+        for medical_appointment in medicalAppointments:
+            self.create_medical_appointment(medical_appointment=medical_appointment)
 
     
     def create_address(self,address:Address) -> Address:
@@ -114,7 +138,7 @@ class CargaInicial:
                     name=doctors_list['name'],
                     user=User(id_user=doctors_list['user']['id_user'],
                         username=doctors_list['user']['username'],
-                        password=doctors_list['user']['password'],
+                        password=None,
                             user_role=UserRole(
                                 id_user_role=doctors_list['user']['user_role']['id_user_role'],
                                 name=doctors_list['user']['user_role']['name']
@@ -159,7 +183,7 @@ class CargaInicial:
         user_list = rs.json()
         user : User = User(id_user=user_list['id_user'],
                         username=user_list['username'],
-                        password=user_list['password'],
+                        password=None,
                             user_role=UserRole(
                                 id_user_role=user_list['user_role']['id_user_role'],
                                 name=user_list['user_role']['name']
@@ -188,7 +212,7 @@ class CargaInicial:
                     is_active=patient_list['is_active'],
                     user=User(id_user=patient_list['user']['id_user'],
                         username=patient_list['user']['username'],
-                        password=patient_list['user']['password'],
+                        password=None,
                             user_role=UserRole(
                                 id_user_role=patient_list['user']['user_role']['id_user_role'],
                                 name=patient_list['user']['user_role']['name']

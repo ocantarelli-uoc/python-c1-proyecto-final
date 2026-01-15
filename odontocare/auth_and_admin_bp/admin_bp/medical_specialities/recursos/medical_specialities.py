@@ -26,7 +26,7 @@ def add_medical_speciality(*args, **kwargs):
         if existing_medical_speciality != None:
             raise MedicalSpecialityAlreadyExistsException()
         created_medical_speciality = create_medical_speciality()
-        return jsonify({'id': created_medical_speciality.id_medical_speciality, 'name': created_medical_speciality.name})
+        return jsonify({'id_medical_speciality': created_medical_speciality.id_medical_speciality, 'name': created_medical_speciality.name})
     except MedicalSpecialityAlreadyExistsException as e_medical_speciality_already_exists:
         print(e_medical_speciality_already_exists.__str__(),file=sys.stderr)
         print(e_medical_speciality_already_exists.__repr__(),file=sys.stderr)

@@ -34,7 +34,11 @@ def add_user(*args, **kwargs):
         user = orm_get_user_by_id(createdUser.id_user)
         if user is None:
             raise UserNotFoundException()
-        return jsonify({'id': user.id_user, 'username': user.username})
+        return jsonify({'id_user': user.id_user, 'username': user.username,
+                        'user_role':{
+                            'id_user_role':user.user_role.id_user_role,
+                            'name':user.user_role.name,
+                        }})
     except UserAlreadyExistsException as e_user_already_exists:
         print(e_user_already_exists.__str__(),file=sys.stderr)
         print(e_user_already_exists.__repr__(),file=sys.stderr)

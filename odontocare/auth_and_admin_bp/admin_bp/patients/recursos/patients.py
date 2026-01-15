@@ -33,7 +33,14 @@ def add_patient(*args, **kwargs):
         created_patient = create_patient(created_user)
         if created_patient is None:
             raise PatientNotFoundException()
-        return jsonify({'id': created_patient.id_patient, 'name': created_patient.name})
+        return jsonify({'id_patient': created_patient.id_patient, 'name': created_patient.name,
+                        'telephone':created_patient.telephone,
+                        'is_active':created_patient.is_active,
+                        'user':{'id_user': created_patient.user.id_user, 'username': created_patient.user.username,
+                        'user_role':{
+                            'id_user_role':created_patient.user.user_role.id_user_role,
+                            'name':created_patient.user.user_role.name,
+                        }}})
     except PatientAlreadyExistsException as e_patient_already_exists:
         print(e_patient_already_exists.__str__(),file=sys.stderr)
         print(e_patient_already_exists.__repr__(),file=sys.stderr)

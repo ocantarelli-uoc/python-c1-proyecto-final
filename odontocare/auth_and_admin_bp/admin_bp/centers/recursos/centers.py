@@ -27,7 +27,12 @@ def add_center(*args, **kwargs):
         created_center = create_center()
         if created_center is None:
             raise MedicalCenterNotFoundException()
-        return jsonify({'id': created_center.id_medical_center, 'name': created_center.name})
+        return jsonify({'id_medical_center': created_center.id_medical_center, 'name': created_center.name, 
+                        'address':{
+                            'id_address':created_center.address.id_address,
+                            'street':created_center.address.street,
+                            'city':created_center.address.city,
+                        }})
     except MedicalCenterAlreadyExistsException as e_center_already_exists:
         print(e_center_already_exists.__str__(),file=sys.stderr)
         print(e_center_already_exists.__repr__(),file=sys.stderr)
