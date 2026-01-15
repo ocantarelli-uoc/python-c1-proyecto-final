@@ -265,7 +265,7 @@ class CargaInicial:
         body_payload:dict={
             "status_name":medical_appointment_status.name,
         }
-        req = requests.Request('POST','http://cites_bp:5002/api/v1/admin/estats_cites',json=body_payload)
+        req = requests.Request('POST','http://cites_bp:5002/api/v1/estats_cites',json=body_payload)
         r = req.prepare()
         r.headers['Authorization'] = "Bearer " + self.token.token
         r.headers['Content-Type'] = 'application/json'
@@ -287,7 +287,7 @@ class CargaInicial:
             "motiu":medical_appointment.motiu,
             "id_action_user":medical_appointment.id_action_user,
         }
-        req = requests.Request('POST','http://cites_bp:5002/api/v1/admin/cites',json=body_payload)
+        req = requests.Request('POST','http://cites_bp:5002/api/v1/cites',json=body_payload)
         r = req.prepare()
         r.headers['Authorization'] = "Bearer " + self.token.token
         r.headers['Content-Type'] = 'application/json'
