@@ -69,14 +69,14 @@ class CargaInicial:
         medicalAppointmentConverter.print(medicalAppointments)
 
     
-    def create_address(self,address:Address,token:Token) -> Address:
+    def create_address(self,address:Address) -> Address:
         body_payload:dict={
             "street":address.street,
             "city":address.city,
         }
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/adreces',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = token.token
+        r.headers['Authorization'] = self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
@@ -88,7 +88,7 @@ class CargaInicial:
         )
         return address
     
-    def create_doctor(self,doctor:Doctor,token:Token) -> Doctor:
+    def create_doctor(self,doctor:Doctor) -> Doctor:
         body_payload:dict={
             "username":doctor.user.username,
             "password":doctor.user.password,
@@ -97,7 +97,7 @@ class CargaInicial:
         }
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/doctors',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = token.token
+        r.headers['Authorization'] = self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
@@ -120,13 +120,13 @@ class CargaInicial:
                 )
         return doctor
     
-    def create_user_role(self,user_role:UserRole,token:Token) -> UserRole:
+    def create_user_role(self,user_role:UserRole) -> UserRole:
         body_payload:dict={
             "role_name":user_role.name,
         }
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/rols_usuaris',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = token.token
+        r.headers['Authorization'] = self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
@@ -137,7 +137,7 @@ class CargaInicial:
         )
         return user_role
     
-    def create_user(self,user:User,token:Token) -> User:
+    def create_user(self,user:User) -> User:
         body_payload:dict={
             "username":user.username,
             "password":user.password,
@@ -145,7 +145,7 @@ class CargaInicial:
         }
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/usuaris',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = token.token
+        r.headers['Authorization'] = self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
@@ -160,7 +160,7 @@ class CargaInicial:
                     )
         return user
     
-    def create_patient(self,patient:Patient,token:Token) -> Patient:
+    def create_patient(self,patient:Patient) -> Patient:
         body_payload:dict={
             "username":patient.user.username,
             "password":patient.user.password,
@@ -169,7 +169,7 @@ class CargaInicial:
         }
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/pacients',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = token.token
+        r.headers['Authorization'] = self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
@@ -190,14 +190,14 @@ class CargaInicial:
                 )
         return patient
     
-    def create_medical_center(self,medical_center:MedicalCenter,token:Token) -> Address:
+    def create_medical_center(self,medical_center:MedicalCenter) -> Address:
         body_payload:dict={
             "name":medical_center.name,
             "id_address":medical_center.address.id_address,
         }
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/centres',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = token.token
+        r.headers['Authorization'] = self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
@@ -213,13 +213,13 @@ class CargaInicial:
         )
         return medical_center
     
-    def create_medical_speciality(self,medical_speciality:MedicalSpeciality,token:Token) -> MedicalSpeciality:
+    def create_medical_speciality(self,medical_speciality:MedicalSpeciality) -> MedicalSpeciality:
         body_payload:dict={
             "medical_speciality_name":medical_speciality.name,
         }
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/especialitats_mediques',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = token.token
+        r.headers['Authorization'] = self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
@@ -230,13 +230,13 @@ class CargaInicial:
         )
         return medical_speciality
     
-    def create_medical_appointment_status(self,medical_appointment_status:MedicalAppointmentStatus,token:Token) -> MedicalAppointmentStatus:
+    def create_medical_appointment_status(self,medical_appointment_status:MedicalAppointmentStatus) -> MedicalAppointmentStatus:
         body_payload:dict={
             "status_name":medical_appointment_status.name,
         }
         req = requests.Request('POST','http://cites_bp:5002/api/v1/admin/estats_cites',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = token.token
+        r.headers['Authorization'] = self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
@@ -247,7 +247,7 @@ class CargaInicial:
         )
         return medical_appointment_status
     
-    def create_medical_appointment(self,medical_appointment:MedicalAppointment,token:Token) -> MedicalAppointment:
+    def create_medical_appointment(self,medical_appointment:MedicalAppointment) -> MedicalAppointment:
         body_payload:dict={
             "appointment_date":str(medical_appointment.appointment_date),
             "id_doctor":medical_appointment.id_doctor,
@@ -258,7 +258,7 @@ class CargaInicial:
         }
         req = requests.Request('POST','http://cites_bp:5002/api/v1/admin/cites',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = token.token
+        r.headers['Authorization'] = self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
