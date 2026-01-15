@@ -26,11 +26,15 @@ from dotenv import dotenv_values
 
 class CargaInicial:
 
+    def __init__(self,token:Token):
+        self.token = token
+
     def doCharge(self):
         config_dotenv_values = dotenv_values(".env")
         app_first_user_username : str = config_dotenv_values['ADMIN_FIRST_APP_USER_USERNAME']
         app_first_user_password : str = config_dotenv_values['ADMIN_FIRST_APP_USER_PASSWORD']
         token : Token = self.login(app_first_user_username,app_first_user_password)
+        self.token = token
         """It instances all the CSV File Managers intances for files and after instance it every one,
         it read its content as a DataFrame with Pandas library
         """
