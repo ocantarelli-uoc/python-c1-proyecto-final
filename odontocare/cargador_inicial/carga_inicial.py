@@ -22,10 +22,15 @@ from models.Patient import Patient
 from models.MedicalCenter import MedicalCenter
 from models.MedicalAppointmentStatus import MedicalAppointmentStatus
 from models.MedicalAppointment import MedicalAppointment
+from dotenv import dotenv_values
 
 class CargaInicial:
 
     def doCharge(self):
+        config_dotenv_values = dotenv_values(".env")
+        app_first_user_username : str = config_dotenv_values['ADMIN_FIRST_APP_USER_USERNAME']
+        app_first_user_password : str = config_dotenv_values['ADMIN_FIRST_APP_USER_PASSWORD']
+        token : Token = self.login(app_first_user_username,app_first_user_password)
         """It instances all the CSV File Managers intances for files and after instance it every one,
         it read its content as a DataFrame with Pandas library
         """
@@ -65,7 +70,7 @@ class CargaInicial:
             "street":address.street,
             "city":address.city,
         }
-        req = requests.post('http://localhost:5001/api/v1/admin/adreces',json=body_payload)
+        req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/adreces',json=body_payload)
         r = req.prepare()
         r.headers['Authorization'] = token.token
         r.headers['Content-Type'] = 'application/json'
@@ -86,7 +91,7 @@ class CargaInicial:
             "name":doctor.name,
             "medical_speciality":doctor.medical_speciality.name,
         }
-        req = requests.post('http://localhost:5001/api/v1/admin/doctors',json=body_payload)
+        req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/doctors',json=body_payload)
         r = req.prepare()
         r.headers['Authorization'] = token.token
         r.headers['Content-Type'] = 'application/json'
@@ -115,7 +120,7 @@ class CargaInicial:
         body_payload:dict={
             "role_name":user_role.name,
         }
-        req = requests.post('http://localhost:5001/api/v1/admin/rols_usuaris',json=body_payload)
+        req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/rols_usuaris',json=body_payload)
         r = req.prepare()
         r.headers['Authorization'] = token.token
         r.headers['Content-Type'] = 'application/json'
@@ -134,7 +139,7 @@ class CargaInicial:
             "password":user.password,
             "user_role":user.user_role.name
         }
-        req = requests.post('http://localhost:5001/api/v1/admin/usuaris',json=body_payload)
+        req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/usuaris',json=body_payload)
         r = req.prepare()
         r.headers['Authorization'] = token.token
         r.headers['Content-Type'] = 'application/json'
@@ -158,7 +163,7 @@ class CargaInicial:
             "name":patient.name,
             "telephone":patient.telephone,
         }
-        req = requests.post('http://localhost:5001/api/v1/admin/pacients',json=body_payload)
+        req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/pacients',json=body_payload)
         r = req.prepare()
         r.headers['Authorization'] = token.token
         r.headers['Content-Type'] = 'application/json'
@@ -186,7 +191,7 @@ class CargaInicial:
             "name":medical_center.name,
             "id_address":medical_center.address.id_address,
         }
-        req = requests.post('http://localhost:5001/api/v1/admin/centres',json=body_payload)
+        req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/centres',json=body_payload)
         r = req.prepare()
         r.headers['Authorization'] = token.token
         r.headers['Content-Type'] = 'application/json'
@@ -208,7 +213,7 @@ class CargaInicial:
         body_payload:dict={
             "medical_speciality_name":medical_speciality.name,
         }
-        req = requests.post('http://localhost:5001/api/v1/admin/especialitats_mediques',json=body_payload)
+        req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/especialitats_mediques',json=body_payload)
         r = req.prepare()
         r.headers['Authorization'] = token.token
         r.headers['Content-Type'] = 'application/json'
@@ -225,7 +230,7 @@ class CargaInicial:
         body_payload:dict={
             "status_name":medical_appointment_status.name,
         }
-        req = requests.post('http://localhost:5002/api/v1/admin/estats_cites',json=body_payload)
+        req = requests.Request('POST','http://cites_bp:5002/api/v1/admin/estats_cites',json=body_payload)
         r = req.prepare()
         r.headers['Authorization'] = token.token
         r.headers['Content-Type'] = 'application/json'
@@ -247,7 +252,7 @@ class CargaInicial:
             "motiu":medical_appointment.motiu,
             "id_action_user":medical_appointment.id_action_user,
         }
-        req = requests.post('http://localhost:5002/api/v1/admin/cites',json=body_payload)
+        req = requests.Request('POST','http://cites_bp:5002/api/v1/admin/cites',json=body_payload)
         r = req.prepare()
         r.headers['Authorization'] = token.token
         r.headers['Content-Type'] = 'application/json'
@@ -271,11 +276,12 @@ class CargaInicial:
             "user":username,
             "password":password
         }
-        req = requests.post('http://localhost:5001/api/v1/auth/login',json=body_payload)
+        req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/auth/login',json=body_payload)
         r = req.prepare()
         r.headers['Content-Type'] = 'application/json'   
         s = requests.Session()
         rs: requests.Response = s.send(r)
         token_list = rs.json()
-        token : Token = Token(token=token_list[0]['token'])
+        token : Token = Token(token=token_list['token'])
+        print(token)
         return token

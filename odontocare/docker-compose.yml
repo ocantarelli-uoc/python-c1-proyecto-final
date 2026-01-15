@@ -24,6 +24,19 @@ services:
       - "5002:5002"
     networks:
       - back-tier
+  carga_inicial:
+    #image: odontocare/cites_bp
+    depends_on:
+      - auth_and_admin_bp
+      - cites_bp
+    container_name: carga_inicial
+    build: 
+      context: .
+      dockerfile: ./cargador_inicial/Dockerfile
+    volumes:
+      - ./cargador_inicial/:/app:ro
+    networks:
+      - back-tier
 
 networks:
   back-tier: 
