@@ -4,6 +4,7 @@ WORKDIR /app
 # Instala dependencias
 COPY ./cites_bp/requirements.txt .  
 RUN pip install -r requirements.txt
+RUN apk add --no-cache curl
 # Copia la aplicación
 #COPY . .
 # Expone el puerto 5001

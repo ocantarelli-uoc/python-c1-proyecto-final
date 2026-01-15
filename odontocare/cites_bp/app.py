@@ -3,6 +3,7 @@ from sqlalchemy.pool import StaticPool
 from extensions import db
 from appointments.recursos.cites import cites_bp
 from appointment_statuses.recursos.appointment_statuses import appointment_statuses_bp
+from healthcheck.recursos.healthcheck import healthcheck_bp
 
 def create_app():
     app = Flask(__name__)
@@ -12,6 +13,9 @@ def create_app():
 
     # Registramos el Blueprint de appointment_statuses_bp
     app.register_blueprint(appointment_statuses_bp, url_prefix='/api/v1')
+    # Registramos el Blueprint de healthcheck
+    app.register_blueprint(healthcheck_bp, url_prefix='')
+    
 
      # BD en memoria compartida durante la vida de la app
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"

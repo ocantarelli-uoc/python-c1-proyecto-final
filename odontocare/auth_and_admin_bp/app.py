@@ -11,6 +11,7 @@ from admin_bp.centers.recursos.centers import centers_bp
 from admin_bp.user_roles.recursos.user_roles import users_roles_bp
 from admin_bp.medical_specialities.recursos.medical_specialities import medical_specialities_bp
 from admin_bp.addresses.recursos.addresses import address_bp
+from healthcheck.recursos.healthcheck import healthcheck_bp
 
 def create_app():
     app = Flask(__name__)
@@ -34,6 +35,8 @@ def create_app():
     app.register_blueprint(medical_specialities_bp, url_prefix='/api/v1')
     # Registramos el Blueprint de roles de especialidades direcciones
     app.register_blueprint(address_bp, url_prefix='/api/v1')
+    # Registramos el Blueprint de healthcheck
+    app.register_blueprint(healthcheck_bp, url_prefix='')
 
      # BD en memoria compartida durante la vida de la app
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"

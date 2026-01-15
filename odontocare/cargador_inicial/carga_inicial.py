@@ -42,31 +42,34 @@ class CargaInicial:
         dadesDataFrame = dadesCsvFileManager.read()
         addressConverter = AddressConverter()
         addresses = addressConverter.convert(dadesDataFrame)
-        addressConverter.print(addresses)
+        #addressConverter.print(addresses)
         medicalCenterConverter = MedicalCenterConverter()
         medical_centers = medicalCenterConverter.convert(dadesDataFrame)
-        medicalCenterConverter.print(medical_centers)
+        #medicalCenterConverter.print(medical_centers)
         medicalSpecialityConverter = MedicalSpecialityConverter()
         medical_specialities = medicalSpecialityConverter.convert(dadesDataFrame)
-        medicalSpecialityConverter.print(medical_specialities)
+        #medicalSpecialityConverter.print(medical_specialities)
         userRolesConverter = UserRoleConverter()
         user_roles = userRolesConverter.convert(dadesDataFrame)
-        userRolesConverter.print(user_roles)
+        #userRolesConverter.print(user_roles)
         userConverter = UserConverter()
         users = userConverter.convert(dadesDataFrame)
-        userConverter.print(users)
+        #userConverter.print(users)
         patientConverter = PatientConverter()
         patients = patientConverter.convert(dadesDataFrame)
-        patientConverter.print(patients)
+        #patientConverter.print(patients)
         doctorConverter = DoctorConverter()
         doctors = doctorConverter.convert(dadesDataFrame)
-        doctorConverter.print(doctors)
+        #doctorConverter.print(doctors)
         medicalAppointmentStatusConverter = MedicalAppointmentStatusConverter()
         medicalAppointmentStatuses = medicalAppointmentStatusConverter.convert(dadesDataFrame)
-        medicalAppointmentStatusConverter.print(medicalAppointmentStatuses)
+        #medicalAppointmentStatusConverter.print(medicalAppointmentStatuses)
         medicalAppointmentConverter = MedicalAppointmentConverter()
         medicalAppointments = medicalAppointmentConverter.convert(dadesDataFrame)
-        medicalAppointmentConverter.print(medicalAppointments)
+        #medicalAppointmentConverter.print(medicalAppointments)
+
+        for address in addresses:
+            self.create_address(address=address)
 
     
     def create_address(self,address:Address) -> Address:
@@ -74,17 +77,21 @@ class CargaInicial:
             "street":address.street,
             "city":address.city,
         }
+        print(body_payload)
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/adreces',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = self.token.token
+        r.headers['Authorization'] = "Bearer " + self.token.token
         r.headers['Content-Type'] = 'application/json'
+        r.headers['Accept'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
+        print(rs)
         address_list = rs.json()
+        print(address_list)
         address : Address = Address(
-            id_address=address_list[0]['id_address'],
-            street=address_list[0]['street'],
-            city=address_list[0]['city'],
+            id_address=address_list['id_address'],
+            street=address_list['street'],
+            city=address_list['city'],
         )
         return address
     
@@ -97,25 +104,25 @@ class CargaInicial:
         }
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/doctors',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = self.token.token
+        r.headers['Authorization'] = "Bearer " + self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
         doctors_list = rs.json()
         doctor : Doctor = Doctor(
-                    id_doctor=doctors_list[0]['id_doctor'],
-                    name=doctors_list[0]['name'],
-                    user=User(id_user=doctors_list[0]['user']['id_user'],
-                        username=doctors_list[0]['user']['username'],
-                        password=doctors_list[0]['user']['password'],
+                    id_doctor=doctors_list['id_doctor'],
+                    name=doctors_list['name'],
+                    user=User(id_user=doctors_list['user']['id_user'],
+                        username=doctors_list['user']['username'],
+                        password=doctors_list['user']['password'],
                             user_role=UserRole(
-                                id_user_role=doctors_list[0]['user']['user_role']['id_user_role'],
-                                name=doctors_list[0]['user']['user_role']['name']
+                                id_user_role=doctors_list['user']['user_role']['id_user_role'],
+                                name=doctors_list['user']['user_role']['name']
                             )
                     ),
                     medical_speciality=MedicalSpeciality(
-                                id_medical_speciality=doctors_list[0]['medical_speciality']['id_medical_speciality'],
-                                name=doctors_list[0]['medical_speciality']['name']
+                                id_medical_speciality=doctors_list['medical_speciality']['id_medical_speciality'],
+                                name=doctors_list['medical_speciality']['name']
                             )
                 )
         return doctor
@@ -126,14 +133,14 @@ class CargaInicial:
         }
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/rols_usuaris',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = self.token.token
+        r.headers['Authorization'] = "Bearer " + self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
         user_role_list = rs.json()
         user_role : UserRole = UserRole(
-            id_user_role=user_role_list[0]['id_user_role'],
-            name=user_role_list[0]['name']
+            id_user_role=user_role_list['id_user_role'],
+            name=user_role_list['name']
         )
         return user_role
     
@@ -145,17 +152,17 @@ class CargaInicial:
         }
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/usuaris',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = self.token.token
+        r.headers['Authorization'] = "Bearer " + self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
         user_list = rs.json()
-        user : User = User(id_user=user_list[0]['id_user'],
-                        username=user_list[0]['username'],
-                        password=user_list[0]['password'],
+        user : User = User(id_user=user_list['id_user'],
+                        username=user_list['username'],
+                        password=user_list['password'],
                             user_role=UserRole(
-                                id_user_role=user_list[0]['user_role']['id_user_role'],
-                                name=user_list[0]['user_role']['name']
+                                id_user_role=user_list['user_role']['id_user_role'],
+                                name=user_list['user_role']['name']
                             ) 
                     )
         return user
@@ -169,22 +176,22 @@ class CargaInicial:
         }
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/pacients',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = self.token.token
+        r.headers['Authorization'] = "Bearer " + self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
         patient_list = rs.json()
         patient : Patient = Patient(
-                    id_patient=patient_list[0]['id_patient'],
-                    name=patient_list[0]['name'],
-                    telephone=patient_list[0]['telephone'],
-                    is_active=patient_list[0]['is_active'],
-                    user=User(id_user=patient_list[0]['user']['id_user'],
-                        username=patient_list[0]['user']['username'],
-                        password=patient_list[0]['user']['password'],
+                    id_patient=patient_list['id_patient'],
+                    name=patient_list['name'],
+                    telephone=patient_list['telephone'],
+                    is_active=patient_list['is_active'],
+                    user=User(id_user=patient_list['user']['id_user'],
+                        username=patient_list['user']['username'],
+                        password=patient_list['user']['password'],
                             user_role=UserRole(
-                                id_user_role=patient_list[0]['user']['user_role']['id_user_role'],
-                                name=patient_list[0]['user']['user_role']['name']
+                                id_user_role=patient_list['user']['user_role']['id_user_role'],
+                                name=patient_list['user']['user_role']['name']
                             )
                     )
                 )
@@ -197,19 +204,19 @@ class CargaInicial:
         }
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/centres',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = self.token.token
+        r.headers['Authorization'] = "Bearer " + self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
         medical_center_list = rs.json()
         medical_center : MedicalCenter = MedicalCenter(
-            id_medical_center=medical_center_list[0]['id_medical_center'],
+            id_medical_center=medical_center_list['id_medical_center'],
             address=Address(
-                id_address=medical_center_list[0]['address']['id_address'],
-                street=medical_center_list[0]['address']['street'],
-                city=medical_center_list[0]['address']['city'],
+                id_address=medical_center_list['address']['id_address'],
+                street=medical_center_list['address']['street'],
+                city=medical_center_list['address']['city'],
             ),
-            name=medical_center_list[0]['name'],
+            name=medical_center_list['name'],
         )
         return medical_center
     
@@ -219,14 +226,14 @@ class CargaInicial:
         }
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/especialitats_mediques',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = self.token.token
+        r.headers['Authorization'] = "Bearer " + self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
         medical_speciality_list = rs.json()
         medical_speciality : MedicalSpeciality = MedicalSpeciality(
-            id_medical_speciality=medical_speciality_list[0]['id_medical_speciality'],
-            name=medical_speciality_list[0]['name'],
+            id_medical_speciality=medical_speciality_list['id_medical_speciality'],
+            name=medical_speciality_list['name'],
         )
         return medical_speciality
     
@@ -236,14 +243,14 @@ class CargaInicial:
         }
         req = requests.Request('POST','http://cites_bp:5002/api/v1/admin/estats_cites',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = self.token.token
+        r.headers['Authorization'] = "Bearer " + self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
         medical_appointment_status_list = rs.json()
         medical_appointment_status : MedicalAppointmentStatus = MedicalAppointmentStatus(
-            id_medical_status=medical_appointment_status_list[0]['id_medical_status'],
-            name=medical_appointment_status_list[0]['name'],
+            id_medical_status=medical_appointment_status_list['id_medical_status'],
+            name=medical_appointment_status_list['name'],
         )
         return medical_appointment_status
     
@@ -258,7 +265,7 @@ class CargaInicial:
         }
         req = requests.Request('POST','http://cites_bp:5002/api/v1/admin/cites',json=body_payload)
         r = req.prepare()
-        r.headers['Authorization'] = self.token.token
+        r.headers['Authorization'] = "Bearer " + self.token.token
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
@@ -266,12 +273,12 @@ class CargaInicial:
         medical_appointment : MedicalAppointment = MedicalAppointment(
             id_medical_appointment=None,
             medical_status=None,
-            id_doctor=medical_appointment_list[0]['id_doctor'],
-            id_patient=medical_appointment_list[0]['id_patient'],
-            id_medical_center=medical_appointment_list[0]['id_medical_center'],
-            appointment_date=medical_appointment_list[0]['appointment_date'],
-            motiu=medical_appointment_list[0]['motiu'],
-            id_action_user=medical_appointment_list[0]['id_action_user'],
+            id_doctor=medical_appointment_list['id_doctor'],
+            id_patient=medical_appointment_list['id_patient'],
+            id_medical_center=medical_appointment_list['id_medical_center'],
+            appointment_date=medical_appointment_list['appointment_date'],
+            motiu=medical_appointment_list['motiu'],
+            id_action_user=medical_appointment_list['id_action_user'],
         )
         return medical_appointment
     
@@ -287,5 +294,5 @@ class CargaInicial:
         rs: requests.Response = s.send(r)
         token_list = rs.json()
         token : Token = Token(token=token_list['token'])
-        print(token)
+        #print(token)
         return token

@@ -7,7 +7,7 @@ class AddressConverter(Converter):
      def convert(self,dataFrame) -> list:
         addresses = []
         for row in dataFrame.itertuples():
-            print(row)
+            #print(row)
             if row.entity_type == "address":
                 address = Address(
                     id_address=None,

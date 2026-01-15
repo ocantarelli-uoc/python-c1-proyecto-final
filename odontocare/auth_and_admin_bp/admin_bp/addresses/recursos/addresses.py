@@ -27,7 +27,7 @@ def add_address(*args, **kwargs):
         created_address = create_address()
         if create_address is None:
             raise AddressNotFoundException()
-        return jsonify({'id': created_address.id_address, 'street': created_address.street, 
+        return jsonify({'id_address': created_address.id_address, 'street': created_address.street, 
                         'city':created_address.city})
     except AddressAlreadyExistsException as e_address_already_exists:
         print(e_address_already_exists.__str__(),file=sys.stderr)

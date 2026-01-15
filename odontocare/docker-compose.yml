@@ -6,11 +6,17 @@ services:
       context: .
       dockerfile: ./auth_and_admin_bp/Dockerfile
     volumes:
-      - ./auth_and_admin_bp/:/app:ro
+      - ./auth_and_admin_bp/:/app:ro   
     ports:
       - "5001:5001"
     networks:
       - back-tier
+    healthcheck:
+      test: curl -f http://localhost:5001/health || exit 1
+      interval: 4s       
+      timeout: 5s         
+      retries: 3          
+      start_period: 5s 
 
   cites_bp:
     #image: odontocare/cites_bp
@@ -24,19 +30,29 @@ services:
       - "5002:5002"
     networks:
       - back-tier
+    healthcheck:
+      test: curl -f http://localhost:5002/health || exit 1
+      interval: 4s       
+      timeout: 5s         
+      retries: 3          
+      start_period: 5s
   carga_inicial:
     #image: odontocare/cites_bp
-    depends_on:
-      - auth_and_admin_bp
-      - cites_bp
     container_name: carga_inicial
     build: 
       context: .
       dockerfile: ./cargador_inicial/Dockerfile
     volumes:
       - ./cargador_inicial/:/app:ro
+    restart: "no"
+    depends_on:
+       auth_and_admin_bp:
+        condition: service_healthy
+       cites_bp:
+        condition: service_healthy
     networks:
       - back-tier
+    profiles: ["data_setup"]
 
 networks:
   back-tier: 
