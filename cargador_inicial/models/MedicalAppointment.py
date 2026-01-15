@@ -13,7 +13,10 @@ class MedicalAppointment:
         self.appointment_date = appointment_date
         self.motiu = motiu
         self.medical_status = medical_status
-        self.doctor = id_doctor
-        self.patient = id_patient
-        self.action_user = id_action_user
-        self.id_medical_appointment = id_medical_appointment
+        self.id_doctor = id_doctor
+        self.id_patient = id_patient
+        self.id_action_user = id_action_user
+        self.id_medical_center = id_medical_center
+        
+    def describe(self):
+        return f"MedicalAppointment - id_medical_appointment: {self.id_medical_appointment}, appointment_date: {self.appointment_date},motiu:{self.motiu},medical_status:{self.medical_status.describe()},id_doctor:{self.id_doctor},id_patient:{self.id_patient},id_action_user:{self.id_action_user},id_medical_center:{self.id_medical_center} ." 

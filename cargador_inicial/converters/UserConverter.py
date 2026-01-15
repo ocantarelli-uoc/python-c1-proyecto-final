@@ -10,6 +10,6 @@ class UserConverter(Converter):
     for row in dataFrame.itertuples():
       if row.entity_type == "user":
         user = User(id_user=None,username=row.username,password=row.password,
-                      user_role=UserRole(id_user_role=None,name=row.user_role))
+                      user_role=UserRole(id_user_role=None,name=row.role))
         users.append(user)
     return users

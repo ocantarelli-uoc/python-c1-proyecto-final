@@ -23,7 +23,7 @@ from models.MedicalCenter import MedicalCenter
 from models.MedicalAppointmentStatus import MedicalAppointmentStatus
 from models.MedicalAppointment import MedicalAppointment
 
-class InitialCharger:
+class CargaInicial:
 
     def doCharge(self):
         """It instances all the CSV File Managers intances for files and after instance it every one,
@@ -33,24 +33,31 @@ class InitialCharger:
         dadesDataFrame = dadesCsvFileManager.read()
         addressConverter = AddressConverter()
         addresses = addressConverter.convert(dadesDataFrame)
+        addressConverter.print(addresses)
         medicalCenterConverter = MedicalCenterConverter()
         medical_centers = medicalCenterConverter.convert(dadesDataFrame)
+        medicalCenterConverter.print(medical_centers)
         medicalSpecialityConverter = MedicalSpecialityConverter()
         medical_specialities = medicalSpecialityConverter.convert(dadesDataFrame)
+        medicalSpecialityConverter.print(medical_specialities)
         userRolesConverter = UserRoleConverter()
         user_roles = userRolesConverter.convert(dadesDataFrame)
+        userRolesConverter.print(user_roles)
         userConverter = UserConverter()
         users = userConverter.convert(dadesDataFrame)
+        userConverter.print(users)
         patientConverter = PatientConverter()
         patients = patientConverter.convert(dadesDataFrame)
+        patientConverter.print(patients)
         doctorConverter = DoctorConverter()
         doctors = doctorConverter.convert(dadesDataFrame)
-        doctorConverter = DoctorConverter()
-        doctors = doctorConverter.convert(dadesDataFrame)
+        doctorConverter.print(doctors)
         medicalAppointmentStatusConverter = MedicalAppointmentStatusConverter()
         medicalAppointmentStatuses = medicalAppointmentStatusConverter.convert(dadesDataFrame)
+        medicalAppointmentStatusConverter.print(medicalAppointmentStatuses)
         medicalAppointmentConverter = MedicalAppointmentConverter()
         medicalAppointments = medicalAppointmentConverter.convert(dadesDataFrame)
+        medicalAppointmentConverter.print(medicalAppointments)
 
     
     def create_address(self,address:Address,token:Token) -> Address:

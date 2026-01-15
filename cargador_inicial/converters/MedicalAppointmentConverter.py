@@ -17,7 +17,10 @@ class MedicalAppointmentConverter(Converter):
                     id_doctor=row.id_doctor,
                     id_patient=row.id_patient,
                     motiu=row.motiu,
-                    medical_status=None,
+                    medical_status=MedicalAppointmentStatus(
+                        id_medical_status=None,
+                        name=None,
+                    ),
                     id_action_user=row.id_action_user,
                     id_medical_center=row.id_medical_center
                 )

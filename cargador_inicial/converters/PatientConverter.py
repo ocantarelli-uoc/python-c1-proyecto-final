@@ -1,3 +1,4 @@
+from models.UserRole import UserRole
 from converters.Converter import Converter
 from models.Patient import Patient
 from models.User import User
@@ -14,7 +15,10 @@ class PatientConverter(Converter):
                             id_user=None,
                             username=row.username,
                             password=row.password,
-                            user_role=None
+                            user_role=UserRole(
+                                id_user_role=None,
+                                name=None
+                            )
                           ),
                           name=row.name,
                           telephone=row.telephone,

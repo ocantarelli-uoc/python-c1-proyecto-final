@@ -4,3 +4,6 @@ class MedicalCenter:
         self.id_medical_center = id_medical_center
         self.address = address
         self.name = name
+    
+    def describe(self):
+        return f"MedicalCenter - id_medical_center: {self.id_medical_center}, address: {self.address.describe()},name:{self.name}." 

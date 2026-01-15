@@ -10,7 +10,7 @@ class UserRoleConverter(Converter):
             if row.entity_type == "user_role":
                 user_role = UserRole(
                     id_user_role=None,
-                    name=row.name
+                    name=row.role_name
                 )
                 user_roles.append(user_role)
         return user_roles

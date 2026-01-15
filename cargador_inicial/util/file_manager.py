@@ -10,7 +10,7 @@ class CSVFileManager:
     self.path = path
   #method that its responsibility it's to read from a csv file to Pandas DataFrame
   def read(self) -> pd.DataFrame:
-    return pd.read_csv(self.path,sep=";")  
+    return pd.read_csv(self.path)  
   #method that its responsibility it's to write a Pandas DataFrame to a csv file
   def write(self,dataFrame:pd.DataFrame,mode:str):
     #It checks if mode it's 'a' referring to append mode

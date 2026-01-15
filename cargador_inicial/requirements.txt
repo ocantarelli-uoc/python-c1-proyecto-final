@@ -1,0 +1,10 @@
+requests
+responses
+pytest
+Flask
+flask-sqlalchemy
+PyJWT
+jsonschema
+python-dotenv
+bcrypt
+pandas

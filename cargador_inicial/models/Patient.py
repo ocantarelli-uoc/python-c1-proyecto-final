@@ -6,3 +6,6 @@ class Patient:
         self.name = name
         self.telephone = telephone
         self.is_active = is_active
+
+    def describe(self):
+        return f"Patient - id_patient: {self.id_patient}, user: {self.user.describe()} , name: {self.name},telephone: {self.telephone} ,." 
