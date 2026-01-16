@@ -1,5 +1,6 @@
 
 import sys
+import json
 from flask import request
 import requests
 from converters.AddressConverter import AddressConverter
@@ -93,7 +94,8 @@ class CargaInicial:
             self.create_medical_appointment_status(medical_appointment_status=medical_appointment_status)
         
         for medical_appointment in medicalAppointments:
-            self.create_medical_appointment(medical_appointment=medical_appointment)
+            created_medical_appointment : MedicalAppointment = self.create_medical_appointment(medical_appointment=medical_appointment)
+            #print(created_medical_appointment.describe())
 
     
     def create_address(self,address:Address) -> Address:
@@ -101,7 +103,7 @@ class CargaInicial:
             "street":address.street,
             "city":address.city,
         }
-        print(body_payload)
+        #print(body_payload)
         req = requests.Request('POST','http://auth_and_admin_bp:5001/api/v1/admin/adreces',json=body_payload)
         r = req.prepare()
         r.headers['Authorization'] = "Bearer " + self.token.token
@@ -109,9 +111,9 @@ class CargaInicial:
         r.headers['Accept'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
-        print(rs)
+        #print(rs)
         address_list = rs.json()
-        print(address_list)
+        #print(address_list)
         address : Address = Address(
             id_address=address_list['id_address'],
             street=address_list['street'],
@@ -293,16 +295,19 @@ class CargaInicial:
         r.headers['Content-Type'] = 'application/json'
         s = requests.Session()
         rs: requests.Response = s.send(r)
-        medical_appointment_list = rs.json()
+        medical_appointment_response_obj = rs.json()
+        #print("Medical Appointment JSON")
+        print(json.dumps(medical_appointment_response_obj))
         medical_appointment : MedicalAppointment = MedicalAppointment(
-            id_medical_appointment=None,
-            medical_status=None,
-            id_doctor=medical_appointment_list['id_doctor'],
-            id_patient=medical_appointment_list['id_patient'],
-            id_medical_center=medical_appointment_list['id_medical_center'],
-            appointment_date=medical_appointment_list['appointment_date'],
-            motiu=medical_appointment_list['motiu'],
-            id_action_user=medical_appointment_list['id_action_user'],
+            id_medical_appointment=medical_appointment_response_obj['id_medical_appointment'],
+            medical_appointment_status=MedicalAppointmentStatus(id_medical_status=medical_appointment_response_obj['medical_appointment_status']['id_medical_status'],
+                        name=medical_appointment_response_obj['medical_appointment_status']['name']),
+            id_doctor=medical_appointment_response_obj['id_doctor'],
+            id_patient=medical_appointment_response_obj['id_patient'],
+            id_medical_center=medical_appointment_response_obj['id_medical_center'],
+            appointment_date=medical_appointment_response_obj['appointment_date'],
+            motiu=medical_appointment_response_obj['motiu'],
+            id_action_user=medical_appointment_response_obj['id_action_user'],
         )
         return medical_appointment
     

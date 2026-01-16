@@ -12,61 +12,61 @@ from models import User
 from admin_bp.exceptions.not_found.UserNotFoundException import UserNotFoundException
 from admin_bp.exceptions.authorization.UnauthorizedRoleException import UnauthorizedRoleException
 # Creamos una instancia de Blueprint
-# 'users_bp' es el nombre del Blueprint
+# "users_bp" es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
-users_bp = Blueprint('users_bp', __name__)
+users_bp = Blueprint("users_bp", __name__)
 
 # Definimos las rutas usando el Blueprint
-@users_bp.route('/admin/usuaris', methods=['POST'])
+@users_bp.route("/admin/usuaris", methods=["POST"])
 @needs_auth
 @require_role(required_roles=["admin"])
 def add_user(*args, **kwargs):
     datos = request.get_json()
     try:
-        existing_user:User = orm_get_user_by_username(datos['username'])
+        existing_user:User = orm_get_user_by_username(datos["username"])
         if existing_user != None:
             raise UserAlreadyExistsException()
         createdUser = create_user({
-            'username':datos['username'],
-            'password':datos['password'],
-            'user_role':datos['user_role']
+            "username":datos["username"],
+            "password":datos["password"],
+            "user_role":datos["user_role"]
         },user_role_str=None)
         user = orm_get_user_by_id(createdUser.id_user)
         if user is None:
             raise UserNotFoundException()
-        return jsonify({'id_user': user.id_user, 'username': user.username,
-                        'user_role':{
-                            'id_user_role':user.user_role.id_user_role,
-                            'name':user.user_role.name,
+        return jsonify({"id_user": user.id_user, "username": user.username,
+                        "user_role":{
+                            "id_user_role":user.user_role.id_user_role,
+                            "name":user.user_role.name,
                         }})
     except UserAlreadyExistsException as e_user_already_exists:
         print(e_user_already_exists.__str__(),file=sys.stderr)
         print(e_user_already_exists.__repr__(),file=sys.stderr)
-        return jsonify({'message':'Usuario '+datos['username']+' ya existe.'}),409
+        return jsonify({"message":"Usuario "+datos["username"]+" ya existe."}),409
     except UserNotFoundException as e_user_not_found:
         print(e_user_not_found.__str__(),file=sys.stderr)
         print(e_user_not_found.__repr__(),file=sys.stderr)
-        return jsonify({'message':'Usuario '+datos['username']+' creado no se ha encontrado.'}),404
+        return jsonify({"message":"Usuario "+datos["username"]+" creado no se ha encontrado."}),404
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
-        return jsonify({'message':'Ha ocurrido algún error!'}),500
+        return jsonify({"message":"Ha ocurrido algún error!"}),500
     
 # Definimos las rutas usando el Blueprint
-@users_bp.route('/admin/usuaris', methods=['GET'])
+@users_bp.route("/admin/usuaris", methods=["GET"])
 @needs_auth
 @require_role(required_roles=["admin"])
 def list_users(*args, **kwargs):
     try:
         users = orm_list_users()
-        user_list = [{'id': u.id_user, 'name': u.username, 'role': u.user_role.name} for u in users]
+        user_list = [{"id": u.id_user, "name": u.username, "role": u.user_role.name} for u in users]
         return jsonify(user_list)
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
-        return jsonify({'message':'Ha ocurrido algún error!'}),500
+        return jsonify({"message":"Ha ocurrido algún error!"}),500
 
-@users_bp.route('/admin/usuaris/<int:id>', methods=['GET'])
+@users_bp.route("/admin/usuaris/<int:id>", methods=["GET"])
 @needs_auth
 @require_role(required_roles=["admin"])
 def get_user_by_id(id,*args, **kwargs):
@@ -74,24 +74,24 @@ def get_user_by_id(id,*args, **kwargs):
         user = orm_get_user_by_id(id)
         if user is None:
             raise UserNotFoundException()
-        user_dict = [{'id': user.id_user, 'username': user.username, 'role': user.user_role.name}]
+        user_dict = [{"id": user.id_user, "username": user.username, "role": user.user_role.name}]
         return jsonify(user_dict)
     except (UserNotFoundException) as e_user_not_found:
         print(e_user_not_found.__str__(),file=sys.stderr)
         print(e_user_not_found.__repr__(),file=sys.stderr)
-        return jsonify({'message':'Usuario no encontrado!'}),404
+        return jsonify({"message":"Usuario no encontrado!"}),404
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
-        return jsonify({'message':'Ha ocurrido algún error!'}),500
+        return jsonify({"message":"Ha ocurrido algún error!"}),500
 
-@users_bp.route('/admin/usuaris/name/<string:username>', methods=['GET'])
+@users_bp.route("/admin/usuaris/name/<string:username>", methods=["GET"])
 @needs_auth
 @require_role(required_roles=["admin","secretary","patient","doctor"])
 def get_user_by_username(username,*args, **kwargs):
     try:
         user = None
-        authorized_user : User = kwargs.get('authorized_user')
+        authorized_user : User = kwargs.get("authorized_user")
         if authorized_user is not None:
             user_role : UserRole = authorized_user.user_role
             if user_role is None or user_role.name not in ["admin"] and authorized_user.username != username:
@@ -100,24 +100,24 @@ def get_user_by_username(username,*args, **kwargs):
                 user : User = orm_get_user_by_username(username)
         if user is None:
             raise UserNotFoundException()
-        user_dict = [{'id_user': user.id_user, 'username': user.username, 
-            'user_role':{
-                'id_user_role':user.user_role.id_user_role,
-                'name':user.user_role.name,
+        user_dict = [{"id_user": user.id_user, "username": user.username, 
+            "user_role":{
+                "id_user_role":user.user_role.id_user_role,
+                "name":user.user_role.name,
             }
           }]
         return jsonify(user_dict)
     except (UnauthorizedRoleException) as e_unauthorized_user:
         print(e_unauthorized_user.__str__(),file=sys.stderr)
         print(e_unauthorized_user.__repr__(),file=sys.stderr)
-        return jsonify({'message':'No tienes permiso para consultar este usuario!'}),403
+        return jsonify({"message":"No tienes permiso para consultar este usuario!"}),403
     except (UserNotFoundException) as e_user_not_found:
         print(e_user_not_found.__str__(),file=sys.stderr)
         print(e_user_not_found.__repr__(),file=sys.stderr)
-        return jsonify({'message':'Usuario no encontrado!'}),404
+        return jsonify({"message":"Usuario no encontrado!"}),404
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
-        return jsonify({'message':'Ha ocurrido algún error!'}),500
+        return jsonify({"message":"Ha ocurrido algún error!"}),500
 
 # ... (Añadir aquí las rutas POST, PUT, DELETE para usuarios)
