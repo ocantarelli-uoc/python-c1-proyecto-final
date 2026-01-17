@@ -19,22 +19,30 @@ medical_specialities_bp = Blueprint("medical_specialities_bp", __name__)
 @medical_specialities_bp.route("/admin/especialitats_mediques", methods=["POST"])
 @needs_auth
 @require_role(required_roles=["admin"])
+#It defines the endpoint for adding a medical speciality
 def add_medical_speciality(*args, **kwargs):
     datos = request.get_json()
     try:
+        #It tries to get medical speciality by name
         existing_medical_speciality:MedicalSpeciality = get_medical_speciality_by_name(datos["medical_speciality_name"])
-        if existing_medical_speciality != None:
+        #It controls if the medical speciality already exists
+        if existing_medical_speciality is not None:
             raise MedicalSpecialityAlreadyExistsException()
+        #It creates the medical speciality
         created_medical_speciality = create_medical_speciality()
+        #It returns the created medical speciality in json format
         return jsonify({"id_medical_speciality": created_medical_speciality.id_medical_speciality, "name": created_medical_speciality.name})
+    #It captures if the medical speciality already exists
     except MedicalSpecialityAlreadyExistsException as e_medical_speciality_already_exists:
         print(e_medical_speciality_already_exists.__str__(),file=sys.stderr)
         print(e_medical_speciality_already_exists.__repr__(),file=sys.stderr)
         return jsonify({"message":"Especialidad Médica "+datos["medical_speciality_name"]+" ya existe."}),409
+    #It captures if created medical speciality hasn't been found
     except MedicalSpecialityNotFoundException as e_medical_speciality_not_found:
         print(e_medical_speciality_not_found.__str__(),file=sys.stderr)
         print(e_medical_speciality_not_found.__repr__(),file=sys.stderr)
         return jsonify({"message":"Especialidad Médica "+datos["medical_speciality_name"]+" no se encuentra recién creado."}),404
+    #It captures if an error has ocurred
     except (TypeError, ValueError,Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
@@ -43,11 +51,15 @@ def add_medical_speciality(*args, **kwargs):
 @medical_specialities_bp.route("/admin/especialitats_mediques", methods=["GET"])
 @needs_auth
 @require_role(required_roles=["admin"])
+#It defines the endpoint for listing the previously created medical specialities
 def list_medical_specialities(*args, **kwargs):
     try:
+        #It gets the medical specialities from repository from database
         medical_specialities:list[MedicalSpeciality] = orm_list_medical_specialities()
+        #It returns the medical specialities as list in dictionary format for returning as json
         medical_specialities_list = [{"id": m_s.id_medical_speciality, "name": m_s.name} for m_s in medical_specialities]
         return jsonify(medical_specialities_list)
+    #It controls if an error has ocurred
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
@@ -56,20 +68,24 @@ def list_medical_specialities(*args, **kwargs):
 @medical_specialities_bp.route("/admin/especialitats_mediques/<int:id>", methods=["GET"])
 @needs_auth
 @require_role(required_roles=["admin"])
+#It defines the endpoint for getting medical speciality by id
 def get_medical_speciality_by_id(id,*args, **kwargs):
     try:
+        #It gets the medical speciality by id from repository from database
         medical_speciality : MedicalSpeciality = orm_get_medical_speciality_by_id(id)
+        #It controls if the medical speciality hasn't been found
         if medical_speciality is None:
             raise MedicalSpecialityNotFoundException()
+        #It returns the medical speciality in dictionary format for returning as json
         medical_speciality_dict = [{"id_medical_speciality": medical_speciality.id_medical_speciality, "name": medical_speciality.name}]
         return jsonify(medical_speciality_dict)
+    #It captures if the medical speciality hasn't been found
     except (MedicalSpecialityNotFoundException) as e_medical_speciality_not_found:
         print(e_medical_speciality_not_found.__str__(),file=sys.stderr)
         print(e_medical_speciality_not_found.__repr__(),file=sys.stderr)
         return jsonify({"message":"Especialidad Médica no encontrada!"}),404
+    #It captures if an error has ocurred
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
         return jsonify({"message":"Ha ocurrido algún error!"}),500
-
-# ... (Añadir aquí las rutas POST, PUT, DELETE para usuarios)

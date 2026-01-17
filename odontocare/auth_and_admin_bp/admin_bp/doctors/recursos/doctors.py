@@ -20,19 +20,26 @@ doctors_bp = Blueprint("doctors_bp", __name__)
 @doctors_bp.route("/admin/doctors", methods=["POST"])
 @needs_auth
 @require_role(required_roles=["admin"])
+#It defines the endpoint for adding a doctor
 def add_doctor(*args, **kwargs):
     datos = request.get_json()
     try:
+        #It tries to get doctor by name
         existing_doctor:Doctor = get_doctor_by_name(datos["name"])
-        if existing_doctor != None:
+        #It controls if the doctor already exists
+        if existing_doctor is not None:
             raise DoctorAlreadyExistsException()
+        #It creates the user for doctor
         created_user = create_user({
             "username":datos["username"],
             "password":datos["password"]
         },user_role_str=UserRoleEnum.DOCTOR.value)
+        #It creates the doctor
         created_doctor = create_doctor(created_user)
+        #It controls if the created doctor is not none
         if created_doctor is None:
             raise DoctorNotFoundException()
+        #It returns the created doctor in json format
         return jsonify({"id_doctor": created_doctor.id_doctor, "name": created_doctor.name,"user":{"id_user": created_doctor.user.id_user, "username": created_doctor.user.username,
                         "user_role":{
                             "id_user_role":created_doctor.user.user_role.id_user_role,
@@ -42,14 +49,17 @@ def add_doctor(*args, **kwargs):
                             "id_medical_speciality":created_doctor.medical_speciality.id_medical_speciality,
                             "name":created_doctor.medical_speciality.name,
                         }})
+    #It captures if doctor already exists
     except DoctorAlreadyExistsException as e_doctor_already_exists:
         print(e_doctor_already_exists.__str__(),file=sys.stderr)
         print(e_doctor_already_exists.__repr__(),file=sys.stderr)
         return jsonify({"message":"Doctor "+datos["name"]+" ya existe."}),409
+    #It captures if created doctor hasn't been found
     except DoctorNotFoundException as e_doctor_not_found:
         print(e_doctor_not_found.__str__(),file=sys.stderr)
         print(e_doctor_not_found.__repr__(),file=sys.stderr)
         return jsonify({"message":"Doctor "+datos["name"]+" no se encuentra recién creado."}),404
+    #It captures if an error has ocurred
     except (TypeError, ValueError,Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
@@ -58,11 +68,15 @@ def add_doctor(*args, **kwargs):
 @doctors_bp.route("/admin/doctors", methods=["GET"])
 @needs_auth
 @require_role(required_roles=["admin"])
+#It defines the endpoint for listing the previously created doctors
 def list_doctors(*args, **kwargs):
     try:
+        #It gets the medical doctors from repository from database
         doctors:list[Doctor] = orm_list_doctors()
+        #It returns the doctors as list in dictionary format for returning as json
         doctors_list = [{"id": d.id_doctor, "name": d.name} for d in doctors]
         return jsonify(doctors_list)
+    #It controls if an error has ocurred
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
@@ -71,11 +85,15 @@ def list_doctors(*args, **kwargs):
 @doctors_bp.route("/admin/doctors/<int:id>", methods=["GET"])
 @needs_auth
 @require_role(required_roles=["admin"])
+#It defines the endpoint for getting doctor by id
 def get_doctor_by_id(id,*args, **kwargs):
     try:
+        #It gets the doctor by id from repository from database
         doctor : Doctor = orm_get_doctor_by_id(id)
+        #It controls if the doctor hasn't been found
         if doctor is None:
             raise DoctorNotFoundException()
+        #It returns the doctor in dictionary format for returning as json
         doctor_dict = [{"id_doctor": doctor.id_doctor, "name": doctor.name
                         ,"medical_speciality":{
                             "id_medical_speciality":doctor.medical_speciality.id_medical_speciality,
@@ -90,13 +108,13 @@ def get_doctor_by_id(id,*args, **kwargs):
                             }
                         }}]
         return jsonify(doctor_dict)
+    #It captures if the doctor hasn't been found
     except (DoctorNotFoundException) as e_doctor_not_found:
         print(e_doctor_not_found.__str__(),file=sys.stderr)
         print(e_doctor_not_found.__repr__(),file=sys.stderr)
         return jsonify({"message":"Doctor no encontrado!"}),404
+    #It captures if an error has ocurred
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
         return jsonify({"message":"Ha ocurrido algún error!"}),500
-
-# ... (Añadir aquí las rutas POST, PUT, DELETE para médicos)

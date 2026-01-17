@@ -14,6 +14,7 @@ auth_bp = Blueprint("auth_bp", __name__)
 
 # Definimos las rutas usando el Blueprint
 @auth_bp.route("/auth/login", methods=["POST"])
+#It defines the endpoint for login user
 def login_user():
     try:
         # It loads dotenv values
@@ -21,20 +22,21 @@ def login_user():
         credentials = request.get_json()
         given_user = credentials.get("user")
         plain_password = credentials.get("password")
+        #It gets user by username
         user:User = get_user_by_username(given_user)
-
+        #It checks if the username and password are correct
         if given_user == user.username and check_password(user.password,plain_password):
-            # Generamos el token JWT
+            # It generates the JWT Token
             payload = {
                 "sub": user.username,
                 "iat": datetime.datetime.now(datetime.timezone.utc),
                 "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=30)
             }
             token = jwt.encode(payload, config_dotenv_values["SECRET_KEY"])
+            #It returns the Token
             return jsonify({"token": token})
+    #It controls if an error has ocurred
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
         print(e.__repr__(),file=sys.stderr)
         return jsonify({"message":"Ha ocurrido algún error!"}),500
-
-# ... (Añadir aquí las rutas POST, PUT, DELETE para autenticación)
