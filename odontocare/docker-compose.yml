@@ -13,9 +13,9 @@ services:
       - back-tier
     healthcheck:
       test: curl -f http://localhost:5001/health || exit 1
-      interval: 4s       
+      interval: 30s       
       timeout: 5s         
-      retries: 3          
+      retries: 4          
       start_period: 5s 
 
   cites_bp:
@@ -32,9 +32,9 @@ services:
       - back-tier
     healthcheck:
       test: curl -f http://localhost:5002/health || exit 1
-      interval: 4s       
+      interval: 30s       
       timeout: 5s         
-      retries: 3          
+      retries: 4          
       start_period: 5s
   carga_inicial:
     #image: odontocare/cites_bp
