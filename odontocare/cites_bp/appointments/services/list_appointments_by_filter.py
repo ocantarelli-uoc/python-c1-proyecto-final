@@ -20,13 +20,20 @@ from appointments.services.get_appointments_by_status import get_appointments_by
 from appointments.services.get_appointments_by_date import get_appointments_by_date
 from exceptions.authorization.ErrorHasOcurredValidatingRoleException import ErrorHasOcurredValidatingRoleException
 from exceptions.authorization.UnauthorizedRoleException import UnauthorizedRoleException
+#It defines method for listing appointments by filter
 def list_appointments_by_filter(filter_dict,*args,**kwargs):
     try:
+        #It gets authorized user from kwargs
         authorized_user : User = kwargs.get('authorized_user')
+        #It defines the variable which the appointments are going to be recovered
         appointments = []
+        #It gets the filter_by value from filter dictionary
         filter_by = filter_dict["filter_by"]
+        #It gets the filter_value value from filter dictionary
         filter_value = filter_dict["filter_value"]
+        #It checks if user has the needed role for the filter
         result_user_has_role = {}
+        #It checks if the filter_by it's for filtering by doctor
         if filter_by == "doctor":
             result_user_has_role = user_has_role(required_roles=["admin","doctor"],*args,**kwargs)
             if authorized_user.user_role.name=="doctor":
@@ -36,6 +43,7 @@ def list_appointments_by_filter(filter_dict,*args,**kwargs):
                 doctor : Doctor = orm_get_doctor_by_id(doctor_id)
                 if doctor is not None:
                     appointments : list[MedicalAppointment] = get_appointments_by_doctor(doctor)
+        #It checks if the filter_by it's for filtering by patient
         if filter_by == "patient":
             result_user_has_role = user_has_role(required_roles=["admin"],*args,**kwargs)
             patient : Patient = orm_get_patient_by_id(filter_value)
@@ -43,6 +51,7 @@ def list_appointments_by_filter(filter_dict,*args,**kwargs):
                 appointments : list[MedicalAppointment] = get_appointments_by_patient(
                     patient
                 )
+        #It checks if the filter_by it's for filtering by center
         if filter_by == "center":
             result_user_has_role = user_has_role(required_roles=["admin"],*args,**kwargs)
             medical_center : MedicalCenter = orm_get_medical_center_by_id(filter_value)
@@ -50,6 +59,7 @@ def list_appointments_by_filter(filter_dict,*args,**kwargs):
                 appointments : list[MedicalAppointment] = get_appointments_by_medical_center(
                     medical_center
                 )
+        #It checks if the filter_by it's for filtering by status
         if filter_by == "status":
             result_user_has_role = user_has_role(required_roles=["admin"],*args,**kwargs)
             medical_status : MedicalAppointmentStatus = orm_get_medical_appointment_status_by_id(filter_value)
@@ -57,16 +67,20 @@ def list_appointments_by_filter(filter_dict,*args,**kwargs):
                 appointments : list[MedicalAppointment] = get_appointments_by_status(
                     medical_status
                 )
+        #It checks if the filter_by it's for filtering by date
         if filter_by == "date":
             result_user_has_role = user_has_role(required_roles=["admin","secretary"],*args,**kwargs)
             if filter_value is not None:
                 appointments : list[MedicalAppointment] = get_appointments_by_date(
                 datetime.datetime.fromisoformat(str(filter_value)))
-        print(result_user_has_role,file=sys.stderr)
+        #print(result_user_has_role,file=sys.stderr)
         return appointments
+    #It captures if unauthorized role for filtering by filter_by and filter value
     except UnauthorizedRoleException as e_unauthorized_role:
         raise e_unauthorized_role
+    #It captures if the role couldn't be validated
     except ErrorHasOcurredValidatingRoleException as e_error_has_ocurred_validating_role:
         raise e_error_has_ocurred_validating_role
+    #It captures generic exception 
     except Exception as e:
         raise e
