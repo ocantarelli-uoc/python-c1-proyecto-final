@@ -168,8 +168,8 @@ def get_appointment_by_id(id,*args,**kwargs):
 @cites_bp.route("/cites/<int:id>", methods=["PUT"])
 @needs_auth
 @require_role(required_roles=["admin","secretary"])
-"""It defines the endpoint for modyfing a medical appointment, 
-such as for cancelling that medical appointment"""
+#It defines the endpoint for modyfing a medical appointment, 
+#such as for cancelling that medical appointment
 def modify_appointment(id,*args, **kwargs):
     datos = request.get_json()
     try:

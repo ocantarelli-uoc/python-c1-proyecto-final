@@ -1,7 +1,7 @@
 from flask import Flask
 from sqlalchemy.pool import StaticPool
 from extensions import db
-from appointments.recursos.cites import cites_bp
+from appointments.recursos.appointments import cites_bp
 from appointment_statuses.recursos.appointment_statuses import appointment_statuses_bp
 from healthcheck.recursos.healthcheck import healthcheck_bp
 
