@@ -15,4 +15,3 @@ def list_users() -> list[User]:
     #It returns the user list gotten from database
     #through ORM
     return users
-    
