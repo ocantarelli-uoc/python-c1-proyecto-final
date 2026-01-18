@@ -9,5 +9,3 @@ healthcheck_bp = Blueprint("healthcheck_bp", __name__)
 @healthcheck_bp.route("/health", methods=["GET"])
 def healthcheck():
     return jsonify({"healtcheck": "OK"}),200
-
-# ... (Añadir aquí las rutas POST, PUT, DELETE para autenticación)
