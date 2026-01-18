@@ -1,4 +1,5 @@
 from extensions import db
+#It defines Model for representation of a medical appointment status
 class MedicalAppointmentStatus(db.Model):
     __tablename__ = 'medical_appointment_statuses'
     id_medical_status = db.Column(db.Integer, primary_key=True)

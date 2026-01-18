@@ -1,7 +1,7 @@
-from models.UserRole import UserRole
+from dtos.UserRole import UserRole
 from converters.Converter import Converter
-from models.Patient import Patient
-from models.User import User
+from dtos.Patient import Patient
+from dtos.User import User
 
 
 class PatientConverter(Converter):

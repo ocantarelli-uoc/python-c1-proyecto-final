@@ -1,5 +1,5 @@
 from converters.Converter import Converter
-from models.MedicalSpeciality import MedicalSpeciality
+from dtos.MedicalSpeciality import MedicalSpeciality
 
 
 class MedicalSpecialityConverter(Converter):

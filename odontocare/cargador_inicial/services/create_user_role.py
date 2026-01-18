@@ -1,7 +1,7 @@
 from flask import request
 import requests
 from models.Token import Token
-from models.UserRole import UserRole
+from dtos.UserRole import UserRole
 
 #It defines a method for creating a request that creates a user role (user_role) on the auth_and_admin microservice
 def create_user_role(user_role:UserRole,token:Token) -> UserRole:

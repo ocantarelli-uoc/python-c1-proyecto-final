@@ -24,15 +24,7 @@ from services.create_medical_appointment_status import create_medical_appointmen
 from services.create_medical_appointment import create_medical_appointment
 from util.file_manager import CSVFileManager
 from models.Token import Token
-from models.Address import Address
-from models.User import User
-from models.UserRole import UserRole
-from models.Doctor import Doctor
-from models.MedicalSpeciality import MedicalSpeciality
-from models.Patient import Patient
-from models.MedicalCenter import MedicalCenter
-from models.MedicalAppointmentStatus import MedicalAppointmentStatus
-from models.MedicalAppointment import MedicalAppointment
+from dtos.MedicalAppointment import MedicalAppointment
 from dotenv import dotenv_values
 
 class CargaInicial:

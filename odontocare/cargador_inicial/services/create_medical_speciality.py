@@ -1,7 +1,7 @@
 from flask import request
 import requests
 from models.Token import Token
-from models.MedicalSpeciality import MedicalSpeciality
+from dtos.MedicalSpeciality import MedicalSpeciality
 #It defines a method for creating a request that creates a medical speciality on the auth_and_admin microservice
 def create_medical_speciality(medical_speciality:MedicalSpeciality,token:Token) -> MedicalSpeciality:
         #It prepares the body payload for the POST request for creating the medical speciality

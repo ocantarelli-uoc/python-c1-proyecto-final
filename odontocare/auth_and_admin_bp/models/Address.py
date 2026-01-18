@@ -1,4 +1,5 @@
 from extensions import db
+#It defines Model for representation of an address
 class Address(db.Model):
     __tablename__ = 'addresses'
     id_address = db.Column(db.Integer, primary_key=True)

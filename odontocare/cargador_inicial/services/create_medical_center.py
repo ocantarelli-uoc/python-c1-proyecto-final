@@ -1,8 +1,8 @@
 from flask import request
 import requests
 from models.Token import Token
-from models.MedicalCenter import MedicalCenter
-from models.Address import Address
+from dtos.MedicalCenter import MedicalCenter
+from dtos.Address import Address
 #It defines a method for creating a request that creates a medical center on the auth_and_admin microservice
 def create_medical_center(medical_center:MedicalCenter,token:Token) -> MedicalCenter:
         #It prepares the body payload for the POST request for creating the medical center

@@ -1,8 +1,8 @@
 from flask import request
 import requests
 from models.Token import Token
-from models.UserRole import UserRole
-from models.User import User
+from dtos.UserRole import UserRole
+from dtos.User import User
 #It defines a method for creating a request that creates a user on the auth_and_admin microservice
 def create_user(user:User,token:Token) -> User:
         #It prepares the body payload for the POST request for creating the user

@@ -1,9 +1,9 @@
 from flask import request
 import requests
 from models.Token import Token
-from models.Patient import Patient
-from models.UserRole import UserRole
-from models.User import User
+from dtos.Patient import Patient
+from dtos.UserRole import UserRole
+from dtos.User import User
 #It defines a method for creating a request that creates a patient on the auth_and_admin microservice
 def create_patient(patient:Patient,token:Token) -> Patient:
         #It prepares the body payload for the POST request for creating the patient

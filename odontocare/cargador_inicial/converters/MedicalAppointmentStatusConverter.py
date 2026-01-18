@@ -1,5 +1,5 @@
 from converters.Converter import Converter
-from models.MedicalAppointmentStatus import MedicalAppointmentStatus
+from dtos.MedicalAppointmentStatus import MedicalAppointmentStatus
 
 
 class MedicalAppointmentStatusConverter(Converter):

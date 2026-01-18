@@ -1,9 +1,7 @@
 from datetime import datetime
 
-from models.MedicalAppointmentStatus import MedicalAppointmentStatus
-from models.Doctor import Doctor
-from models.Patient import Patient
-from models.User import User
+from dtos.MedicalAppointmentStatus import MedicalAppointmentStatus
+#It defines Data Transfer Object (DTO) for representation of a medical appointment
 class MedicalAppointment:
     def __init__(self,id_medical_appointment:int,appointment_date:datetime,
                  motiu:str,medical_appointment_status:MedicalAppointmentStatus,

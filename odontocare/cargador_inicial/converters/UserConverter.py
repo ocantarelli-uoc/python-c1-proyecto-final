@@ -1,6 +1,6 @@
 from converters.Converter import Converter
-from models.User import User
-from models.UserRole import UserRole
+from dtos.User import User
+from dtos.UserRole import UserRole
 
 
 class UserConverter(Converter):

@@ -1,5 +1,5 @@
 from converters.Converter import Converter
-from models.Address import Address
+from dtos.Address import Address
 
 
 class AddressConverter(Converter):

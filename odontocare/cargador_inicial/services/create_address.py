@@ -1,7 +1,7 @@
 from flask import request
 import requests
 from models.Token import Token
-from models.Address import Address
+from dtos.Address import Address
 #It defines a method for creating a request that creates an address on the auth_and_admin microservice
 def create_address(address:Address,token:Token) -> Address:
         #It prepares the body payload for the POST request for creating the address

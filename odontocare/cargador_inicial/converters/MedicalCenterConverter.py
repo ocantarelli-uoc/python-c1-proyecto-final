@@ -1,6 +1,6 @@
 from converters.Converter import Converter
-from models.MedicalCenter import MedicalCenter
-from models.Address import Address
+from dtos.MedicalCenter import MedicalCenter
+from dtos.Address import Address
 
 class MedicalCenterConverter(Converter):
   #method that its responsibility it's to convert a dataframe of medical_centers to list of MedicalCenter class objects (instances)

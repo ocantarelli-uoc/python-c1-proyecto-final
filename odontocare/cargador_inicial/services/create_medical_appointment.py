@@ -2,8 +2,8 @@ from flask import request
 import json
 import requests
 from models.Token import Token
-from models.MedicalAppointment import MedicalAppointment
-from models.MedicalAppointmentStatus import MedicalAppointmentStatus
+from dtos.MedicalAppointment import MedicalAppointment
+from dtos.MedicalAppointmentStatus import MedicalAppointmentStatus
 #It defines a method for creating a request that creates a medical appointment on the cites microservice
 def create_medical_appointment(medical_appointment:MedicalAppointment,token:Token) -> MedicalAppointment:
         #It prepares the body payload for the POST request for creating the medical appointment

@@ -1,4 +1,5 @@
 from extensions import db
+#It defines Model for representation of a doctor
 class Doctor(db.Model):
     __tablename__ = 'doctors'
     id_doctor = db.Column(db.Integer, primary_key=True)

@@ -1,5 +1,5 @@
-from models.UserRole import UserRole
-
+from dtos.UserRole import UserRole
+#It defines Data Transfer Object (DTO) for representation of a user
 class User:
     def __init__(self,id_user:int,username:str,password:str,user_role:UserRole):
         self.id_user = id_user
