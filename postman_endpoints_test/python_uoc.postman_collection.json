@@ -1,0 +1,1784 @@
+{
+	"info": {
+		"_postman_id": "ac392b35-8e38-4013-9375-3d0a87ebbddb",
+		"name": "python uoc",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24929790"
+	},
+	"item": [
+		{
+			"name": "finalC1",
+			"item": [
+				{
+					"name": "cites service",
+					"item": [
+						{
+							"name": "appointments - cites",
+							"item": [
+								{
+									"name": "list appointments",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {}
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:5002/api/v1/cites?filter_by=patient&filter_value=1",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"cites"
+											],
+											"query": [
+												{
+													"key": "filter_by",
+													"value": "patient"
+												},
+												{
+													"key": "filter_value",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "list appointments - filter by doctor",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {}
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:5002/api/v1/cites?filter_by=doctor&filter_value=1",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"cites"
+											],
+											"query": [
+												{
+													"key": "filter_by",
+													"value": "doctor"
+												},
+												{
+													"key": "filter_value",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "list appointments - filter by patient",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {}
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:5002/api/v1/cites?filter_by=patient&filter_value=1",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"cites"
+											],
+											"query": [
+												{
+													"key": "filter_by",
+													"value": "patient"
+												},
+												{
+													"key": "filter_value",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "list appointments - filter by patient (Secretary)",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {}
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_SECRETARY}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:5002/api/v1/cites?filter_by=patient&filter_value=1",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"cites"
+											],
+											"query": [
+												{
+													"key": "filter_by",
+													"value": "patient"
+												},
+												{
+													"key": "filter_value",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "list appointments - filter by date",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {}
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:5002/api/v1/cites?filter_by=date&filter_value=2025-01-08T17:05:23",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"cites"
+											],
+											"query": [
+												{
+													"key": "filter_by",
+													"value": "date"
+												},
+												{
+													"key": "filter_value",
+													"value": "2025-01-08T17:05:23"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "list appointments - filter by date - Secretary",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {}
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_SECRETARY}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:5002/api/v1/cites?filter_by=date&filter_value=2025-01-08T17:05:23",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"cites"
+											],
+											"query": [
+												{
+													"key": "filter_by",
+													"value": "date"
+												},
+												{
+													"key": "filter_value",
+													"value": "2025-01-08T17:05:23"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "list appointments - filter by status",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {}
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:5002/api/v1/cites?filter_by=status&filter_value=2",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"cites"
+											],
+											"query": [
+												{
+													"key": "filter_by",
+													"value": "status"
+												},
+												{
+													"key": "filter_value",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "list appointments - filter by medical center",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {}
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:5002/api/v1/cites?filter_by=center&filter_value=1",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"cites"
+											],
+											"query": [
+												{
+													"key": "filter_by",
+													"value": "center"
+												},
+												{
+													"key": "filter_value",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add appointment",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"appointment_date\":\"2025-01-08T17:05:23\",\n    \"id_doctor\":1,\n    \"id_patient\":1,\n    \"id_medical_center\":1,\n    \"motiu\":\"visita mèdica revisió cor\",\n    \"id_action_user\":1\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:5002/api/v1/cites",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"cites"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "get appointment by id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:5002/api/v1/cites/1",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"cites",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "cancel appointment by id",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"action\":\"Cancel\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:5002/api/v1/cites/1",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"cites",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "approve appointment by id",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"action\":\"Approve\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:5002/api/v1/cites/1",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"cites",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "decline appointment by id",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"action\":\"Decline\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:5002/api/v1/cites/1",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"cites",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "appointment statuses - estats de cites",
+							"item": [
+								{
+									"name": "Add appointment status",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"status_name\":\"Cancelled\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:5002/api/v1/estats_cites",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"estats_cites"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add appointment status - Pending",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"status_name\":\"Pending\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:5002/api/v1/estats_cites",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"estats_cites"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add appointment status - Approved",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"status_name\":\"Approved\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:5002/api/v1/estats_cites",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"estats_cites"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add appointment status - Declined",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"status_name\":\"Declined\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:5002/api/v1/estats_cites",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"estats_cites"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "get appointment status by id - 1",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN_ADMIN}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:5002/api/v1/estats_cites/1",
+											"host": [
+												"localhost"
+											],
+											"port": "5002",
+											"path": [
+												"api",
+												"v1",
+												"estats_cites",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "auth and admin service",
+					"item": [
+						{
+							"name": "auth",
+							"item": [
+								{
+									"name": "login user",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"user\":\"hsala\",\n    \"password\":\"test3\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:5001/api/v1/auth/login",
+											"host": [
+												"localhost"
+											],
+											"port": "5001",
+											"path": [
+												"api",
+												"v1",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "login admin user",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"user\":\"admin\",\n    \"password\":\"test2xa\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:5001/api/v1/auth/login",
+											"host": [
+												"localhost"
+											],
+											"port": "5001",
+											"path": [
+												"api",
+												"v1",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "login secretary user",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"user\":\"joan\",\n    \"password\":\"test3\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:5001/api/v1/auth/login",
+											"host": [
+												"localhost"
+											],
+											"port": "5001",
+											"path": [
+												"api",
+												"v1",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "administration",
+							"item": [
+								{
+									"name": "users",
+									"item": [
+										{
+											"name": "create user",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\":\"uri\",\n    \"password\":\"test\",\n    \"user_role\":\"admin\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/usuaris",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"usuaris"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "create user - secretaria",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"username\":\"joan\",\n    \"password\":\"test3\",\n    \"user_role\":\"secretary\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/usuaris",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"usuaris"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "get user by id",
+											"protocolProfileBehavior": {
+												"disabledSystemHeaders": {}
+											},
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2NzQ0NTEwNCwiZXhwIjoxNzY3NDQ2OTA0fQ.1mbZhKQ5xihtdXykaVZp5vtyW-Gp7CpGadOg4jjVTvs",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/usuaris/{{USER_ID}}",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"usuaris",
+														"{{USER_ID}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "get user by username",
+											"protocolProfileBehavior": {
+												"disabledSystemHeaders": {}
+											},
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2NzQ0NTEwNCwiZXhwIjoxNzY3NDQ2OTA0fQ.1mbZhKQ5xihtdXykaVZp5vtyW-Gp7CpGadOg4jjVTvs",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/usuaris/name/{{USER_NAME}}",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"usuaris",
+														"name",
+														"{{USER_NAME}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "list users",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/usuaris",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"usuaris"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "get user by username (admin)",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_SECRETARY}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/usuaris/name/admin",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"usuaris",
+														"name",
+														"admin"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "user roles",
+									"item": [
+										{
+											"name": "create user role - admin",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"role_name\":\"admin\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/rols_usuaris",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"rols_usuaris"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "create user role - secretaria",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"role_name\":\"secretary\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/rols_usuaris",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"rols_usuaris"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "create user role - doctor",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"role_name\":\"doctor\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/rols_usuaris",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"rols_usuaris"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "create user role - patient",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"role_name\":\"patient\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/rols_usuaris",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"rols_usuaris"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "get user by role by id",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/rols_usuaris/1",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"rols_usuaris",
+														"1"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "list user roles",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/rols_usuaris",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"rols_usuaris"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "doctors",
+									"item": [
+										{
+											"name": "create doctor",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\":\"José Daniel\",\n    \"username\":\"josedaniel\",\n    \"password\":\"test2\",\n    \"medical_speciality\":\"Cardiología\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/doctors",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"doctors"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "get doctor by id",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/doctors/1",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"doctors",
+														"1"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "list doctors",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/doctors",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"doctors"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "medical specialities",
+									"item": [
+										{
+											"name": "create medical speciality",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"medical_speciality_name\":\"Cardiología\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/especialitats_mediques",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"especialitats_mediques"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "get medical speciality by id",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/especialitats_mediques/1",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"especialitats_mediques",
+														"1"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "list medical specialities",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/especialitats_mediques",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"especialitats_mediques"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "addresses",
+									"item": [
+										{
+											"name": "add address",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"street\":\"Carrer del caire 24, 2º 2na\",\n    \"city\":\"Barcelona\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/adreces",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"adreces"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "get address by id",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/adreces/1",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"adreces",
+														"1"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "list addresses",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/adreces",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"adreces"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "medical centers",
+									"item": [
+										{
+											"name": "add center",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\":\"New Teknon Institut Cor BCN\",\n    \"id_address\":1\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/centres",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"centres"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "get medical center by id",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/centres/1",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"centres",
+														"1"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "list medical centers",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/centres",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"centres"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "patients",
+									"item": [
+										{
+											"name": "create patient",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\":\"Helena\",\n    \"username\":\"hrama\",\n    \"password\":\"test3\",\n    \"telephone\":\"8888888\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/pacients",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"pacients"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "create patient KO",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb3NlYW50b25pbyIsImlhdCI6MTc2NzE4NDE3MiwiZXhwIjoxNzY3MTg1OTcyfQ.clfu7_DStXIeLlI3t0LKZriLHitVvLQ9Tz3sUXVHjic",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\":\"Helena\",\n    \"username\":\"hsala\",\n    \"password\":\"test3\",\n    \"telephone\":\"8888888\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/pacients",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"pacients"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "get patient by id",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/pacients/1",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"pacients",
+														"1"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "list patients",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{TOKEN_ADMIN}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "localhost:5001/api/v1/admin/pacients",
+													"host": [
+														"localhost"
+													],
+													"port": "5001",
+													"path": [
+														"api",
+														"v1",
+														"admin",
+														"pacients"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "USER_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "TOKEN_ADMIN",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "USER_NAME",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "TOKEN_SECRETARY",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
