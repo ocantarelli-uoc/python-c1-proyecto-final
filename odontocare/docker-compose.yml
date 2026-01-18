@@ -1,6 +1,5 @@
 services:
   auth_and_admin_bp:
-    #image: odontocare/auth_and_admin_bp
     container_name: auth_and_admin_bp
     build: 
       context: .
@@ -19,7 +18,6 @@ services:
       start_period: 5s 
 
   cites_bp:
-    #image: odontocare/cites_bp
     container_name: cites_bp
     build: 
       context: .
@@ -37,7 +35,6 @@ services:
       retries: 4          
       start_period: 5s
   carga_inicial:
-    #image: odontocare/cites_bp
     container_name: carga_inicial
     build: 
       context: .
