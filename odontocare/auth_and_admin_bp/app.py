@@ -3,15 +3,15 @@ from first_configs import create_first_admin_user
 from sqlalchemy.pool import StaticPool
 from dotenv import dotenv_values
 from extensions import db
-from auth_bp.recursos.auth import auth_bp
-from admin_bp.users.recursos.users import users_bp
-from admin_bp.patients.recursos.patients import patients_bp
-from admin_bp.doctors.recursos.doctors import doctors_bp
-from admin_bp.centers.recursos.centers import centers_bp
-from admin_bp.user_roles.recursos.user_roles import users_roles_bp
-from admin_bp.medical_specialities.recursos.medical_specialities import medical_specialities_bp
-from admin_bp.addresses.recursos.addresses import address_bp
-from healthcheck.recursos.healthcheck import healthcheck_bp
+from auth_bp.endpoints.auth import auth_bp
+from admin_bp.users.endpoints.users import users_bp
+from admin_bp.patients.endpoints.patients import patients_bp
+from admin_bp.doctors.endpoints.doctors import doctors_bp
+from admin_bp.centers.endpoints.centers import centers_bp
+from admin_bp.user_roles.endpoints.user_roles import users_roles_bp
+from admin_bp.medical_specialities.endpoints.medical_specialities import medical_specialities_bp
+from admin_bp.addresses.endpoints.addresses import address_bp
+from healthcheck.endpoints.healthcheck import healthcheck_bp
 
 def create_app():
     app = Flask(__name__)

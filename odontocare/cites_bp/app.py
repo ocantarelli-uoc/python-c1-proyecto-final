@@ -1,9 +1,9 @@
 from flask import Flask
 from sqlalchemy.pool import StaticPool
 from extensions import db
-from appointments.recursos.appointments import cites_bp
-from appointment_statuses.recursos.appointment_statuses import appointment_statuses_bp
-from healthcheck.recursos.healthcheck import healthcheck_bp
+from appointments.endpoints.appointments import cites_bp
+from appointment_statuses.endpoints.appointment_statuses import appointment_statuses_bp
+from healthcheck.endpoints.healthcheck import healthcheck_bp
 
 def create_app():
     app = Flask(__name__)
