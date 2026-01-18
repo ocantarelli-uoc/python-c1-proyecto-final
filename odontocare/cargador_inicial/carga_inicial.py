@@ -29,15 +29,17 @@ from dotenv import dotenv_values
 
 class CargaInicial:
 
-    def __init__(self,token:Token):
-        self.token = token
-
+    def __init__(self):
+        pass
     def doCharge(self):
+        #It gets configuration variables and values
         config_dotenv_values = dotenv_values(".env")
+        #It gets the first app user username
         app_first_user_username : str = config_dotenv_values['ADMIN_FIRST_APP_USER_USERNAME']
+        #It gets the first app user password
         app_first_user_password : str = config_dotenv_values['ADMIN_FIRST_APP_USER_PASSWORD']
+        #It does first user login and it returns the first app user login token for specified time duration
         token : Token = login(app_first_user_username,app_first_user_password)
-        self.token = token
         """It instances all the CSV File Manager intance for file dades.csv and after instance it,
         it read its content as a DataFrame with Pandas library
         """
