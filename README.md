@@ -421,3 +421,79 @@ En esta carpeta, se contendrá el vídeo de la explicación.
 ## postman_endpoints_test:
 
 En esta carpeta, se contienen los tests de endpoints realizados con Postman.
+
+# Referencias:
+
+## Decorators / Decoradores:
+
+https://aula.uoc.edu/courses/70601/pages/python-c1-tema-3-3c-autenticacio-basica-de-tokens-i-autoritzacio?module_item_id=2621295
+
+https://docs.python.org/3/tutorial/controlflow.html#arbitrary-argument-lists
+
+https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments
+
+## bcrypt:
+
+https://pypi.org/project/bcrypt/
+
+https://github.com/pyca/bcrypt/
+
+https://www.geeksforgeeks.org/python/hashing-passwords-in-python-with-bcrypt/
+
+https://dev.to/abbyesmith/password-hashing-using-bcrypt-in-python-2i08
+
+## datetime:
+
+https://docs.python.org/3/library/datetime.html#datetime.datetime.fromisoformat
+
+## Detectar si es instancia:
+
+https://stackoverflow.com/questions/624926/how-do-i-detect-whether-a-variable-is-a-function
+
+## Cambiar de puerto:
+
+https://www.geeksforgeeks.org/python/how-to-change-port-in-flask-app/
+
+## SQL Alchemy:
+
+https://docs.sqlalchemy.org/en/20/tutorial/data_select.html
+
+https://docs.sqlalchemy.org/en/20/tutorial/data_select.html#the-where-clause
+
+https://aula.uoc.edu/courses/70601/pages/python-c1-tema-3-3b-persistencia-de-dades-amb-sqlalchemy?module_item_id=2621293
+
+## HTTP / REST:
+
+### Servidors i Clients HTTP:
+
+https://aula.uoc.edu/courses/70601/pages/python-c1-tema-1-1a-servidors-i-clients-http?module_item_id=2621264
+
+### Codis d'estat HTTP:
+
+https://aula.uoc.edu/courses/70601/pages/python-c1-tema-1-1b-codis-destat-http?module_item_id=2621266
+
+### Clients d'una API:
+
+https://aula.uoc.edu/courses/70601/pages/python-c1-tema-1-1c-client-duna-api?module_item_id=2621268
+
+### Eines externes per a APIs:
+
+https://aula.uoc.edu/courses/70601/pages/python-c1-tema-1-1d-eines-externes-per-a-apis?module_item_id=2621269
+
+## Flask:
+
+### Creación de un servicio REST:
+
+https://aula.uoc.edu/courses/70601/pages/python-c1-tema-2-2c-creacio-dun-servei-rest?module_item_id=2621278
+
+### Controles de errores:
+
+https://aula.uoc.edu/courses/70601/pages/python-c1-tema-2-2d-control-derrors-a-flask?module_item_id=2621281
+
+### Datos al cuerpo de la petición:
+
+https://aula.uoc.edu/courses/70601/pages/python-c1-tema-2-2e-maneig-de-dades-de-la-peticio?module_item_id=2621283
+
+### Modularidad con Blueprints
+
+https://aula.uoc.edu/courses/70601/pages/python-c1-tema-2-2f-modularitat-de-les-api-amb-blueprints?module_item_id=2621285
