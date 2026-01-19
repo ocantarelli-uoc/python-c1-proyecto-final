@@ -144,3 +144,280 @@ Se requiere una demostración visual, clara y concisa del aplicativo desarrollad
 * **Contenido**: Debe evidenciar claramente el funcionamiento completo del aplicativo, incluyendo la interacción entre los microservicios.
 * **Funcionamiento**: Mostrar el flujo de trabajo del sistema, desde la inicialización de los servicios hasta la creación de una cita médica, destacando la comunicación RESTful entre los módulos.
 
+## Explicación de estructuración de directorios del proyecto
+
+### odontocare
+
+Contiene el microservicio auth_and_admin_bp, que ofrece los servicios de autenticación y de gestión administrativa.
+
+#### módulo auth_and_admin_bp
+
+Este módulo contiene el microservicio auth_and_admin_bp, que sirve para la autenticación (auth), y la gestión administrativa de las distintas entidades del proyecto (a excepción de la creación de las citas).
+
+##### admin_bp
+
+En este directorio consta todo lo relacionado con la gestión administrativa de la plataforma Odontocare.
+
+###### addresses
+
+Contiene tanto los recursos (endpoints) como los servicios para la gestión de las direcciones.
+
+###### centers
+
+Contiene tanto los recursos (endpoints) como los servicios para la gestión de los centros médicos.
+
+###### doctors
+
+Contiene tanto los recursos (endpoints) como los servicios para la gestión de los doctores.
+
+
+###### patients
+
+Contiene tanto los recursos (endpoints) como los servicios para la gestión de los pacientes.
+
+###### user_roles
+
+Contiene tanto los recursos (endpoints) como los servicios para la gestión de los roles de usuario.
+
+###### users
+
+Contiene tanto los recursos (endpoints) como los servicios para la gestión de los usuarios.
+
+###### exceptions
+
+Contiene tanto las excepciones personalizadas.
+
+###### already_exists:
+
+Contiene las excepciones personalizadas para el caso de que ya exista una entidad (con el mismo identificador o atributos).
+
+###### authorization:
+
+Contiene las excepciones para la gestión relacionada con authorización, como cuando el usuario tiene un rol que no está autorizado.
+
+###### not_found:
+
+Contiene las excepciones para cuando no se encuentra una entidad (por id o atributos de los campos especificados).
+
+##### healthcheck
+
+Contiene tanto los recursos (endpoints) como los servicios para la comprobación de si el microservicio está con estado saludable (health).
+
+### models
+
+Contiene los modelos que representan las entidades de la aplicación de autenticación y administración.
+
+#### app.py
+
+Contiene los blueprints de la aplicación
+
+### Dockerfile
+
+Contiene las instrucciones (que serán capas) para contruir la imagen para la aplicación.
+
+### extensions.py
+
+Contiene la instanciación del ORM de base de datos (SQLAlchemy)
+
+### requeriments.txt
+
+Contiene las dependencias a instalar para la aplicación.
+
+### first_configs.py
+
+Contiene la creación del primer usuario administrador de la plataforma Odontocare, con las variables recuperadas del archivo de entorno .env:
+
+ADMIN_FIRST_APP_USER_USERNAME
+
+ADMIN_FIRST_APP_USER_PASSWORD
+
+### run.py
+
+Contiene la inicialización de la aplicación especificando la IP (host) y puerto por el que escuchará.
+
+### .env:
+
+Archivo de entorno (.env) que se debe crear (no viene por defecto en el repositorio ya que está ignorado).
+
+Se debe crear obligatoriamente con las siguientes variables de configuración:
+
+SECRET_KEY (con una clave secreta para hashing de las contraseñas de los usuarios)
+
+ADMIN_FIRST_APP_USER_USERNAME (con el nombre del primer usuario administrador)
+
+ADMIN_FIRST_APP_USER_PASSWORD (con la primera contraseña del usuario administrador)
+
+ejemplo:
+
+SECRET_KEY = secreto
+ADMIN_FIRST_APP_USER_USERNAME = username
+ADMIN_FIRST_APP_USER_PASSWORD = password
+
+#### módulo cites_bp
+
+Este módulo contiene el microservicio cites_bp, que sirve para la gestión de las citas, y los estados posibles de las citas.
+
+###### appointment_statuses
+
+Contiene tanto los recursos (endpoints) como los servicios para la gestión de los estados de las citas médicas.
+
+###### appointments
+
+Contiene tanto los recursos (endpoints) como los servicios para la gestión de las citas médicas.
+
+###### auth
+
+Contiene los servicios para el login contra el microservicio de auth_and_admin_bp (autenticación y gestión administrativa de la clínica).
+
+###### decorators
+
+Contiene los decoradores que sirven para comprobar si cumple los requisitos de autenticación, y require_role para ver si está autorizado a ver un recurso.
+
+###### dtos
+
+Contiene las clases del otro microservicio, que en este caso no serán modelos, sino Data Transfer Objects (DTO) para la gestión y facilidad de gestión de los objetos a enviar y recibidos del microservicio de autenticación y administración.
+
+###### enums
+
+Contiene los Enums relacionados con el microservicio de citas, que en este caso es para las acciones a realizar sobre una cita médica, y del estado de una cita médica respectivamente.
+
+###### exceptions
+
+Contiene tanto las excepciones personalizadas.
+
+###### already_exists:
+
+Contiene las excepciones personalizadas para el caso de que ya exista una entidad (con el mismo identificador o atributos).
+
+###### authorization:
+
+Contiene las excepciones para la gestión relacionada con authorización, como cuando el usuario tiene un rol que no está autorizado.
+
+###### not_found:
+
+Contiene las excepciones para cuando no se encuentra una entidad (por id o atributos de los campos especificados).
+
+###### action_already_applied:
+
+Contiene las excepciones para si una acción ya se ha aplicado sobre una entidad.
+
+###### invalid:
+
+Contiene las excepciones para si una acción a aplicar no es válida.
+
+##### healthcheck
+
+Contiene tanto los recursos (endpoints) como los servicios para la comprobación de si el microservicio está con estado saludable (health).
+
+##### models
+
+Contiene los modelos de esta aplicación como MedicalAppointment y MedicalAppointmentStatus.
+
+#### app.py
+
+Contiene los blueprints de la aplicación
+
+### Dockerfile
+
+Contiene las instrucciones (que serán capas) para contruir la imagen para la aplicación.
+
+### extensions.py
+
+Contiene la instanciación del ORM de base de datos (SQLAlchemy)
+
+### requeriments.txt
+
+Contiene las dependencias a instalar para la aplicación.
+
+### .env:
+
+Archivo de entorno (.env) que se debe crear (no viene por defecto en el repositorio ya que está ignorado).
+
+Se debe crear obligatoriamente con las siguientes variables de configuración:
+
+SECRET_KEY (con una clave secreta para hashing de las contraseñas de los usuarios)
+
+ejemplo:
+
+SECRET_KEY = secreto
+
+### run.py
+
+Contiene la inicialización de la aplicación especificando la IP (host) y puerto por el que escuchará.
+
+#### módulo cargador_inicial
+
+Este módulo contiene la estructura de carpetas necesarias, junto al script carga_inicial.py, para hacer la primera creación de una cita médica a través del fichero de datos csv dades.csv.
+
+##### converters
+
+Este módulo contiene los convertidores (converters) para convertir las filas (rows) recuperadas del DataFrame del CSV mediante Pandas a instancias de entidad (genera entidades) de su clase de Modelo respectiva.
+
+##### data
+
+Este directorio contiene el fichero de datos csv a importar dades.csv con los datos a importar para cada entidad a crear y de cada tipo de entidad.
+
+##### dtos
+
+Contiene las clases del otro microservicio, que en este caso no serán modelos, sino Data Transfer Objects (DTO) para la gestión y facilidad de gestión de los objetos a enviar y recibidos del microservicio de autenticación y administración, y del de citas.
+
+### models
+
+Contiene los modelos que representan las entidades del módulo de cargador_inicial, que es el Token para representar un token de JWT.
+
+### services:
+
+Contiene los servicios para crear entidades haciendo peticiones hacia el microservicio de autenticación y administración (todos los que no sirvan para crear estado de cita ni el de para crear citas médicas), y también hacia el microservicio de citas (los que sirvan para crear estado de cita ni el de para crear citas médicas).
+
+### util:
+
+Tiene una utilidad para leer los datos del archivo csv.
+
+### .env:
+
+Archivo de entorno (.env) que se debe crear (no viene por defecto en el repositorio ya que está ignorado).
+
+Se debe crear obligatoriamente con las siguientes variables de configuración:
+
+ADMIN_FIRST_APP_USER_USERNAME (con el nombre del primer usuario administrador)
+
+ADMIN_FIRST_APP_USER_PASSWORD (con la primera contraseña del usuario administrador)
+
+ejemplo:
+
+ADMIN_FIRST_APP_USER_USERNAME = username
+ADMIN_FIRST_APP_USER_PASSWORD = password
+
+### carga_inicial.py
+
+Es el script principal del cargador_inicial, que lee las variables de entorno (.env), hace login con el primer usuario administrador de la plataforma Odontocare. A continuación, lee los datos del archivo dades.csv, instancia los convertidores (converters) a instancias de sus respectivas Entidades, generando entidades o instancias de Entidad.
+
+Finalmente, creando las entidades llamando al servicio correspondiente, que hará una petición al microservicio de autenticación y administración (auth_and_admin_bp) si no se trata de la creación de un estado de cita, o de la creación de una cita médica. En caso de tratarse de la creación de un estado de cita médica, o de la creación de una cita médica, llama a microservicio de citas (cites_bp).
+
+### Dockerfile:
+
+Contiene las instrucciones (que serán capas) para contruir la imagen para la aplicación.
+
+### requeriments.txt
+
+Contiene las dependencias a instalar para la aplicación.
+
+### run.py
+
+Contiene la inicialización de la aplicación del script de cargador_inicial.
+
+## .gitignore:
+
+Contiene los archivos a ignorar.
+
+## docker-compose.yml:
+
+Define los servicios de la plataforma auth_and_admin_bp, cites_bp y carga_inicial, y su creación de imagen y configuración de contenedor, una red de Docker para que se puedan comunicar, y también hacia Internet y descargar las dependencias.
+
+## video:
+
+En esta carpeta, se contendrá el vídeo de la explicación.
+
+## postman_endpoints_test:
+
+En esta carpeta, se contienen los tests de endpoints realizados con Postman.
