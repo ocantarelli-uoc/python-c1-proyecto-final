@@ -462,6 +462,10 @@ https://docs.sqlalchemy.org/en/20/tutorial/data_select.html#the-where-clause
 
 https://aula.uoc.edu/courses/70601/pages/python-c1-tema-3-3b-persistencia-de-dades-amb-sqlalchemy?module_item_id=2621293
 
+### Relaciones entre Entidades (SQLAlchemy):
+
+https://docs.sqlalchemy.org/en/20/orm/basic_relationships.html
+
 ## HTTP / REST:
 
 ### Servidors i Clients HTTP:
