@@ -33,7 +33,7 @@ def add_appointment_status(*args, **kwargs):
     except (MedicalAppointmentStatusAlreadyExistsException) as e_medical_appointment_status_already_exists:
         print(e_medical_appointment_status_already_exists.__str__(),file=sys.stderr)
         print(e_medical_appointment_status_already_exists.__repr__(),file=sys.stderr)
-        return jsonify({"message":"Estado de Cita Médica ya existía!"}),404
+        return jsonify({"message":"Estado de Cita Médica ya existía!"}),409
     #It captures if an error has ocurred
     except (TypeError, ValueError, Exception) as e:
         print(e.__str__(),file=sys.stderr)
