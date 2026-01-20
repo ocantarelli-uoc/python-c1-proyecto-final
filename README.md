@@ -501,3 +501,15 @@ https://aula.uoc.edu/courses/70601/pages/python-c1-tema-2-2e-maneig-de-dades-de-
 ### Modularidad con Blueprints
 
 https://aula.uoc.edu/courses/70601/pages/python-c1-tema-2-2f-modularitat-de-les-api-amb-blueprints?module_item_id=2621285
+
+## Inicialización:
+
+Para levantar (run) los microservicios y el cargador inicial se requiere de Docker.
+
+Primero, para levantar los microservicios se debe ejecutar comando (des de dentro de carpeta: odontocare):
+
+docker-compose up -d
+
+A continuación, para ejecutar el cargador de los datos iniciales, se debe ejecutar comando (des de dentro de carpeta: odontocare):
+
+docker-compose --profile data_setup up -d
