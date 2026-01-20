@@ -48,7 +48,7 @@ def add_doctor(*args, **kwargs):
                         "medical_speciality":{
                             "id_medical_speciality":created_doctor.medical_speciality.id_medical_speciality,
                             "name":created_doctor.medical_speciality.name,
-                        }})
+                        }}),201
     #It captures if doctor already exists
     except DoctorAlreadyExistsException as e_doctor_already_exists:
         print(e_doctor_already_exists.__str__(),file=sys.stderr)

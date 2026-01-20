@@ -31,7 +31,7 @@ def add_address(*args, **kwargs):
         created_address = create_address()
         #It returns the created address
         return jsonify({"id_address": created_address.id_address, "street": created_address.street, 
-                        "city":created_address.city})
+                        "city":created_address.city}),201
     #It controls if address already exists
     except AddressAlreadyExistsException as e_address_already_exists:
         print(e_address_already_exists.__str__(),file=sys.stderr)

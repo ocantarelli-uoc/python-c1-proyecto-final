@@ -43,7 +43,7 @@ def add_user(*args, **kwargs):
                         "user_role":{
                             "id_user_role":user.user_role.id_user_role,
                             "name":user.user_role.name,
-                        }})
+                        }}),201
     #It captures if the user already exists
     except UserAlreadyExistsException as e_user_already_exists:
         print(e_user_already_exists.__str__(),file=sys.stderr)

@@ -47,7 +47,7 @@ def add_patient(*args, **kwargs):
                         "user_role":{
                             "id_user_role":created_patient.user.user_role.id_user_role,
                             "name":created_patient.user.user_role.name,
-                        }}})
+                        }}}),201
     #It captures if the patient already exists
     except PatientAlreadyExistsException as e_patient_already_exists:
         print(e_patient_already_exists.__str__(),file=sys.stderr)

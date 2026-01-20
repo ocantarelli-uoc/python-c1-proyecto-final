@@ -38,7 +38,7 @@ def add_center(*args, **kwargs):
                             "id_address":created_center.address.id_address,
                             "street":created_center.address.street,
                             "city":created_center.address.city,
-                        }})
+                        }}),201
     #It captures if the medical center already exists
     except MedicalCenterAlreadyExistsException as e_center_already_exists:
         print(e_center_already_exists.__str__(),file=sys.stderr)
