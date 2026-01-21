@@ -559,3 +559,8 @@ para reducir tiempo de grabación del vídeo.
 ## Agradecimientos
 
 Se quiere agradecer por la formación recibida por estos niveles del curso de Python, y se considera que han sido de utilidad para el aprendizaje, y mejora en Python.
+
+Considero que es un buen curso, y que ha sido de ayuda. 
+
+Hubiera sido interesante ver también otros frameworks web (que tienen librerías para web (con renderización de plantilla (pasando objetos) o html) - web,
+REST, Graphql...) de Python.
