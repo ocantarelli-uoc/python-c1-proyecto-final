@@ -440,9 +440,9 @@ En esta carpeta, se contendrá el vídeo de la explicación.
 
 En esta carpeta, se contienen los tests de endpoints realizados con Postman.
 
-# Referencias:
+## Referencias:
 
-## Decorators / Decoradores:
+### Decorators / Decoradores:
 
 https://aula.uoc.edu/courses/70601/pages/python-c1-tema-3-3c-autenticacio-basica-de-tokens-i-autoritzacio?module_item_id=2621295
 
@@ -450,7 +450,7 @@ https://docs.python.org/3/tutorial/controlflow.html#arbitrary-argument-lists
 
 https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments
 
-## bcrypt:
+### bcrypt:
 
 https://pypi.org/project/bcrypt/
 
@@ -460,19 +460,19 @@ https://www.geeksforgeeks.org/python/hashing-passwords-in-python-with-bcrypt/
 
 https://dev.to/abbyesmith/password-hashing-using-bcrypt-in-python-2i08
 
-## datetime:
+### datetime:
 
 https://docs.python.org/3/library/datetime.html#datetime.datetime.fromisoformat
 
-## Detectar si es instancia:
+### Detectar si es instancia:
 
 https://stackoverflow.com/questions/624926/how-do-i-detect-whether-a-variable-is-a-function
 
-## Cambiar de puerto:
+### Cambiar de puerto:
 
 https://www.geeksforgeeks.org/python/how-to-change-port-in-flask-app/
 
-## SQL Alchemy:
+### SQL Alchemy:
 
 https://docs.sqlalchemy.org/en/20/tutorial/data_select.html
 
@@ -484,41 +484,52 @@ https://aula.uoc.edu/courses/70601/pages/python-c1-tema-3-3b-persistencia-de-dad
 
 https://docs.sqlalchemy.org/en/20/orm/basic_relationships.html
 
-## HTTP / REST:
+### HTTP / REST:
 
-### Servidors i Clients HTTP:
+#### Servidors i Clients HTTP:
 
 https://aula.uoc.edu/courses/70601/pages/python-c1-tema-1-1a-servidors-i-clients-http?module_item_id=2621264
 
-### Codis d'estat HTTP:
+#### Codis d'estat HTTP:
 
 https://aula.uoc.edu/courses/70601/pages/python-c1-tema-1-1b-codis-destat-http?module_item_id=2621266
 
-### Clients d'una API:
+#### Clients d'una API:
 
 https://aula.uoc.edu/courses/70601/pages/python-c1-tema-1-1c-client-duna-api?module_item_id=2621268
 
-### Eines externes per a APIs:
+#### Eines externes per a APIs:
 
 https://aula.uoc.edu/courses/70601/pages/python-c1-tema-1-1d-eines-externes-per-a-apis?module_item_id=2621269
 
-## Flask:
+### Flask:
 
-### Creación de un servicio REST:
+#### Creación de un servicio REST:
 
 https://aula.uoc.edu/courses/70601/pages/python-c1-tema-2-2c-creacio-dun-servei-rest?module_item_id=2621278
 
-### Controles de errores:
+#### Controles de errores:
 
 https://aula.uoc.edu/courses/70601/pages/python-c1-tema-2-2d-control-derrors-a-flask?module_item_id=2621281
 
-### Datos al cuerpo de la petición:
+#### Datos al cuerpo de la petición:
 
 https://aula.uoc.edu/courses/70601/pages/python-c1-tema-2-2e-maneig-de-dades-de-la-peticio?module_item_id=2621283
 
-### Modularidad con Blueprints
+#### Modularidad con Blueprints
 
 https://aula.uoc.edu/courses/70601/pages/python-c1-tema-2-2f-modularitat-de-les-api-amb-blueprints?module_item_id=2621285
+
+## Comentarios sobre aclaración en referencia a cliente que haga importación del archivo de datos dades.csv:
+
+Quiero comentar, que aunque se indica en sección introducción:
+"""Cliente Externo: Creación de un script independiente en Python que consuma los servicios de la API utilizando la biblioteca requests, demostrando la correcta interacción entre cliente y servidor."""
+En esta implementación del proyecto se ha hecho con un script independiente que no forma parte de ninguno de los microservicios, pero que para simplificar la implementación del script independiente, y para reducir el hecho de la frase "en mi máquina funciona", que luego en otra máquina no funcione,...
+
+Se ha implementado mediante docker, y para que pueda hacer peticiones sin depender de intentar recuperar la IP privada del dispositivo en qué se esté ejecutando (ya que al ser un contenedor Docker no funcionaría localhost, al consultar con el propio contenedor, y no con el host), se ha combinado como parte del conjunto de contenedores con Docker Compose (docker-compose).
+
+Esto es, para que pueda acceder a los microservicios por su nombre de contenedor junto al puerto que tengan abierto (en un caso hipotético podrían tener más de uno, pero para los requisitos, se ha escuchado solo por un puerto distinto por cada microservicio).
+
 
 ## Inicialización:
 
@@ -544,3 +555,7 @@ He cambiado de Docker de 3.9 a 3.14, funciona igual.
 En el vídeo no puse RUN pip install --no-cache-dir -r requirements.txt 
 y puse RUN pip install -r requirements.txt, sin --no-cache-dir 
 para reducir tiempo de grabación del vídeo.
+
+## Agradecimientos
+
+Se quiere agradecer por la formación recibida por estos niveles del curso de Python, y se considera que han sido de utilidad para el aprendizaje, y mejora en Python.
