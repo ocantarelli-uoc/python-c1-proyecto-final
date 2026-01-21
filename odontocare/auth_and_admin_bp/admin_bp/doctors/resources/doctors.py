@@ -13,6 +13,7 @@ from admin_bp.doctors.services.list_doctors import list_doctors as orm_list_doct
 from admin_bp.doctors.services.get_doctor_by_id import get_doctor_by_id as orm_get_doctor_by_id
 from admin_bp.user_roles.enums.UserRoleEnum import UserRoleEnum
 from admin_bp.users.services.get_user_by_username import get_user_by_username
+from admin_bp.exceptions.already_exists.UserAlreadyExistsException import UserAlreadyExistsException
 # Creamos una instancia de Blueprint
 # "doctors_bp" es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -35,7 +36,7 @@ def add_doctor(*args, **kwargs):
             existing_doctor_user:User = get_user_by_username(datos["username"])
             #It controls if the doctor already exists
             if existing_doctor_user is not None:
-                raise DoctorAlreadyExistsException()
+                raise UserAlreadyExistsException()
         #It creates the user for doctor
         created_user = create_user({
             "username":datos["username"],
@@ -61,6 +62,10 @@ def add_doctor(*args, **kwargs):
         print(e_doctor_already_exists.__str__(),file=sys.stderr)
         print(e_doctor_already_exists.__repr__(),file=sys.stderr)
         return jsonify({"message":"Doctor "+datos["name"]+" ya existe."}),409
+    except UserAlreadyExistsException as e_user_already_exists:
+        print(e_user_already_exists.__str__(),file=sys.stderr)
+        print(e_user_already_exists.__repr__(),file=sys.stderr)
+        return jsonify({"message":"Usuario para el que se quiere crear Doctor "+datos["name"]+" ya existe."}),409
     #It captures if created doctor hasn't been found
     except DoctorNotFoundException as e_doctor_not_found:
         print(e_doctor_not_found.__str__(),file=sys.stderr)
