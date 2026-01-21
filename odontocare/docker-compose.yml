@@ -1,6 +1,7 @@
 services:
   auth_and_admin_bp:
     container_name: auth_and_admin_bp
+    image: odontocare-auth_and_admin_bp:1.0.0
     build: 
       context: .
       dockerfile: ./auth_and_admin_bp/Dockerfile
@@ -19,6 +20,7 @@ services:
 
   cites_bp:
     container_name: cites_bp
+    image: odontocare-cites_bp:1.0.0
     build: 
       context: .
       dockerfile: ./cites_bp/Dockerfile
@@ -36,6 +38,7 @@ services:
       start_period: 5s
   carga_inicial:
     container_name: carga_inicial
+    image: odontocare-carga_inicial:1.0.0
     build: 
       context: .
       dockerfile: ./cargador_inicial/Dockerfile

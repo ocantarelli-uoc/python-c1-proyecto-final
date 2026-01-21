@@ -513,3 +513,10 @@ docker-compose up -d
 A continuación, para ejecutar el cargador de los datos iniciales, se debe ejecutar comando (des de dentro de carpeta: odontocare):
 
 docker-compose --profile data_setup up -d
+
+## Comentarios sobre el vídeo:
+
+He cambiado de Docker de 3.9 a 3.14, funciona igual.
+En el vídeo no puse RUN pip install --no-cache-dir -r requirements.txt 
+y puse RUN pip install -r requirements.txt, sin --no-cache-dir 
+para reducir tiempo de grabación del vídeo.

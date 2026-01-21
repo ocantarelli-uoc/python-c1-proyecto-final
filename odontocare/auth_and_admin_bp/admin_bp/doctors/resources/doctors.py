@@ -7,10 +7,12 @@ from decorators.require_role import require_role
 from admin_bp.exceptions.already_exists.DoctorAlreadyExistsException import DoctorAlreadyExistsException
 from admin_bp.exceptions.not_found.DoctorNotFoundException import DoctorNotFoundException
 from models.Doctor import Doctor
+from models.User import User
 from admin_bp.doctors.services.get_doctor_by_name import get_doctor_by_name
 from admin_bp.doctors.services.list_doctors import list_doctors as orm_list_doctors
 from admin_bp.doctors.services.get_doctor_by_id import get_doctor_by_id as orm_get_doctor_by_id
 from admin_bp.user_roles.enums.UserRoleEnum import UserRoleEnum
+from admin_bp.users.services.get_user_by_username import get_user_by_username
 # Creamos una instancia de Blueprint
 # "doctors_bp" es el nombre del Blueprint
 # El segundo parámetro es el nombre del módulo
@@ -29,6 +31,11 @@ def add_doctor(*args, **kwargs):
         #It controls if the doctor already exists
         if existing_doctor is not None:
             raise DoctorAlreadyExistsException()
+        else:
+            existing_doctor_user:User = get_user_by_username(datos["username"])
+            #It controls if the doctor already exists
+            if existing_doctor_user is not None:
+                raise DoctorAlreadyExistsException()
         #It creates the user for doctor
         created_user = create_user({
             "username":datos["username"],
