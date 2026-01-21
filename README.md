@@ -521,11 +521,17 @@ Para levantar (run) los microservicios y el cargador inicial se requiere de Dock
 
 Primero, para levantar los microservicios se debe ejecutar comando (des de dentro de carpeta: odontocare):
 
+```
 docker-compose up -d
+```
 
-A continuación, para ejecutar el cargador de los datos iniciales, se debe ejecutar comando (des de dentro de carpeta: odontocare):
+A continuación, para ejecutar el cargador de los datos iniciales (cargador_inicial, que ejecuta la carga_inicial), se debe ejecutar comando (des de dentro de carpeta: odontocare):
 
+```
 docker-compose --profile data_setup up -d
+```
+
+Para ver el resultado (respuesta JSON de la cita médica) se debe ir a los logs del contenedor carga_inicial (puede estar dentro de grupo de contenedores odontocare), ya sea por terminal o por Docker Desktop (es la opción que he usado para este proyecto).
 
 ## Comentarios sobre el vídeo:
 
