@@ -564,3 +564,5 @@ Considero que es un buen curso, y que ha sido de ayuda.
 
 Hubiera sido interesante ver también otros frameworks web (que tienen librerías para web (con renderización de plantilla (pasando objetos) o html) - web,
 REST, Graphql...) de Python.
+
+¡Muchas gracias por el curso :) !
