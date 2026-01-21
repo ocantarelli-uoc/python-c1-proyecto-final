@@ -250,7 +250,9 @@ ADMIN_FIRST_APP_USER_PASSWORD (con la primera contraseña del usuario administra
 ejemplo:
 
 SECRET_KEY = secreto
+
 ADMIN_FIRST_APP_USER_USERNAME = username
+
 ADMIN_FIRST_APP_USER_PASSWORD = password
 
 ![Ubicación archivo .env Auth And Admin bp](/readme_images/auth_and_admin_bp_ubicacion_env.png)
