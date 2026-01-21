@@ -541,7 +541,7 @@ Primero, para levantar los microservicios se debe ejecutar comando (des de dentr
 docker-compose up -d
 ```
 
-A continuación, para ejecutar el cargador de los datos iniciales (cargador_inicial, que ejecuta la carga_inicial), se debe ejecutar comando (des de dentro de carpeta: odontocare):
+A continuación, solo en el caso de que se quiera ejecutar la carga_inicial, entonces, para ejecutar el cargador de los datos iniciales (cargador_inicial, que ejecuta la carga_inicial), se debe ejecutar comando (des de dentro de carpeta: odontocare):
 
 ```
 docker-compose --profile data_setup up -d
