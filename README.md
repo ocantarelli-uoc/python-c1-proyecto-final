@@ -253,6 +253,11 @@ SECRET_KEY = secreto
 ADMIN_FIRST_APP_USER_USERNAME = username
 ADMIN_FIRST_APP_USER_PASSWORD = password
 
+![Ubicación archivo .env Auth And Admin bp](/readme_images/auth_and_admin_bp_ubicacion_env.png)
+
+![Ejemplo Contenido archivo .env Auth And Admin bp](/readme_images/auth_and_admin_bp_ejemplo_contenido_archivo_env.png)
+
+
 #### módulo cites_bp
 
 Este módulo contiene el microservicio cites_bp, que sirve para la gestión de las citas, y los estados posibles de las citas.
@@ -313,23 +318,23 @@ Contiene tanto los recursos (endpoints) como los servicios para la comprobación
 
 Contiene los modelos de esta aplicación como MedicalAppointment y MedicalAppointmentStatus.
 
-#### app.py
+##### app.py
 
 Contiene los blueprints de la aplicación
 
-### Dockerfile
+#### Dockerfile
 
 Contiene las instrucciones (que serán capas) para contruir la imagen para la aplicación.
 
-### extensions.py
+#### extensions.py
 
 Contiene la instanciación del ORM de base de datos (SQLAlchemy)
 
-### requeriments.txt
+#### requeriments.txt
 
 Contiene las dependencias a instalar para la aplicación.
 
-### .env:
+#### .env:
 
 Archivo de entorno (.env) que se debe crear (no viene por defecto en el repositorio ya que está ignorado).
 
@@ -341,11 +346,15 @@ ejemplo:
 
 SECRET_KEY = secreto
 
-### run.py
+![Ubicación archivo .env Cites bp](/readme_images/cites_bp_ubicacion_env.png)
+
+![Ejemplo Contenido archivo .env Cites bp](/readme_images/cites_bp_ejemplo_contenido_archivo_env.png)
+
+#### run.py
 
 Contiene la inicialización de la aplicación especificando la IP (host) y puerto por el que escuchará.
 
-#### módulo cargador_inicial
+### módulo cargador_inicial
 
 Este módulo contiene la estructura de carpetas necesarias, junto al script carga_inicial.py, para hacer la primera creación de una cita médica a través del fichero de datos csv dades.csv.
 
@@ -387,6 +396,10 @@ ejemplo:
 
 ADMIN_FIRST_APP_USER_USERNAME = username
 ADMIN_FIRST_APP_USER_PASSWORD = password
+
+![Ubicación archivo .env cargador_inicial bp](/readme_images/cargador_inicial_ubicacion_env.png)
+
+![Ejemplo Contenido archivo .env cargador_inicial bp](/readme_images/cargador_inicial_ejemplo_contenido_archivo_env.png)
 
 ### carga_inicial.py
 
