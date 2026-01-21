@@ -401,6 +401,7 @@ ADMIN_FIRST_APP_USER_USERNAME = username
 
 ADMIN_FIRST_APP_USER_PASSWORD = password
 
+
 ![Ubicación archivo .env cargador_inicial bp](/readme_images/cargador_inicial_ubicacion_env.png)
 
 ![Ejemplo Contenido archivo .env cargador_inicial bp](/readme_images/cargador_inicial_ejemplo_contenido_archivo_env.png)
