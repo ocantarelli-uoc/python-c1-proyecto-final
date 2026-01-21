@@ -517,7 +517,7 @@ https://aula.uoc.edu/courses/70601/pages/python-c1-tema-2-2f-modularitat-de-les-
 
 ## Inicialización:
 
-Para levantar (run) los microservicios y el cargador inicial se requiere de Docker.
+Para levantar (run) de todos los microservicios y el cargador inicial se requiere de Docker.
 
 Primero, para levantar los microservicios se debe ejecutar comando (des de dentro de carpeta: odontocare):
 
