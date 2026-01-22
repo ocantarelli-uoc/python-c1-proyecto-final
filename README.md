@@ -1,5 +1,7 @@
 # Proyecto Final Python C1 — OdontoCare
 
+## Alumno: Oriol Cantarell i Sala (ocantarelli)
+
 ## Introducción
 
 El objetivo principal de este proyecto es integrar los distintos contenidos del curso y aplicarlos al desarrollo de una solución backend completa y funcional. Para ello, el estudiante deberá implementar un sistema que combine los siguientes componentes fundamentales:
