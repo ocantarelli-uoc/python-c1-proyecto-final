@@ -2,6 +2,10 @@
 
 ## Alumno: Oriol Cantarell i Sala (ocantarelli)
 
+## Aviso:
+
+Por favor, leer todo el README.md con los comentarios indicados.
+
 ## Introducción
 
 El objetivo principal de este proyecto es integrar los distintos contenidos del curso y aplicarlos al desarrollo de una solución backend completa y funcional. Para ello, el estudiante deberá implementar un sistema que combine los siguientes componentes fundamentales:
